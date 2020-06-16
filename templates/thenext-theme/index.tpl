@@ -1,0 +1,217 @@
+{OVERALL_HEADER}
+<div class="intro-banner" data-background-image="{SITE_URL}storage/banner/{BANNER_IMAGE}">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="banner-headline">
+                    <h3><strong>{LANG_HOME_BANNER_HEADING}</strong>
+                        <br>
+                        <span>{LANG_HOME_BANNER_TAGLINE}</span></h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form autocomplete="off" method="get" action="{LINK_LISTING}" accept-charset="UTF-8">
+                    <div class="intro-banner-search-form margin-top-45">
+                        <div class="intro-search-field">
+                            <input id="intro-keywords" type="text" class="qucikad-ajaxsearch-input" placeholder="{LANG_WHAT_LOOK_FOR}" data-prev-value="0" data-noresult="{LANG_MORE_RESULTS_FOR}">
+                            <div id="qucikad-ajaxsearch-dropdown" size="0" tabindex="0">
+                                <ul>
+                                    {LOOP: CATEGORY}
+                                    <li class="qucikad-ajaxsearch-li-cats" data-catid="{CATEGORY.slug}">
+                                        IF("{CATEGORY.picture}"==""){
+                                        <i class="qucikad-as-caticon {CATEGORY.icon}"></i>
+                                        {:IF}
+                                        IF("{CATEGORY.picture}"!=""){
+                                        <img src="{CATEGORY.picture}" />
+                                        {:IF}
+                                        <span class="qucikad-as-cat">{CATEGORY.name}</span>
+                                    </li>
+                                    {/LOOP: CATEGORY}
+                                </ul>
+
+                                <div style="display:none" id="def-cats">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="intro-search-field with-autocomplete live-location-search">
+                            <div class="input-with-icon">
+                                <input type="text" id="searchStateCity" name="location" placeholder="{LANG_WHERE}">
+                                <i class="la la-map-marker"></i>
+                                <div data-option="{AUTO_DETECT_LOCATION}" class="loc-tracking"><i class="fa fa-crosshairs"></i></div>
+                                <input type="hidden" name="latitude" id="latitude" value="">
+                                <input type="hidden" name="longitude" id="longitude" value="">
+                                <input type="hidden" name="placetype" id="searchPlaceType" value="">
+                                <input type="hidden" name="placeid" id="searchPlaceId" value="">
+                                <input type="hidden" id="input-keywords" name="keywords" value="">
+                                <input type="hidden" id="input-maincat" name="cat" value="" />
+                                <input type="hidden" id="input-subcat" name="subcat" value="" />
+                            </div>
+                        </div>
+                        <div class="intro-search-button">
+                            <button class="button ripple-effect">{LANG_SEARCH}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Category Boxes -->
+<div class="section margin-top-45">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12 px-0">
+
+                <div class="categories-container">
+                <a href="{LINK_POST-AD}" class="category-box">
+                        <div class="category-box-icon">
+                            <div class="category-icon"><i class="la la-plus"></i></div>
+                        </div>
+                    </a>
+                    {LOOP: CAT}
+                    <a href="{CAT.catlink}" class="category-box">
+                        <div class="category-box-icon margin-bottom-10">
+                            IF("{CAT.picture}"==""){
+                            <div class="category-icon"><i class="{CAT.icon}"></i></div>
+                            {ELSE}
+                            <div class="category-icon"><img src="{CAT.picture}" /></div>
+                            {:IF}
+                        </div>
+                        <!--<div class="category-box-counter">{CAT.main_ads_count}</div>-->
+                        <div class="category-box-content">
+                            <h3>{CAT.main_title}</h3>
+                        </div>
+                    </a>
+                    {/LOOP: CAT}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Jobs -->
+<div class="section gray margin-top-45 padding-top-65 padding-bottom-65">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="section-headline margin-top-0 margin-bottom-35">
+                    <h3>{LANG_PREMIUM_ADS}</h3>
+                    <a href="{LINK_LISTING}?filter=premium" class="headline-link">{LANG_VIEW_MORE}</a>
+                </div>
+                <!-- I modify line add 'row' @python-->
+                <div class="row listings-container compact-list-layout margin-top-35">
+                    {LOOP: ITEM}
+                    <!-- I modify line add 'col-6 col-sm-6 col-md-4 col-xl-3'-->
+                    <div class='col-6 col-sm-6 col-md-4 col-xl-3 job-listing IF("{ITEM.highlight}"=="1"){ highlight {:IF}' style="padding:5px; border:0;text-align:center">
+                        <a href="{ITEM.link}">
+                            <div class="job-listing-details">
+                                <div class="job-listing-company-logo" style="position:relative;">
+                                    <img src="{SITE_URL}storage/products/{ITEM.picture}" alt="{ITEM.product_name}">
+                                    IF("{ITEM.featured}"=="1" || "{ITEM.urgent}"=="1"){
+                                    <span style="background:rgba(0,0,0,.25);border-radius:20px;padding:0px 7px;position:absolute;top:5px;left:5px;">
+                                    IF("{ITEM.featured}"=="1"){<i class="la la-star" style="color:green;"></i>{:IF}
+                                    IF("{ITEM.urgent}"=="1"){<i class="la la-star" style="color:orange;"></i>{:IF}
+                                    </span>
+                                    {:IF}
+                                </div>
+                                <div class="job-listing-description">
+                                    <h3 class="job-listing-title">{ITEM.product_name}</h3>
+                                </div>
+
+                            </div>
+                        </a>
+                            <div class="job-listing-footer">
+                                <ul>
+                                    IF("{ITEM.price}"!="0"){
+
+                                    <li class="job-listing-price d-inline"> {ITEM.price}</li>
+                                    <li class="job-listing-price d-none"> {ITEM.alt_price}</li>
+                                     <button id="hide" style="background-color:#FFA500;color:white; padding:5px" onclick="swap_currency(this)">convert</button>
+
+                                    {:IF}
+                                </ul>
+                            </div>
+                    </div>
+                    {/LOOP: ITEM}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Featured Jobs / End -->
+
+<!-- Latest Jobs -->
+<div class="section padding-top-65 padding-bottom-75">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="section-headline margin-top-0 margin-bottom-35">
+                    <h3>{LANG_LATEST_ADS}</h3>
+                    <a href="{LINK_LISTING}" class="headline-link">{LANG_VIEW_MORE}</a>
+                </div>
+                <!-- I modify line add 'row' @python-->
+                <div class="row listings-container compact-list-layout margin-top-35">
+                    {LOOP: ITEM2}
+                    <!-- I modify line add 'col-6 col-sm-6 col-md-4 col-xl-3'-->
+                    <div class="col-6 col-sm-6 col-md-4 col-xl-3 job-listing IF({ITEM2.highlight}){ highlight {:IF}" style="padding:5px; border:0;text-align:center">
+                        <a href="{ITEM2.link}">
+                            <div class="job-listing-details">
+                                <div class="job-listing-company-logo" style="position:relative;">
+                                    <!-- I modify line remove some unnessary data wey dey cum from back end. like the time, person wake past am and location @python-->
+                                    <img src="{SITE_URL}storage/products/{ITEM2.picture}" alt="{ITEM2.product_name}">
+                                    IF("{ITEM2.featured}"=="1" || "{ITEM2.urgent}"=="1"){
+                                    <span style="background:rgba(0,0,0,.25);border-radius:20px;padding:0px 7px;position:absolute;top:5px;left:5px;">
+                                    IF("{ITEM2.featured}"=="1"){<i class="la la-star" style="color:green;"></i>{:IF}
+                                    IF("{ITEM2.urgent}"=="1"){<i class="la la-star" style="color:orange;"></i>{:IF}
+                                    </span>
+                                    {:IF}
+                                </div>
+                                <div class="job-listing-description">
+                                    <h3 class="job-listing-title">{ITEM2.product_name}</h3>
+
+                                    <div class="job-listing-footer">
+                                        <ul>
+                                            IF("{ITEM2.price}"!="0"){
+                                            <!-- I modify line add 'job-listing-price' @python-->
+                                            <li class="job-listing-price">{ITEM2.price}</li>
+                                            {:IF}
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </a>
+                    </div>
+                    {/LOOP: ITEM2}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Latest Jobs / End -->
+<script>
+    var loginurl = "{LINK_LOGIN}?ref=index.php";
+</script>
+<!-- If address mode enable: ADDRESS FIELD JAVASCRIPT -->
+<link href="{SITE_URL}templates/{TPL_NAME}/css/map/map-marker.css" type="text/css" rel="stylesheet">
+<script type='text/javascript' src='{SITE_URL}templates/{TPL_NAME}/js/jquery-migrate-1.2.1.min.js'></script>
+<script type='text/javascript' src='//maps.google.com/maps/api/js?key={GMAP_API_KEY}&#038;libraries=places%2Cgeometry&#038;ver=2.2.1'></script>
+<script type='text/javascript' src='{SITE_URL}templates/{TPL_NAME}/js/map/richmarker-compiled.js'></script>
+<script type='text/javascript' src='{SITE_URL}templates/{TPL_NAME}/js/map/markerclusterer_packed.js'></script>
+<script type='text/javascript' src='{SITE_URL}templates/{TPL_NAME}/js/map/gmapAdBox.js'></script>
+<script type='text/javascript' src='{SITE_URL}templates/{TPL_NAME}/js/map/maps.js'></script>
+
+<!--written by Andy-->
+<script>
+const swap_currency = (ele) =>{
+    $(document).ready( ()=> {
+        $(ele).siblings('li').toggleClass('d-inline d-none')
+    })
+}
+
+</script>
+{OVERALL_FOOTER}
