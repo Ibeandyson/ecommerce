@@ -165,35 +165,45 @@
                     </div>
                 </div>
 
-                <div class="listings-container margin-top-35">
+                <div class="row listings-container compact-list-layout margin-top-10" style="padding:0 10px;">
                     {LOOP: ITEM}
-                        <div class="job-listing IF({ITEM.highlight}){ highlight {:IF}">
+                    <!-- I modify line add 'col-6 col-sm-6 col-md-4 col-xl-3'-->
+                    <div class='col-6 col-sm-6 col-md-4 col-xl-3 job-listing IF("{ITEM.highlight}"=="1"){ highlight {:IF}' style="padding:5px; border:0;text-align:center">
+                        <a href="{ITEM.link}">
                             <div class="job-listing-details">
-                                <div class="job-listing-company-logo">
+                                <div class="job-listing-company-logo" style="position:relative;">
                                     <img src="{SITE_URL}storage/products/{ITEM.picture}" alt="{ITEM.product_name}">
+                                    IF("{ITEM.featured}"=="1" || "{ITEM.urgent}"=="1"){
+                                    <span style="background:rgba(0,0,0,.25);border-radius:20px;padding:0px 7px;position:absolute;top:5px;left:5px;">
+                                        IF("{ITEM.featured}"=="1"){<i class="la la-star" style="color:green;"></i>{:IF}
+                                        IF("{ITEM.urgent}"=="1"){<i class="la la-star" style="color:orange;"></i>{:IF}
+                                    </span>
+                                    {:IF}
+                                    <span style="background:rgba(0,0,0,.25);border-radius:20px;padding:0px 7px;position:absolute;top:5px;right:5px;">
+                                        <span class="la la-heart set-item-fav IF('{ITEM.favorite}'){ added {:IF}" data-item-id="{ITEM.id}" data-userid="{USER_ID}" data-action="setFavAd"></span>
+                                    </span>
                                 </div>
                                 <div class="job-listing-description">
-
-                                    <h3 class="job-listing-title"><a href="{ITEM.link}">{ITEM.product_name}</a>
-                                        IF("{ITEM.featured}"=="1"){ <div class="badge blue"> {LANG_FEATURED}</div> {:IF}
-                                        IF("{ITEM.urgent}"=="1"){ <div class="badge yellow"> {LANG_URGENT}</div> {:IF}
-                                    </h3>
-                                    <h5 class="job-listing-company"><a href="{ITEM.catlink}"><i class="la la-tags"></i> {ITEM.category}</a></h5>
-                                    <h5 class="job-listing-company"><a href="{LINK_PROFILE}/{ITEM.username}"><i class="la la-user"></i> {ITEM.username}</a></h5>
+                                    <h3 class="job-listing-title">{ITEM.product_name}</h3>
                                 </div>
 
                             </div>
-                            <div class="job-listing-footer">
-                                <ul>
-                                    <li><i class="la la-map-marker"></i> {ITEM.location}</li>
-                                    IF("{ITEM.price}"!="0"){
-                                    <li><i class="la la-credit-card"></i> {ITEM.price}</li>
-                                    {:IF}
-                                    <li><i class="la la-clock-o"></i> {ITEM.created_at}</li>
-                                </ul>
-                            </div>
+                        </a>
+                        <div class="job-listing-footer">
+                            <ul>
+                                IF("{ITEM.price}"!="0"){
+
+                                <li class="job-listing-price d-inline"> {ITEM.price}</li>
+                                IF("{ITEM.alt_price}"!=""){
+                                <li class="job-listing-price d-none"> {ITEM.alt_price}</li>
+                                <li style="background-color:#76ba1b;color:white; padding:2px 5px;cursor:pointer;border-radius:11px;" onclick="swap_currency(this)">convert</li>
+                                {:IF}
+                                {:IF}
+                            </ul>
                         </div>
+                    </div>
                     {/LOOP: ITEM}
+                </div>
                     <div class="clearfix"></div>
                     IF("{ADSFOUND}"!="0"){
                     <div class="row">

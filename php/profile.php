@@ -137,6 +137,7 @@ FROM `".$config['db']['pre']."product`
 
         $result = ORM::for_table($config['db']['pre'].'product')->raw_query($query)->find_many();
 
+        $client_country_code = get_client_country_by_ip();
         $item = array();
         if ($result) {
             foreach ($result as $info)
@@ -200,6 +201,18 @@ FROM `".$config['db']['pre']."product`
 
                 $price = price_format($info['price'],$info['country']);
                 $item[$info['id']]['price'] = $price;
+
+                $main_currency_code = get_currency_code($info['country']);
+            $main_ex_rate = get_exchange_rate($main_currency_code);
+            $alt_currency_code = get_currency_code($client_country_code);
+            $alt_ex_rate = get_exchange_rate($alt_currency_code);
+            if($alt_currency_code != $main_currency_code){
+                $alt_price_amount = ($info['price'] / $main_ex_rate) * $alt_ex_rate;
+                $alt_price = price_format($alt_price_amount, $client_country_code);
+                $item[$info['id']]['alt_price'] = $alt_price;
+            }else{
+                $item[$info['id']]['alt_price'] = '';
+            }
 
                 $userinfo = get_user_data(null,$info['user_id']);
 
@@ -324,4 +337,3 @@ else{
     error($lang['PAGE_NOT_FOUND'], __LINE__, __FILE__, 1);
     exit();
 }
-?>

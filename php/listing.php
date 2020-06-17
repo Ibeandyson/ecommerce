@@ -284,6 +284,7 @@ $item = array();
 $result = $mysqli->query($query);
 if (mysqli_num_rows($result) > 0) {
     // output data of each row
+    $client_country_code = get_client_country_by_ip();
     while($info = mysqli_fetch_assoc($result)) {
         $item[$info['id']]['id'] = $info['id'];
         $item[$info['id']]['featured'] = $info['featured'];
@@ -342,6 +343,18 @@ if (mysqli_num_rows($result) > 0) {
 
         $price = price_format($info['price'],$info['country']);
         $item[$info['id']]['price'] = $price;
+
+        $main_currency_code = get_currency_code($info['country']);
+            $main_ex_rate = get_exchange_rate($main_currency_code);
+            $alt_currency_code = get_currency_code($client_country_code);
+            $alt_ex_rate = get_exchange_rate($alt_currency_code);
+            if($alt_currency_code != $main_currency_code){
+                $alt_price_amount = ($info['price'] / $main_ex_rate) * $alt_ex_rate;
+                $alt_price = price_format($alt_price_amount, $client_country_code);
+                $item[$info['id']]['alt_price'] = $alt_price;
+            }else{
+                $item[$info['id']]['alt_price'] = '';
+            }
 
         if($info['tag'] != ''){
             $item[$info['id']]['showtag'] = "1";

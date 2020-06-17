@@ -67,7 +67,7 @@
             <div class="col-xl-12 px-0">
 
                 <div class="categories-container">
-                <a href="{LINK_POST-AD}" class="category-box">
+                    <a href="{LINK_POST-AD}" class="category-box">
                         <div class="category-box-icon">
                             <div class="category-icon"><i class="la la-plus"></i></div>
                         </div>
@@ -113,8 +113,8 @@
                                     <img src="{SITE_URL}storage/products/{ITEM.picture}" alt="{ITEM.product_name}">
                                     IF("{ITEM.featured}"=="1" || "{ITEM.urgent}"=="1"){
                                     <span style="background:rgba(0,0,0,.25);border-radius:20px;padding:0px 7px;position:absolute;top:5px;left:5px;">
-                                    IF("{ITEM.featured}"=="1"){<i class="la la-star" style="color:green;"></i>{:IF}
-                                    IF("{ITEM.urgent}"=="1"){<i class="la la-star" style="color:orange;"></i>{:IF}
+                                        IF("{ITEM.featured}"=="1"){<i class="la la-star" style="color:green;"></i>{:IF}
+                                        IF("{ITEM.urgent}"=="1"){<i class="la la-star" style="color:orange;"></i>{:IF}
                                     </span>
                                     {:IF}
                                 </div>
@@ -124,17 +124,18 @@
 
                             </div>
                         </a>
-                            <div class="job-listing-footer">
-                                <ul>
-                                    IF("{ITEM.price}"!="0"){
+                        <div class="job-listing-footer">
+                            <ul>
+                                IF("{ITEM.price}"!="0"){
 
-                                    <li class="job-listing-price d-inline"> {ITEM.price}</li>
-                                    <li class="job-listing-price d-none"> {ITEM.alt_price}</li>
-                                     <button id="hide" style="background-color:#FFA500;color:white; padding:5px" onclick="swap_currency(this)">convert</button>
-
-                                    {:IF}
-                                </ul>
-                            </div>
+                                <li class="job-listing-price d-inline"> {ITEM.price}</li>
+                                IF("{ITEM.alt_price}"!=""){
+                                <li class="job-listing-price d-none"> {ITEM.alt_price}</li>
+                                <li style="background-color:#76ba1b;color:white; padding:2px 5px;cursor:pointer;border-radius:11px;" onclick="swap_currency(this)">convert</li>
+                                {:IF}
+                                {:IF}
+                            </ul>
+                        </div>
                     </div>
                     {/LOOP: ITEM}
                 </div>
@@ -165,32 +166,36 @@
                                     <img src="{SITE_URL}storage/products/{ITEM2.picture}" alt="{ITEM2.product_name}">
                                     IF("{ITEM2.featured}"=="1" || "{ITEM2.urgent}"=="1"){
                                     <span style="background:rgba(0,0,0,.25);border-radius:20px;padding:0px 7px;position:absolute;top:5px;left:5px;">
-                                    IF("{ITEM2.featured}"=="1"){<i class="la la-star" style="color:green;"></i>{:IF}
-                                    IF("{ITEM2.urgent}"=="1"){<i class="la la-star" style="color:orange;"></i>{:IF}
+                                        IF("{ITEM2.featured}"=="1"){<i class="la la-star" style="color:green;"></i>{:IF}
+                                        IF("{ITEM2.urgent}"=="1"){<i class="la la-star" style="color:orange;"></i>{:IF}
                                     </span>
                                     {:IF}
                                 </div>
                                 <div class="job-listing-description">
                                     <h3 class="job-listing-title">{ITEM2.product_name}</h3>
-
-                                    <div class="job-listing-footer">
-                                        <ul>
-                                            IF("{ITEM2.price}"!="0"){
-                                            <!-- I modify line add 'job-listing-price' @python-->
-                                            <li class="job-listing-price">{ITEM2.price}</li>
-                                            {:IF}
-                                        </ul>
-                                    </div>
                                 </div>
-
-                            </div>
                         </a>
+
+                        <div class="job-listing-footer">
+                            <ul>
+                                IF("{ITEM2.price}"!="0"){
+                                <!-- I modify line add 'job-listing-price' @python-->
+                                <li class="job-listing-price d-inline">{ITEM2.price}</li>
+                                IF("{ITEM2.alt_price}"!=""){
+                                <li class="job-listing-price d-none"> {ITEM2.alt_price}</li>
+                                <li style="background-color:#76ba1b;color:white; padding:2px 5px;cursor:pointer;border-radius:11px;" onclick="swap_currency(this)">convert</li>
+                                {:IF}
+                                {:IF}
+                            </ul>
+                        </div>
                     </div>
-                    {/LOOP: ITEM2}
+
                 </div>
+                {/LOOP: ITEM2}
             </div>
         </div>
     </div>
+</div>
 </div>
 <!-- Latest Jobs / End -->
 <script>
@@ -205,13 +210,4 @@
 <script type='text/javascript' src='{SITE_URL}templates/{TPL_NAME}/js/map/gmapAdBox.js'></script>
 <script type='text/javascript' src='{SITE_URL}templates/{TPL_NAME}/js/map/maps.js'></script>
 
-<!--written by Andy-->
-<script>
-const swap_currency = (ele) =>{
-    $(document).ready( ()=> {
-        $(ele).siblings('li').toggleClass('d-inline d-none')
-    })
-}
-
-</script>
 {OVERALL_FOOTER}

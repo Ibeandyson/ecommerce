@@ -20,20 +20,20 @@
 
             IF({LOGGED_IN}){
 
-                IF({LOGGED_IN} && '{ZECHAT}'=='on'){
-                <div class="col-md-5 col-sm-12">
-                    <div class="right-side">
-                        <button type="button" class="button ripple-effect popup-with-zoom-anim" onclick="javascript:chatWith('{ITEM_AUTHORUNAME}','{ITEM_AUTHORIMG}','{ITEM_AUTHORONLINE}')">{LANG_CHAT_NOW} <i class="icon-feather-message-circle"></i></button>
-                    </div>
+            IF({LOGGED_IN} && '{ZECHAT}'=='on'){
+            <div class="col-md-5 col-sm-12">
+                <div class="right-side">
+                    <button type="button" class="button ripple-effect popup-with-zoom-anim" onclick="javascript:chatWith('{ITEM_AUTHORUNAME}','{ITEM_AUTHORIMG}','{ITEM_AUTHORONLINE}')">{LANG_CHAT_NOW} <i class="icon-feather-message-circle"></i></button>
                 </div>
-                {:IF}
+            </div>
+            {:IF}
 
             {ELSE}
-                <div class="col-md-5 col-sm-12">
-                    <div class="right-side">
-                        <a href="#sign-in-dialog" class="button ripple-effect popup-with-zoom-anim">{LANG_LOGIN_CHAT} <i class="icon-feather-message-circle"></i></a>
-                    </div>
+            <div class="col-md-5 col-sm-12">
+                <div class="right-side">
+                    <a href="#sign-in-dialog" class="button ripple-effect popup-with-zoom-anim">{LANG_LOGIN_CHAT} <i class="icon-feather-message-circle"></i></a>
                 </div>
+            </div>
             {:IF}
         </div>
     </div>
@@ -42,7 +42,7 @@ IF("{SHOW_IMAGE_SLIDER}"=="1"){
 <!-- Slider -->
 <div class="fullwidth-property-slider margin-bottom-0">
     {LOOP: ITEM_SCREENSHOT}
-        <a href="{SITE_URL}/storage/products/{ITEM_SCREENSHOT.image}" data-background-image="{SITE_URL}/storage/products/{ITEM_SCREENSHOT.image}" class="item mfp-gallery"></a>
+    <a href="{SITE_URL}/storage/products/{ITEM_SCREENSHOT.image}" data-background-image="{SITE_URL}/storage/products/{ITEM_SCREENSHOT.image}" class="item mfp-gallery"></a>
     {/LOOP: ITEM_SCREENSHOT}
 </div>
 {:IF}
@@ -111,36 +111,36 @@ IF("{SHOW_IMAGE_SLIDER}"=="1"){
                     IF("{ITEM_CUSTOMFIELD}"!="0"){
 
                     {LOOP: ITEM_CUSTOM}
-                        <div class="col-md-6">
-                            <div class="job-property">
-                                <i class="icon-feather-chevron-right"></i>
-                                <span>{ITEM_CUSTOM.title}</span>
-                                <h5>{ITEM_CUSTOM.value}</h5>
-                            </div>
+                    <div class="col-md-6">
+                        <div class="job-property">
+                            <i class="icon-feather-chevron-right"></i>
+                            <span>{ITEM_CUSTOM.title}</span>
+                            <h5>{ITEM_CUSTOM.value}</h5>
                         </div>
+                    </div>
                     {/LOOP: ITEM_CUSTOM}
                     {:IF}
 
                     {LOOP: ITEM_CUSTOM_CHECKBOX}
-                        <div class="col-md-12">
-                            <div class="job-property">
-                                <i class="icon-feather-chevron-right"></i>
-                                <span>{ITEM_CUSTOM_CHECKBOX.title}</span>
-                                <h5 class="row">
-                                    <ul class="listing-features checkboxes">
-                                        {ITEM_CUSTOM_CHECKBOX.value}
-                                    </ul>
-                                </h5>
-                            </div>
+                    <div class="col-md-12">
+                        <div class="job-property">
+                            <i class="icon-feather-chevron-right"></i>
+                            <span>{ITEM_CUSTOM_CHECKBOX.title}</span>
+                            <h5 class="row">
+                                <ul class="listing-features checkboxes">
+                                    {ITEM_CUSTOM_CHECKBOX.value}
+                                </ul>
+                            </h5>
                         </div>
+                    </div>
                     {/LOOP: ITEM_CUSTOM_CHECKBOX}
                 </div>
                 {LOOP: ITEM_CUSTOM_TEXTAREA}
-                    <div class="job-property">
-                        <i class="icon-feather-chevron-right"></i>
-                        <span>{ITEM_CUSTOM_TEXTAREA.title}</span>
-                        <h5>{ITEM_CUSTOM_TEXTAREA.value}</h5>
-                    </div>
+                <div class="job-property">
+                    <i class="icon-feather-chevron-right"></i>
+                    <span>{ITEM_CUSTOM_TEXTAREA.title}</span>
+                    <h5>{ITEM_CUSTOM_TEXTAREA.value}</h5>
+                </div>
                 {/LOOP: ITEM_CUSTOM_TEXTAREA}
 
             </div>
@@ -160,7 +160,7 @@ IF("{SHOW_IMAGE_SLIDER}"=="1"){
                 </ul>
             </div>
             {:IF}
-            <div class="single-page-section IF("{POST_ADDRESS_MODE}"!="1"){ hidden {:IF}">
+            <div class="single-page-section IF(" {POST_ADDRESS_MODE}"!="1" ){ hidden {:IF}">
                 <h3>{LANG_LOCATION}</h3>
                 <div id="single-job-map-container">
                     <div class="map-widget map height-200px" id="map-detail"></div>
@@ -174,10 +174,10 @@ IF("{SHOW_IMAGE_SLIDER}"=="1"){
         <div class="col-xl-4 col-lg-4">
             <div class="sidebar-container">
                 <!-- Sidebar Widget -->
-                <div class="sidebar-widget" >
+                <div class="sidebar-widget">
                     <div class="job-detail-box">
                         <div class="job-detail-box-headline text-center" style="background-color:#76ba1b; color:white">{LANG_CONTACT_ADVERTISER}</div>
-                        <div class="job-detail-box-inner" >
+                        <div class="job-detail-box-inner">
                             <div class="job-company-logo">
                                 <a href="{ITEM_AUTHORLINK}">
                                     <img src="{SITE_URL}storage/profile/small_{ITEM_AUTHORIMG}" alt="{ITEM_AUTHORUNAME}">
@@ -197,50 +197,50 @@ IF("{SHOW_IMAGE_SLIDER}"=="1"){
                                 IF('{ITEM_PHONE}' != ''){
                                 <li class="tg-btnphone" style="background-color:#FFA500; padding:10px;">
                                     <i class="icon-feather-phone-call" style="color:white"></i>
-                                    <span data-last="{ITEM_PHONE}" ><a href="tel:{ITEM_PHONE}" rel="nofollow" style="color:white"><em>{LANG_SHOW_PHONE_NO}</em></a></span>
+                                    <span data-last="{ITEM_PHONE}"><a href="tel:{ITEM_PHONE}" rel="nofollow" style="color:white"><em>{LANG_SHOW_PHONE_NO}</em></a></span>
                                 </li>
                                 {:IF}
-                                <a class="tg-btnphone" href="javascript:void(0);" >
+                                <a class="tg-btnphone" href="javascript:void(0);">
                                     <i class="icon-phone-handset" style="color:white"></i>
                                 </a>
                             </ul>
                             IF({LOGGED_IN}){
 
-                                IF({LOGGED_IN} && '{ZECHAT}'=='on'){
-                                <button  type="button" class="button ripple-effect full-width margin-top-10" onclick="javascript:chatWith('{ITEM_AUTHORUNAME}','{ITEM_AUTHORIMG}','{ITEM_AUTHORONLINE}')">{LANG_CHAT_NOW} <i class="icon-feather-message-circle"></i></button>
-                                {:IF}
+                            IF({LOGGED_IN} && '{ZECHAT}'=='on'){
+                            <button type="button" class="button ripple-effect full-width margin-top-10" onclick="javascript:chatWith('{ITEM_AUTHORUNAME}','{ITEM_AUTHORIMG}','{ITEM_AUTHORONLINE}')">{LANG_CHAT_NOW} <i class="icon-feather-message-circle"></i></button>
+                            {:IF}
 
                             {ELSE}
-                                <a href="#sign-in-dialog" class="button ripple-effect popup-with-zoom-anim full-width margin-top-10">{LANG_LOGIN_CHAT} <i class="icon-feather-message-circle"></i></a>
+                            <a href="#sign-in-dialog" class="button ripple-effect popup-with-zoom-anim full-width margin-top-10">{LANG_LOGIN_CHAT} <i class="icon-feather-message-circle"></i></a>
                             {:IF}
 
                             <a href="#emailToSeller" class="button ripple-effect popup-with-zoom-anim full-width margin-top-10">{LANG_REPLY_MAIL} <i class="icon-feather-mail"></i></a>
                         </div>
                     </div>
                 </div>
-                
-                 <!---disclaimer written by andy start here--->
-                <div class="sidebar-widget" >
+
+                <!---disclaimer written by andy start here--->
+                <div class="sidebar-widget">
                     <div class="job-detail-box">
                         <div class="job-detail-box-headline text-center" style="background-color:#76ba1b">
-                          <b style="color:white">Safety tips</b>
+                            <b style="color:white">Safety tips</b>
                         </div>
-                        <div class="job-detail-box-inner"  style="padding:2px; text-align:left">
+                        <div class="job-detail-box-inner" style="padding:2px; text-align:left">
                             <ol>
-                                  <li  style="font-size:0.8em">Do not pay in advance even for the delivery</li>
-                                  <li  style="font-size:0.8em">Try to meet at a safe, public location or a market</li>
-                                  <li  style="font-size:0.8em">Check the item BEFORE you buy it</li>
-                                  <li  style="font-size:0.8em">Pay only after collecting the item</li>
+                                <li style="font-size:0.8em">Do not pay in advance even for the delivery</li>
+                                <li style="font-size:0.8em">Try to meet at a safe, public location or a market</li>
+                                <li style="font-size:0.8em">Check the item BEFORE you buy it</li>
+                                <li style="font-size:0.8em">Pay only after collecting the item</li>
                             </ol>
                         </div>
-                    </div>  
                     </div>
-                    <!--- discaimer written by andy end here--->
-               
+                </div>
+                <!--- discaimer written by andy end here--->
+
                 <!-- Sidebar Widget -->
                 <div class="sidebar-widget">
                     <h3>{LANG_BOOKMARK_SHARE}</h3>
-                    <button  class="fav-button margin-bottom-20 set-item-fav IF('{ITEM_FAVORITE}' == '1'){ added {:IF}" data-item-id="{ITEM_ID}" data-userid="{USER_ID}" data-action="setFavAd">
+                    <button class="fav-button margin-bottom-20 set-item-fav IF('{ITEM_FAVORITE}' == '1'){ added {:IF}" data-item-id="{ITEM_ID}" data-userid="{USER_ID}" data-action="setFavAd">
                         <span class="fav-icon"></span>
                         <span class="fav-text">{LANG_SAVE_THIS_AD}</span>
                         <span class="added-text">{LANG_AD_SAVED}</span>
@@ -275,41 +275,41 @@ IF("{SHOW_IMAGE_SLIDER}"=="1"){
                 <h3 class="margin-bottom-25">{LANG_SIMILAR_ADS}</h3>
                 <div class="row listings-container compact-list-layout margin-top-35">
                     {LOOP: ITEM}
-                        <div class="col-6 col-sm-6 col-md-4 col-xl-3 job-listing IF("{ITEM.highlight}"=="1"){ highlight {:IF}" style="padding:5px; border:0;text-align:center">
-                            <a href="{ITEM.link}">
+                    <div class="col-6 col-sm-6 col-md-4 col-xl-3 job-listing IF(" {ITEM.highlight}"=="1" ){ highlight {:IF}" style="padding:5px; border:0;text-align:center">
+                        <a href="{ITEM.link}">
                             <div class="job-listing-details">
                                 <div class="job-listing-company-logo" style="position:relative;">
                                     <!-- I modify line remove some unnessary data wey dey cum from back end. like the time, person wake past am and location @python-->
                                     <img src="{SITE_URL}storage/products/{ITEM.picture}" alt="{ITEM.product_name}">
                                     IF("{ITEM.featured}"=="1" || "{ITEM.urgent}"=="1"){
                                     <span style="background:rgba(0,0,0,.25);border-radius:20px;padding:0px 7px;position:absolute;top:5px;left:5px;">
-                                    IF("{ITEM.featured}"=="1"){<i class="la la-star" style="color:green;"></i>{:IF}
-                                    IF("{ITEM.urgent}"=="1"){<i class="la la-star" style="color:orange;"></i>{:IF}
+                                        IF("{ITEM.featured}"=="1"){<i class="la la-star" style="color:green;"></i>{:IF}
+                                        IF("{ITEM.urgent}"=="1"){<i class="la la-star" style="color:orange;"></i>{:IF}
                                     </span>
                                     {:IF}
                                 </div>
                                 <div class="job-listing-description">
                                     <h3 class="job-listing-title">{ITEM.product_name}</h3>
-
-                                    <div class="job-listing-footer">
-                                        <ul>
-                                            IF("{ITEM.price}"!="0"){
-                                            <!-- I modify line add 'job-listing-price' @python-->
-                                            <li class="job-listing-price">{ITEM.price}</li>
-                                            {:IF}
-                                        </ul>
-                                    </div>
-                                </div>
-
-                            </div>
                         </a>
-                        </div>
-                    {/LOOP: ITEM}
+                    </div>
+                    <div class="job-listing-footer">
+                        <ul>
+                            IF("{ITEM.price}"!="0"){
+                            <!-- I modify line add 'job-listing-price' @python-->
+                            <li class="job-listing-price">{ITEM.price}</li>
+                            
+                            {:IF}
+                        </ul>
+                    </div>
                 </div>
+
             </div>
+            {/LOOP: ITEM}
         </div>
-        {:IF}
     </div>
+</div>
+{:IF}
+</div>
 </div>
 
 <div id="emailToSeller" class="zoom-anim-dialog mfp-hide dialog-with-tabs popup-dialog">
@@ -352,29 +352,33 @@ IF("{SHOW_IMAGE_SLIDER}"=="1"){
 <script type='text/javascript' src='{SITE_URL}templates/{TPL_NAME}/js/slick.min.js'></script>
 
 <script async="async">
-    var _latitude = {ITEM_LAT};
-    var _longitude = {ITEM_LONG};
+    var _latitude = {
+        ITEM_LAT
+    };
+    var _longitude = {
+        ITEM_LONG
+    };
     var site_url = '{SITE_URL}';
     var color = '{MAP_COLOR}';
     var path = '{SITE_URL}templates/{TPL_NAME}';
     var element = "map-detail";
     simpleMap(_latitude, _longitude, element);
 
-    $('.resume-file').on('change',function(){
-        if($('.new-resume').is(':checked')){
+    $('.resume-file').on('change', function() {
+        if ($('.new-resume').is(':checked')) {
             $('.resume-upload-button').slideDown('fast');;
-        }else{
+        } else {
             $('.resume-upload-button').slideUp('fast');
         }
     });
     $('.resume-file').trigger('change');
 
-    IF("{ERROR}"!=""){
-        $(window).on('load',function () {
-            $('.apply-dialog-button').trigger('click');
-        });
-    {:IF}
+    IF("{ERROR}" != "") {
+            $(window).on('load', function() {
+                $('.apply-dialog-button').trigger('click');
+            }); {
+                : IF
+            }
 </script>
 
 {OVERALL_FOOTER}
-

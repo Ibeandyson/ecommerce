@@ -541,7 +541,7 @@ IF({POST_ADDRESS_MODE}){
     $('.company-select').trigger('change');
 </script>
 <script src="{SITE_URL}templates/{TPL_NAME}/js/jquery.form.js"></script>
-<script src="{SITE_URL}templates/{TPL_NAME}/js/job_post.js"></script>
+<script src="{SITE_URL}templates/{TPL_NAME}/js/ad_post.js"></script>
 
 IF("{POST_DESC_EDITOR}"=="1"){
 <!-- CRUD FORM CONTENT - crud_fields_scripts stack -->

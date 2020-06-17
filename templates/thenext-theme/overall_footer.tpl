@@ -219,6 +219,13 @@ IF("{SWITCHER}"=="1"){
 <script src='{SITE_URL}templates/{TPL_NAME}/js/user-ajax.js'></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script>
+    const swap_currency = (ele) => {
+        $(document).ready(() => {
+            $(ele).siblings('li').toggleClass('d-inline d-none')
+        })
+    }
+</script>
+<script>
 
     /* THIS PORTION OF CODE IS ONLY EXECUTED WHEN THE USER THE LANGUAGE & THEME(CLIENT-SIDE) */
     $(function () {
