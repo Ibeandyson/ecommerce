@@ -121,7 +121,6 @@
                                 <div class="job-listing-description">
                                     <h3 class="job-listing-title">{ITEM.product_name}</h3>
                                 </div>
-
                             </div>
                         </a>
                         <div class="job-listing-footer">
@@ -174,8 +173,8 @@
                                 <div class="job-listing-description">
                                     <h3 class="job-listing-title">{ITEM2.product_name}</h3>
                                 </div>
+                            </div>
                         </a>
-
                         <div class="job-listing-footer">
                             <ul>
                                 IF("{ITEM2.price}"!="0"){
@@ -189,8 +188,6 @@
                             </ul>
                         </div>
                     </div>
-
-                </div>
                 {/LOOP: ITEM2}
             </div>
         </div>

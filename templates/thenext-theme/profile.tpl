@@ -159,8 +159,8 @@
                             <option data-filter-type="sort" data-filter-val="id" data-order="desc">{LANG_NEWEST}</option>
                             <option data-filter-type="sort" data-filter-val="title" data-order="desc">{LANG_NAME}</option>
                             <option data-filter-type="sort" data-filter-val="date" data-order="desc">{LANG_DATE}</option>
-                            <option data-filter-type="sort" data-filter-val="price" data-order="desc">{LANG_SALARY} ({LANG_HIGH_TO_LOW})</option>
-                            <option data-filter-type="sort" data-filter-val="price" data-order="asc">{LANG_SALARY} ({LANG_LOW_TO_HIGH})</option>
+                            <option data-filter-type="sort" data-filter-val="price" data-order="desc">{LANG_PRICE} ({LANG_HIGH_TO_LOW})</option>
+                            <option data-filter-type="sort" data-filter-val="price" data-order="asc">{LANG_PRICE} ({LANG_LOW_TO_HIGH})</option>
                         </select>
                     </div>
                 </div>
@@ -186,7 +186,6 @@
                                 <div class="job-listing-description">
                                     <h3 class="job-listing-title">{ITEM.product_name}</h3>
                                 </div>
-
                             </div>
                         </a>
                         <div class="job-listing-footer">
