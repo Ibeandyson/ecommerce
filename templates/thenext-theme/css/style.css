@@ -7665,11 +7665,16 @@ input:checked + .switch-button:before {
     .icon-image{
         height:100px
     }
-    .category-box-content{
-        /* display:  none; */
+    .category-box-content h3{
+        font-size: 10px;
+        line-height: 1rem;
     }
     .category-box-counter{
         display:  none;
+    }
+    .category-box-icon img{
+        width: 38px;
+        height: 38px;
     }
 }
 
