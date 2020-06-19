@@ -67,7 +67,7 @@
                             <ul class="footer-social-links">
                                 IF('{FACEBOOK_LINK}'!=""){
                                 <li>
-                                    <a href="{FACEBOOK_LINK}" title="{LANG_FACEBOOK}" data-tippy-placement="bottom"
+                                    <a href="{FACEBOOK_LINK}" title="FACEBOOK" data-tippy-placement="bottom"
                                        data-tippy-theme="light" target="_blank">
                                         <i class="fa fa-facebook"></i>
                                     </a>
@@ -75,7 +75,7 @@
                                 {:IF}
                                 IF('{TWITTER_LINK}'!=""){
                                 <li>
-                                    <a href="{TWITTER_LINK}" title="{LANG_TWITTER}" data-tippy-placement="bottom"
+                                    <a href="{TWITTER_LINK}" title="TWITTER" data-tippy-placement="bottom"
                                        data-tippy-theme="light">
                                         <i class="fa fa-twitter"></i>
                                     </a>
@@ -83,7 +83,7 @@
                                 {:IF}
                                 IF('{GOOGLEPLUS_LINK}'!=""){
                                 <li>
-                                    <a href="#" title="{LANG_GOOGLE_PLUS}" data-tippy-placement="bottom"
+                                    <a href="#" title="GOOGLE PLUS" data-tippy-placement="bottom"
                                        data-tippy-theme="light">
                                         <i class="fa fa-google-plus"></i>
                                     </a>
@@ -91,7 +91,7 @@
                                 {:IF}
                                 IF('{YOUTUBE_LINK}'!=""){
                                 <li>
-                                    <a href="{YOUTUBE_LINK}" title="{LANG_YOUTUBE}" data-tippy-placement="bottom"
+                                    <a href="{YOUTUBE_LINK}" title="YOUTUBE" data-tippy-placement="bottom"
                                        data-tippy-theme="light">
                                         <i class="fa fa-youtube-play"></i>
                                     </a>
@@ -218,6 +218,13 @@ IF("{SWITCHER}"=="1"){
 <script src="{SITE_URL}templates/{TPL_NAME}/js/custom.js"></script>
 <script src='{SITE_URL}templates/{TPL_NAME}/js/user-ajax.js'></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script>
+    const swap_currency = (ele) => {
+        $(document).ready(() => {
+            $(ele).siblings('li').toggleClass('d-inline d-none')
+        })
+    }
+</script>
 <script>
 
     /* THIS PORTION OF CODE IS ONLY EXECUTED WHEN THE USER THE LANGUAGE & THEME(CLIENT-SIDE) */

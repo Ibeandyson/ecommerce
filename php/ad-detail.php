@@ -314,6 +314,18 @@ if (count($result1) > 0) {
 
         $item[$info1['id']]['price'] = $price;
 
+        $main_currency_code = get_currency_code($info1['country']);
+        $main_ex_rate = get_exchange_rate($main_currency_code);
+        $alt_currency_code = get_currency_code($client_country_code);
+        $alt_ex_rate = get_exchange_rate($alt_currency_code);
+        if($alt_currency_code != $main_currency_code){
+            $alt_price_amount = ($info1['price'] / $main_ex_rate) * $alt_ex_rate;
+            $alt_price = price_format($alt_price_amount, $client_country_code);
+            $item[$info1['id']]['alt_price'] = $alt_price;
+        }else{
+            $item[$info1['id']]['alt_price'] = '';
+        }
+
         $item[$info1['id']]['favorite'] = check_product_favorite($info1['id']);
         $userinfo = get_user_data(null,$info1['user_id']);
 
@@ -427,4 +439,3 @@ $page->SetParameter('RIGHT_ADSCODE', $right_ad['tpl']);
 $page->SetParameter('RIGHT_ADSTATUS', $right_ad['status']);
 $page->SetParameter ('OVERALL_FOOTER', create_footer());
 $page->CreatePageEcho();
-?>
