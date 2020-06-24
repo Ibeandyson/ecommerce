@@ -106,16 +106,25 @@
                 <div class="row listings-container compact-list-layout margin-top-35">
                     {LOOP: ITEM}
                     <!-- I modify line add 'col-6 col-sm-6 col-md-4 col-xl-3'-->
-                    <div class='col-6 col-sm-6 col-md-4 col-xl-3 job-listing IF("{ITEM.highlight}"=="1"){ highlight {:IF}' style="padding:5px; border:0;text-align:center">
+                    <div class='col-6 col-sm-6 col-md-4 col-xl-3 job-listing' style="padding:5px; border:0;text-align:center">
                         <a href="{ITEM.link}">
                             <div class="job-listing-details">
                                 <div class="job-listing-company-logo" style="position:relative;">
                                     <img src="{SITE_URL}storage/products/{ITEM.picture}" alt="{ITEM.product_name}">
-                                    IF("{ITEM.featured}"=="1" || "{ITEM.urgent}"=="1"){
-                                    <span style="background:rgba(0,0,0,.25);border-radius:20px;padding:0px 7px;position:absolute;top:5px;left:5px;">
-                                        IF("{ITEM.featured}"=="1"){<i class="la la-star" style="color:green;"></i>{:IF}
-                                        IF("{ITEM.urgent}"=="1"){<i class="la la-star" style="color:orange;"></i>{:IF}
-                                    </span>
+                                    IF("{ITEM.urgent}"=="1"){
+                                    <div style="position:absolute;top:4px;left:4px;">
+                                        <span style="background:rgba(255,255,255,1);padding:0px 7px;border-radius:15px;color:#f00;display:block;font-size:12px;line-height:1.5rem;"><b>Urgent</b></span>
+                                    </div>
+                                    {:IF}
+                                    IF("{ITEM.featured}"=="1"){
+                                    <div style="position:absolute;top:4px;right:4px;">
+                                        <span style="background:rgba(255,255,255,1);padding:0px 7px;border-radius:15px;color:rgb(118, 186, 27);display:block;font-size:12px;line-height:1.5rem;"><i class="la la-star"></i> Featured</span>
+                                    </div>
+                                    {:IF}
+                                    IF("{ITEM.highlight}"=="1"){
+                                    <div style="position:absolute;bottom:5px;left:5px;">
+                                        <span style="background:rgba(255,255,255,1);padding:4px;border-radius:15px;box-shadow:1px 1px 2px #666;color: rgba(255,165,0,1);display:block;font-size:14px;line-height:1rem;"> <i class="la la-star"></i> Highlight</span>
+                                    </div>
                                     {:IF}
                                 </div>
                                 <div class="job-listing-description">
@@ -157,17 +166,26 @@
                 <div class="row listings-container compact-list-layout margin-top-35">
                     {LOOP: ITEM2}
                     <!-- I modify line add 'col-6 col-sm-6 col-md-4 col-xl-3'-->
-                    <div class="col-6 col-sm-6 col-md-4 col-xl-3 job-listing IF({ITEM2.highlight}){ highlight {:IF}" style="padding:5px; border:0;text-align:center">
+                    <div class="col-6 col-sm-6 col-md-4 col-xl-3 job-listing" style="padding:5px; border:0;text-align:center">
                         <a href="{ITEM2.link}">
                             <div class="job-listing-details">
                                 <div class="job-listing-company-logo" style="position:relative;">
                                     <!-- I modify line remove some unnessary data wey dey cum from back end. like the time, person wake past am and location @python-->
                                     <img src="{SITE_URL}storage/products/{ITEM2.picture}" alt="{ITEM2.product_name}">
-                                    IF("{ITEM2.featured}"=="1" || "{ITEM2.urgent}"=="1"){
-                                    <span style="background:rgba(0,0,0,.25);border-radius:20px;padding:0px 7px;position:absolute;top:5px;left:5px;">
-                                        IF("{ITEM2.featured}"=="1"){<i class="la la-star" style="color:green;"></i>{:IF}
-                                        IF("{ITEM2.urgent}"=="1"){<i class="la la-star" style="color:orange;"></i>{:IF}
-                                    </span>
+                                    IF("{ITEM2.urgent}"=="1"){
+                                    <div style="position:absolute;top:4px;left:4px;">
+                                        <span style="background:rgba(255,255,255,1);padding:0px 7px;border-radius:15px;color:#f00;display:block;font-size:12px;line-height:1.5rem;"><b>Urgent</b></span>
+                                    </div>
+                                    {:IF}
+                                    IF("{ITEM2.featured}"=="1"){
+                                    <div style="position:absolute;top:4px;right:4px;">
+                                        <span style="background:rgba(255,255,255,1);padding:0px 7px;border-radius:15px;color:rgb(118, 186, 27);display:block;font-size:12px;line-height:1.5rem;"><i class="la la-star"></i> Featured</span>
+                                    </div>
+                                    {:IF}
+                                    IF("{ITEM2.highlight}"=="1"){
+                                    <div style="position:absolute;bottom:5px;left:5px;">
+                                        <span style="background:rgba(255,255,255,1);padding:4px;border-radius:15px;box-shadow:1px 1px 2px #666;color: rgba(255,165,0,1);display:block;font-size:14px;line-height:1rem;"> <i class="la la-star"></i> Highlight</span>
+                                    </div>
                                     {:IF}
                                 </div>
                                 <div class="job-listing-description">

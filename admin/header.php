@@ -204,7 +204,7 @@ if(isset($_SESSION['admin']['id'])){
                 <!-- End drawer navigation -->
 
                 <div class="drawer-footer">
-                    <p class="copyright"><a href="https://bylancer.com" target="_blank">Quickad By Bylancer</a> &copy;</p>
+                    <p class="copyright"><a href="https://app.bellefu.com" target="_blank">bellefu.com &copy;</p>
                     <p class="copyright">Version : <?php echo $config['version']; ?></p>
                 </div>
             </div>
@@ -232,18 +232,7 @@ if(isset($_SESSION['admin']['id'])){
                         <span class="navbar-page-title">Admin Panel</span>
                     </div>
                     <div class="collapse navbar-collapse" id="header-navbar-collapse">
-                        <ul id="main-menu" class="nav navbar-nav navbar-left">
-                            <li class="dropdown">
-                                <a href="#" data-toggle="dropdown">Pages <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="https://bylancer.com/products/demo/classified/documentation/index.html" target="_blank">Documentation</a></li>
-                                    <li><a href="https://codecanyon.net/item/facebook-style-php-ajax-chat-zechat/16491266" target="_blank">Purchase Zechat license</a></li>
-                                    <li><a href="https://codecanyon.net/item/wchat-fully-responsive-phpajax-chat/18047319" target="_blank">Purchase Wchat license</a></li>
-                                </ul>
-                            </li>
-                        </ul>
                         <!-- .navbar-left -->
-
                         <ul class="nav navbar-nav navbar-right navbar-toolbar hidden-sm hidden-xs">
 
                             <li>

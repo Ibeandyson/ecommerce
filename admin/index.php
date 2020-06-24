@@ -122,7 +122,7 @@ $totalearning = $quick_fetch['total_earning']." ".$config['currency_sign'];
                     </div>
                     <div class="card-block">
                         <?php
-                        $getItem = get_items('','',false,1,5);
+                        $getItem = admin_get_items('','',false,1,5);
                         foreach ($getItem as $ads) {
                             $ad_id          = $ads['id'];
                             $ad_title       = $ads['product_name'];
@@ -131,6 +131,7 @@ $totalearning = $quick_fetch['total_earning']." ".$config['currency_sign'];
                             $highlight      = $ads['highlight'];
                             $ad_category    = $ads['category'];
                             $ad_price       = $ads['price'];
+                            $ad_alt_price       = $ads['alt_price'];
                             $ad_location    = $ads['location'];
                             $ad_created_at  = $ads['created_at'];
                             $ad_pic         = $ads['picture'];

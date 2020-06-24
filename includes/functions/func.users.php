@@ -52,13 +52,17 @@ function get_client_ip() {
 
 
 function get_client_country_by_ip(){
- $ip = get_client_ip();  
- require_once  ROOTPATH . '/includes/database/geoip/autoload.php';
-    // Country DB
-    $reader = new \MaxMind\Db\Reader(ROOTPATH .'/includes/database/geoip/geo_country.mmdb');
-    $data = $reader->get($ip);
-    $country_code = @strtoupper(trim($data['country']['iso_code'])); 
-    return $country_code;
+    try{
+        $ip = get_client_ip();  
+        require_once  ROOTPATH . '/includes/database/geoip/autoload.php';
+        // Country DB
+        $reader = new \MaxMind\Db\Reader(ROOTPATH .'/includes/database/geoip/geo_country.mmdb');
+        $data = $reader->get($ip);
+        $country_code = @strtoupper(trim($data['country']['iso_code'])); 
+        return $country_code;
+    }catch(\Exception $e){
+        return 'NG';
+    }
 }
 
 function get_currency_code($country_code = 'us'){
