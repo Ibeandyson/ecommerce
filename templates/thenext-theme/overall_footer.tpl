@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-xl-5 col-lg-5 col-md-12">
                     <div class="footer-logo">
-                        <img src="{SITE_URL}storage/logo/{SITE_LOGO}" alt="Footer Logo">
+                     <h1 style="color: white; padding-bottom:10px">About</h1>
                     </div>
                     <p>{FOOTER_TEXT}</p>
                 </div>

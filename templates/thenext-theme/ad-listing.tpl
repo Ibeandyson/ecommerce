@@ -144,20 +144,29 @@
                 <div class="row listings-container compact-list-layout margin-top-10" style="padding:0 10px;">
                     {LOOP: ITEM}
                     <!-- I modify line add 'col-6 col-sm-6 col-md-4 col-xl-3'-->
-                    <div class='col-6 col-sm-6 col-md-4 col-xl-3 job-listing IF("{ITEM.highlight}"=="1"){ highlight {:IF}' style="padding:5px; border:0;text-align:center">
+                    <div class='col-6 col-sm-6 col-md-4 col-xl-3 job-listing' style="padding:5px; border:0;text-align:center">
                         <a href="{ITEM.link}">
                             <div class="job-listing-details">
                                 <div class="job-listing-company-logo" style="position:relative;">
                                     <img src="{SITE_URL}storage/products/{ITEM.picture}" alt="{ITEM.product_name}">
-                                    IF("{ITEM.featured}"=="1" || "{ITEM.urgent}"=="1"){
-                                    <span style="background:rgba(0,0,0,.25);border-radius:20px;padding:0px 7px;position:absolute;top:5px;left:5px;">
-                                        IF("{ITEM.featured}"=="1"){<i class="la la-star" style="color:green;"></i>{:IF}
-                                        IF("{ITEM.urgent}"=="1"){<i class="la la-star" style="color:orange;"></i>{:IF}
-                                    </span>
+                                    IF("{ITEM.urgent}"=="1"){
+                                    <div style="position:absolute;top:4px;left:4px;">
+                                        <span style="background:rgba(255,255,255,1);padding:0px 7px;border-radius:15px;color:#f00;display:block;font-size:12px;line-height:1.5rem;"><b>Urgent</b></span>
+                                    </div>
                                     {:IF}
-                                    <span style="background:rgba(0,0,0,.25);border-radius:20px;padding:0px 7px;position:absolute;top:5px;right:5px;">
-                                        <span class="la la-heart set-item-fav IF('{ITEM.favorite}'){ added {:IF}" data-item-id="{ITEM.id}" data-userid="{USER_ID}" data-action="setFavAd"></span>
-                                    </span>
+                                    IF("{ITEM.featured}"=="1"){
+                                    <div style="position:absolute;top:4px;right:4px;">
+                                        <span style="background:rgba(255,255,255,1);padding:0px 7px;border-radius:15px;color:rgb(118, 186, 27);display:block;font-size:12px;line-height:1.5rem;"><i class="la la-star"></i> Featured</span>
+                                    </div>
+                                    {:IF}
+                                    IF("{ITEM.highlight}"=="1"){
+                                    <div style="position:absolute;bottom:5px;left:5px;">
+                                        <span style="background:rgba(255,255,255,1);padding:4px;border-radius:15px;box-shadow:1px 1px 2px #666;color: rgba(255,165,0,1);display:block;font-size:14px;line-height:1rem;"> <i class="la la-star"></i> Highlight</span>
+                                    </div>
+                                    {:IF}
+                                    <div style="position:absolute;bottom:5px;right:5px;">
+                                        <span style="background:rgba(255,255,255,1);padding:4px;border-radius:15px;box-shadow:1px 1px 2px #666;display:block;font-size:14px;line-height:1rem;" class="la la-heart set-item-fav IF('{ITEM.favorite}'){ added {:IF}" data-item-id="{ITEM.id}" data-userid="{USER_ID}" data-action="setFavAd"></span>
+                                    </div>
                                 </div>
                                 <div class="job-listing-description">
                                     <h3 class="job-listing-title">{ITEM.product_name}</h3>

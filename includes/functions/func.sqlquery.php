@@ -1,110 +1,112 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Bylancer
  * Date: 4/1/2017
  * Time: 10:26 AM
  */
-function check_product_favorite($product_id){
+function check_product_favorite($product_id)
+{
 
     global $config;
 
-    if(checkloggedin()) {
-        $num_rows = ORM::for_table($config['db']['pre'].'favads')
+    if (checkloggedin()) {
+        $num_rows = ORM::for_table($config['db']['pre'] . 'favads')
             ->where(array(
                 'product_id' => $product_id,
                 'user_id' => $_SESSION['user']['id']
             ))
             ->count();
-        if($num_rows == 1)
+        if ($num_rows == 1)
             return true;
         else
             return false;
-
-    }else{
+    } else {
         return false;
     }
-
 }
 
-function check_valid_author($product_id){
+function check_valid_author($product_id)
+{
 
     global $config;
 
-    if(checkloggedin()) {
-        $num_rows = ORM::for_table($config['db']['pre'].'product')
+    if (checkloggedin()) {
+        $num_rows = ORM::for_table($config['db']['pre'] . 'product')
             ->where(array(
                 'id' => $product_id,
                 'user_id' => $_SESSION['user']['id']
             ))
             ->count();
-        if($num_rows == 1)
+        if ($num_rows == 1)
             return true;
         else
             return false;
-
-    }else{
+    } else {
         return false;
     }
 }
 
-function check_item_status($product_id){
+function check_item_status($product_id)
+{
 
     global $config;
-    $info = ORM::for_table($config['db']['pre'].'product')
+    $info = ORM::for_table($config['db']['pre'] . 'product')
         ->select('status')
-        ->where('id',$product_id)
+        ->where('id', $product_id)
         ->find_one();
 
     return $info->status;
 }
 
-function check_valid_resubmission($product_id){
+function check_valid_resubmission($product_id)
+{
 
     global $config;
 
-    if(checkloggedin()) {
-        $num_rows = ORM::for_table($config['db']['pre'].'product_resubmit')
+    if (checkloggedin()) {
+        $num_rows = ORM::for_table($config['db']['pre'] . 'product_resubmit')
             ->where(array(
                 'product_id' => $product_id,
                 'user_id' => $_SESSION['user']['id']
             ))
             ->count();
-        if($num_rows == 1)
+        if ($num_rows == 1)
             return false;
         else
             return true;
-
-    }else{
+    } else {
         return false;
     }
 }
 
-function get_html_pages(){
+function get_html_pages()
+{
 
     global $config;
     $htmlPages = array();
-    $result = ORM::for_table($config['db']['pre'].'pages')
-        ->where('translation_lang',$config['lang_code'])
+    $result = ORM::for_table($config['db']['pre'] . 'pages')
+        ->where('translation_lang', $config['lang_code'])
         ->find_many();
 
     foreach ($result as $info) {
         $htmlPages[$info['id']]['id'] = $info['id'];
         $htmlPages[$info['id']]['title'] = $info['title'];
 
-        $htmlPages[$info['id']]['link'] = $config['site_url'].'page/'.$info['slug'];
-
+        $htmlPages[$info['id']]['link'] = $config['site_url'] . 'page/' . $info['slug'];
     }
     return $htmlPages;
 }
 
-function get_advertise($slug){
+function get_advertise($slug)
+{
 
     global $config;
     $response = array();
 
-    $info = ORM::for_table($config['db']['pre'].'adsense')
-        ->where('slug',$slug)
+    $info = ORM::for_table($config['db']['pre'] . 'adsense')
+        ->where('slug', $slug)
         ->find_one();
 
     $status = $info['status'];
@@ -113,10 +115,10 @@ function get_advertise($slug){
     $phone_track_code = $info['phone_track_code'];
     $advertise_tpl = "";
 
-    if($status=='1'){
-        $advertise_tpl = '<div class="text-center visible-md visible-lg">'.$large_track_code.'</div>
-        <div class="text-center visible-sm">'.$tablet_track_code.'</div>
-        <div class="text-center visible-xs">'.$phone_track_code.'</div>';
+    if ($status == '1') {
+        $advertise_tpl = '<div class="text-center visible-md visible-lg">' . $large_track_code . '</div>
+        <div class="text-center visible-sm">' . $tablet_track_code . '</div>
+        <div class="text-center visible-xs">' . $phone_track_code . '</div>';
     }
     $response['tpl'] = $advertise_tpl;
     $response['status'] = $status;
@@ -125,61 +127,67 @@ function get_advertise($slug){
 
 /***********************************NEW*****************************/
 
-function get_countryName_by_code($code){
+function get_countryName_by_code($code)
+{
     global $config;
-    $info = ORM::for_table($config['db']['pre'].'countries')
+    $info = ORM::for_table($config['db']['pre'] . 'countries')
         ->select('asciiname')
-        ->where('code',$code)
+        ->where('code', $code)
         ->find_one();
     return $info['asciiname'];
 }
-function get_stateName_by_code($code){
+function get_stateName_by_code($code)
+{
     global $config;
-    $info = ORM::for_table($config['db']['pre'].'subadmin1')
+    $info = ORM::for_table($config['db']['pre'] . 'subadmin1')
         ->select('asciiname')
-        ->where('code',$code)
+        ->where('code', $code)
         ->find_one();
     return $info['asciiname'];
 }
-function get_district_by_code($code){
+function get_district_by_code($code)
+{
     global $config;
-    $info = ORM::for_table($config['db']['pre'].'subadmin2')
+    $info = ORM::for_table($config['db']['pre'] . 'subadmin2')
         ->select('asciiname')
-        ->where('code',$code)
+        ->where('code', $code)
         ->find_one();
     return $info['asciiname'];
 }
 
-function get_countryCurrecny_by_code($code){
+function get_countryCurrecny_by_code($code)
+{
     global $config;
-    $info = ORM::for_table($config['db']['pre'].'countries')
+    $info = ORM::for_table($config['db']['pre'] . 'countries')
         ->select('currency_code')
-        ->where('code',$code)
+        ->where('code', $code)
         ->find_one();
     return $info['currency_code'];
 }
 
-function get_currency_by_id($id){
+function get_currency_by_id($id)
+{
     global $config;
-    $info = ORM::for_table($config['db']['pre'].'currencies')
-        ->where('id',$id)
+    $info = ORM::for_table($config['db']['pre'] . 'currencies')
+        ->where('id', $id)
         ->find_one();
     return $info;
 }
 
-function get_currency_by_code($code){
+function get_currency_by_code($code)
+{
     global $config;
-    $info = ORM::for_table($config['db']['pre'].'currencies')
-        ->where('code',$code)
+    $info = ORM::for_table($config['db']['pre'] . 'currencies')
+        ->where('code', $code)
         ->find_one();
     return $info;
 }
 
-function price_format($number,$country_code)
+function price_format($number, $country_code)
 {
     global $config;
 
-    if($number == '0' or $number < 1)
+    if ($number == '0' or $number < 1)
         return $number;
 
     // Convert string to numeric
@@ -205,29 +213,25 @@ function price_format($number,$country_code)
     return $number;
 }
 
-function get_currency_list($selected="",$selected_text='selected'){
+function get_currency_list($selected = "", $selected_text = 'selected')
+{
 
     global $config;
     $currencies = array();
     $count = 0;
-    $result = ORM::for_table($config['db']['pre'].'currencies')
+    $result = ORM::for_table($config['db']['pre'] . 'currencies')
         ->order_by_asc('name')
         ->find_many();
-    foreach ($result as $info)
-    {
+    foreach ($result as $info) {
         $currencies[$count]['id'] = $info['id'];
         $currencies[$count]['code'] = $info['code'];
         $currencies[$count]['name'] = $info['name'];
         $currencies[$count]['html_entity'] = $info['html_entity'];
         $currencies[$count]['in_left'] = $info['in_left'];
-        if($selected!="")
-        {
-            if($selected==$info['id'] or $selected==$info['code'])
-            {
+        if ($selected != "") {
+            if ($selected == $info['id'] or $selected == $info['code']) {
                 $currencies[$count]['selected'] = $selected_text;
-            }
-            else
-            {
+            } else {
                 $currencies[$count]['selected'] = "";
             }
         }
@@ -237,30 +241,26 @@ function get_currency_list($selected="",$selected_text='selected'){
     return $currencies;
 }
 
-function get_timezone_list($selected="",$selected_text='selected'){
+function get_timezone_list($selected = "", $selected_text = 'selected')
+{
 
     global $config;
     $timezones = array();
     $count = 0;
-    $result = ORM::for_table($config['db']['pre'].'time_zones')
-    ->order_by_asc('time_zone_id')
-    ->find_many();
-    foreach ($result as $info)
-    {
+    $result = ORM::for_table($config['db']['pre'] . 'time_zones')
+        ->order_by_asc('time_zone_id')
+        ->find_many();
+    foreach ($result as $info) {
         $timezones[$count]['id'] = $info['id'];
         $timezones[$count]['country_code'] = $info['country_code'];
         $timezones[$count]['time_zone_id'] = $info['time_zone_id'];
         $timezones[$count]['gmt'] = $info['gmt'];
         $timezones[$count]['dst'] = $info['dst'];
         $timezones[$count]['raw'] = $info['raw'];
-        if($selected!="")
-        {
-            if($selected==$info['id'] or $selected==$info['time_zone_id'])
-            {
+        if ($selected != "") {
+            if ($selected == $info['id'] or $selected == $info['time_zone_id']) {
                 $timezones[$count]['selected'] = $selected_text;
-            }
-            else
-            {
+            } else {
                 $timezones[$count]['selected'] = "";
             }
         }
@@ -270,24 +270,24 @@ function get_timezone_list($selected="",$selected_text='selected'){
     return $timezones;
 }
 
-function get_language_list($selected="",$selected_text='selected',$active=false){
+function get_language_list($selected = "", $selected_text = 'selected', $active = false)
+{
 
     global $config;
     $language = array();
     $count = 0;
     $where = "";
-    if($active){
-        $result = ORM::for_table($config['db']['pre'].'languages')
-            ->where('active',1)
+    if ($active) {
+        $result = ORM::for_table($config['db']['pre'] . 'languages')
+            ->where('active', 1)
             ->order_by_asc('name')
             ->find_many();
-    }else{
-        $result = ORM::for_table($config['db']['pre'].'languages')
+    } else {
+        $result = ORM::for_table($config['db']['pre'] . 'languages')
             ->order_by_asc('id')
             ->find_many();
     }
-    foreach ($result as $info)
-    {
+    foreach ($result as $info) {
         $language[$count]['id'] = $info['id'];
         $language[$count]['code'] = $info['code'];
         $language[$count]['direction'] = $info['direction'];
@@ -295,14 +295,10 @@ function get_language_list($selected="",$selected_text='selected',$active=false)
         $language[$count]['file_name'] = $info['file_name'];
         $language[$count]['active'] = $info['active'];
         $language[$count]['default'] = $info['default'];
-        if($selected!="")
-        {
-            if($selected==$info['id'] or $selected==$info['code'])
-            {
+        if ($selected != "") {
+            if ($selected == $info['id'] or $selected == $info['code']) {
                 $language[$count]['selected'] = $selected_text;
-            }
-            else
-            {
+            } else {
                 $language[$count]['selected'] = "";
             }
         }
@@ -312,150 +308,163 @@ function get_language_list($selected="",$selected_text='selected',$active=false)
     return $language;
 }
 
-function get_language_by_id($id){
+function get_language_by_id($id)
+{
     global $config;
-    $info = ORM::for_table($config['db']['pre'].'languages')
-        ->where('id',$id)
+    $info = ORM::for_table($config['db']['pre'] . 'languages')
+        ->where('id', $id)
         ->find_one();
 
     return $info;
 }
-function get_language_by_code($code,$active=false){
+function get_language_by_code($code, $active = false)
+{
 
     global $config;
     $where = "";
 
-    if($active){
-        $info = ORM::for_table($config['db']['pre'].'languages')
+    if ($active) {
+        $info = ORM::for_table($config['db']['pre'] . 'languages')
             ->where(array(
                 'active' => 1,
                 'code' => $code
             ))
             ->find_one();
-    }else{
-        $info = ORM::for_table($config['db']['pre'].'languages')
-            ->where('code',$code)
+    } else {
+        $info = ORM::for_table($config['db']['pre'] . 'languages')
+            ->where('code', $code)
             ->find_one();
     }
 
-    if($info)
+    if ($info)
         return $info;
     else
         return false;
 }
 
-function get_lang_code_by_filename($lang){
+function get_lang_code_by_filename($lang)
+{
     global $config;
-    $info = ORM::for_table($config['db']['pre'].'languages')
+    $info = ORM::for_table($config['db']['pre'] . 'languages')
         ->select('code')
-        ->where('file_name',$lang)
+        ->where('file_name', $lang)
         ->find_one();
 
     return $info['code'];
 }
 
-function get_current_lang_direction(){
+function get_current_lang_direction()
+{
     global $config;
-    $info = ORM::for_table($config['db']['pre'].'languages')
+    $info = ORM::for_table($config['db']['pre'] . 'languages')
         ->select('direction')
-        ->where('file_name',$config['lang'])
+        ->where('file_name', $config['lang'])
         ->find_one();
 
     return $info['direction'];
 }
 /***********************************NEW*****************************/
 
-function get_countryID_by_state_id($code){
-    return substr($code,0,2);
+function get_countryID_by_state_id($code)
+{
+    return substr($code, 0, 2);
 }
 
-function get_countryName_by_sortname($sortname){
+function get_countryName_by_sortname($sortname)
+{
     global $config;
-    $info = ORM::for_table($config['db']['pre'].'countries')
+    $info = ORM::for_table($config['db']['pre'] . 'countries')
         ->select('asciiname')
-        ->where('code',$sortname)
+        ->where('code', $sortname)
         ->find_one();
 
     return $info['asciiname'];
 }
 
-function get_countryName_by_id($id){
+function get_countryName_by_id($id)
+{
     global $config;
-    $info = ORM::for_table($config['db']['pre'].'countries')
+    $info = ORM::for_table($config['db']['pre'] . 'countries')
         ->select('asciiname')
-        ->where('code',$id)
+        ->where('code', $id)
         ->find_one();
     return $info['asciiname'];
 }
 
-function get_countryData_by_id($id){
+function get_countryData_by_id($id)
+{
     global $config;
-    $info = ORM::for_table($config['db']['pre'].'countries')
-        ->where('code',$id)
+    $info = ORM::for_table($config['db']['pre'] . 'countries')
+        ->where('code', $id)
         ->find_one();
     return $info;
 }
 
-function get_stateName_by_id($id){
+function get_stateName_by_id($id)
+{
     global $config;
-    $info = ORM::for_table($config['db']['pre'].'subadmin1')
+    $info = ORM::for_table($config['db']['pre'] . 'subadmin1')
         ->select('asciiname')
-        ->where('code',$id)
+        ->where('code', $id)
         ->find_one();
     return $info['asciiname'];
 }
 
-function get_cityName_by_id($id){
+function get_cityName_by_id($id)
+{
     global $config;
-    $info = ORM::for_table($config['db']['pre'].'cities')
+    $info = ORM::for_table($config['db']['pre'] . 'cities')
         ->select('asciiname')
-        ->where('id',$id)
+        ->where('id', $id)
         ->find_one();
     return $info['asciiname'];
 }
 
-function get_cityDetail_by_id($cityid){
+function get_cityDetail_by_id($cityid)
+{
     global $config;
-    $info = ORM::for_table($config['db']['pre'].'cities')
-        ->where('id',$cityid)
+    $info = ORM::for_table($config['db']['pre'] . 'cities')
+        ->where('id', $cityid)
         ->find_one();
     return $info;
 }
 
-function check_country_activated($country_code){
+function check_country_activated($country_code)
+{
     global $config;
-    $num_rows = ORM::for_table($config['db']['pre'].'countries')
+    $num_rows = ORM::for_table($config['db']['pre'] . 'countries')
         ->where(array(
             'code' => $country_code,
             'active' => 1
         ))
         ->count();
 
-    if($num_rows > 0){
+    if ($num_rows > 0) {
         return true;
-    }else{
+    } else {
         return false;
     }
 }
 
-function get_lat_long_of_country($country_code){
+function get_lat_long_of_country($country_code)
+{
     global $config;
-    if(get_option("country_type") == "multi"){
+    if (get_option("country_type") == "multi") {
         $country = get_countryData_by_id($country_code);
         $country_name = $country['asciiname'];
         $country_lat = $country['latitude'];
         $country_long = $country['longitude'];
 
-        if($country_lat != NULL && $country_long != NULL){
+        if ($country_lat != NULL && $country_long != NULL) {
             $latLng = array();
             $latLng["lat"] = $country_lat;
             $latLng["lng"] = $country_long;
             return $latLng;
-        }else{
+        } else {
             $google_map_key = get_option("gmap_api_key");
 
-            $curl_handle=curl_init();
-            curl_setopt($curl_handle, CURLOPT_URL,'https://maps.googleapis.com/maps/api/geocode/json?address='.$country_name.'&key='.$google_map_key.'&sensor=false');
+            $curl_handle = curl_init();
+            curl_setopt($curl_handle, CURLOPT_URL, 'https://maps.googleapis.com/maps/api/geocode/json?address=' . $country_name . '&key=' . $google_map_key . '&sensor=false');
             curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 2);
             curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($curl_handle, CURLOPT_USERAGENT, 'app');
@@ -464,75 +473,65 @@ function get_lat_long_of_country($country_code){
 
             $output_deals = json_decode($geocode_stats);
 
-            if(isset($output_deals->results[0])){
+            if (isset($output_deals->results[0])) {
                 $latLng = $output_deals->results[0]->geometry->location;
                 $lat = $latLng->lat;
                 $lng = $latLng->lng;
 
                 $pdo = ORM::get_db();
-                $query = "UPDATE ".$config['db']['pre']."countries SET latitude = '".validate_input($lat)."', longitude = '".validate_input($lng)."' WHERE code='" . $country_code . "' LIMIT 1";
+                $query = "UPDATE " . $config['db']['pre'] . "countries SET latitude = '" . validate_input($lat) . "', longitude = '" . validate_input($lng) . "' WHERE code='" . $country_code . "' LIMIT 1";
                 $pdo->query($query);
 
                 return $array = (array) $latLng;
-            }else{
+            } else {
                 $latLng = array();
                 $latLng["lat"] = get_option("home_map_latitude");
                 $latLng["lng"] = get_option("home_map_longitude");
                 return $latLng;
             }
         }
-
-    }
-    else{
+    } else {
         return false;
     }
 }
 
-function get_country_list($selected="",$selected_text='selected',$installed=1){
+function get_country_list($selected = "", $selected_text = 'selected', $installed = 1)
+{
     global $config;
     $countries = array();
     $count = 0;
-    if($installed){
-        $result = ORM::for_table($config['db']['pre'].'countries')
+    if ($installed) {
+        $result = ORM::for_table($config['db']['pre'] . 'countries')
             ->select_many('id', 'code', 'name', 'asciiname', 'languages')
             ->where('active', 1)
             ->order_by_asc('asciiname')
             ->find_many();
-    }else{
-        $result = ORM::for_table($config['db']['pre'].'countries')
+    } else {
+        $result = ORM::for_table($config['db']['pre'] . 'countries')
             ->select_many('id', 'code', 'name', 'asciiname', 'languages')
             ->order_by_asc('asciiname')
             ->find_many();
     }
-    foreach ($result as $info)
-    {
+    foreach ($result as $info) {
         $countries[$count]['id'] = $info['id'];
         $countries[$count]['code'] = $info['code'];
         $countries[$count]['lowercase_code'] = strtolower($info['code']);
         $countries[$count]['name'] = $info['name'];
         $countries[$count]['asciiname'] = $info['asciiname'];
         $countries[$count]['lang'] = getLangFromCountry($info['languages']);
-        if($selected!="")
-        {
-            if(is_array($selected))
-            {
-                foreach($selected as $select)
-                {
+        if ($selected != "") {
+            if (is_array($selected)) {
+                foreach ($selected as $select) {
 
-                    $select = strtoupper(str_replace('"','',$select));
-                    if($select == $info['id'])
-                    {
+                    $select = strtoupper(str_replace('"', '', $select));
+                    if ($select == $info['id']) {
                         $countries[$count]['selected'] = $selected_text;
                     }
                 }
-            }
-            else{
-                if($selected==$info['id'] or $selected==$info['code'] or $selected==$info['asciiname'])
-                {
+            } else {
+                if ($selected == $info['id'] or $selected == $info['code'] or $selected == $info['asciiname']) {
                     $countries[$count]['selected'] = $selected_text;
-                }
-                else
-                {
+                } else {
                     $countries[$count]['selected'] = "";
                 }
             }
@@ -543,7 +542,8 @@ function get_country_list($selected="",$selected_text='selected',$installed=1){
     return $countries;
 }
 
-function startsWith($haystack, $needles){
+function startsWith($haystack, $needles)
+{
     foreach ((array) $needles as $needle) {
         if ($needle !== '' && substr($haystack, 0, strlen($needle)) === (string) $needle) {
             return true;
@@ -553,7 +553,8 @@ function startsWith($haystack, $needles){
     return false;
 }
 
-function getLangFromCountry($languages){
+function getLangFromCountry($languages)
+{
     global $config;
     // Get language code
     $langCode = $hrefLang = '';
@@ -597,69 +598,71 @@ function getLangFromCountry($languages){
     return $lang;
 }
 
-function get_customField_exist_id($id){
+function get_customField_exist_id($id)
+{
     global $config;
-    $num_rows = ORM::for_table($config['db']['pre'].'custom_fields')
-        ->where('custom_id' , $id)
+    $num_rows = ORM::for_table($config['db']['pre'] . 'custom_fields')
+        ->where('custom_id', $id)
         ->count();
     return $num_rows;
 }
 
-function get_customField_title_by_id($id){
+function get_customField_title_by_id($id)
+{
     global $config;
     $custom_fields_title = "";
 
-    $info = ORM::for_table($config['db']['pre'].'custom_fields')
+    $info = ORM::for_table($config['db']['pre'] . 'custom_fields')
         ->select_many('custom_title', 'translation_lang', 'translation_name')
-        ->where('custom_id' , $id)
+        ->where('custom_id', $id)
         ->find_one();
 
-    if($config['lang_code'] != 'en' && $config['userlangsel'] == '1'){
-        if($info['translation_lang'] != '' && $info['translation_name'] != ''){
-            $translation_lang = explode(',',$info['translation_lang']);
-            $translation_name = explode(',',$info['translation_name']);
+    if ($config['lang_code'] != 'en' && $config['userlangsel'] == '1') {
+        if ($info['translation_lang'] != '' && $info['translation_name'] != '') {
+            $translation_lang = explode(',', $info['translation_lang']);
+            $translation_name = explode(',', $info['translation_name']);
 
             $count = 0;
-            foreach($translation_lang as $key=>$value)
-            {
-                if($value != '')
-                {
+            foreach ($translation_lang as $key => $value) {
+                if ($value != '') {
                     $translation[$translation_lang[$key]] = $translation_name[$key];
 
                     $count++;
                 }
             }
 
-            $trans_name = (isset($translation[$config['lang_code']]))? $translation[$config['lang_code']] : '';
+            $trans_name = (isset($translation[$config['lang_code']])) ? $translation[$config['lang_code']] : '';
 
-            if($trans_name != ''){
+            if ($trans_name != '') {
                 $custom_fields_title = stripslashes($trans_name);
-            }else{
+            } else {
                 $custom_fields_title = stripslashes($info['custom_title']);
             }
         }
-    }else{
+    } else {
         $custom_fields_title = stripslashes($info['custom_title']);
     }
     return $custom_fields_title;
 }
 
-function get_customOption_by_id($option_id){
+function get_customOption_by_id($option_id)
+{
     global $config;
 
-    $info = ORM::for_table($config['db']['pre'].'custom_options')
+    $info = ORM::for_table($config['db']['pre'] . 'custom_options')
         ->select('title')
-        ->where('option_id' , $option_id)
+        ->where('option_id', $option_id)
         ->find_one();
 
-    if($config['lang_code'] != 'en' && $config['userlangsel'] == '1'){
-        $customoption = get_category_translation("custom_option",$option_id);
+    if ($config['lang_code'] != 'en' && $config['userlangsel'] == '1') {
+        $customoption = get_category_translation("custom_option", $option_id);
         $info['title'] = $customoption['title'];
     }
     return $info['title'];
 }
 
-function add_post_customField_data($category_id,$subcategory_id,$product_id){
+function add_post_customField_data($category_id, $subcategory_id, $product_id)
+{
 
     global $config;
     $custom_fields = get_customFields_by_catid($category_id, $subcategory_id);
@@ -668,31 +671,30 @@ function add_post_customField_data($category_id,$subcategory_id,$product_id){
         if ($value['userent']) {
             $field_id = $value['id'];
             $field_type = $value['type'];
-            if($field_type == "textarea")
-                $field_data = validate_input($value['default'],true);
+            if ($field_type == "textarea")
+                $field_data = validate_input($value['default'], true);
             else
                 $field_data = validate_input($value['default']);
 
-            if(isset($product_id)){
+            if (isset($product_id)) {
                 $exist = 0;
                 //Checking Data exist
-                $exist = ORM::for_table($config['db']['pre'].'custom_data')
+                $exist = ORM::for_table($config['db']['pre'] . 'custom_data')
                     ->where(array(
                         'product_id' => $product_id,
                         'field_id' => $field_id
                     ))
                     ->count();
 
-                if($exist > 0){
+                if ($exist > 0) {
                     //Update here
                     $pdo = ORM::get_db();
-                    $query = "UPDATE `".$config['db']['pre']."custom_data` set field_type = '".$field_type."', field_data = '".$field_data."' where product_id = '".$product_id."' and field_id = '".$field_id."' LIMIT 1";
+                    $query = "UPDATE `" . $config['db']['pre'] . "custom_data` set field_type = '" . $field_type . "', field_data = '" . $field_data . "' where product_id = '" . $product_id . "' and field_id = '" . $field_id . "' LIMIT 1";
                     $pdo->query($query);
-
-                }else{
+                } else {
                     //Insert here
-                    if($field_data != "") {
-                        $field_insert = ORM::for_table($config['db']['pre'].'custom_data')->create();
+                    if ($field_data != "") {
+                        $field_insert = ORM::for_table($config['db']['pre'] . 'custom_data')->create();
                         $field_insert->product_id = $product_id;
                         $field_insert->field_id = $field_id;
                         $field_insert->field_type = $field_type;
@@ -705,21 +707,21 @@ function add_post_customField_data($category_id,$subcategory_id,$product_id){
     }
 }
 
-function get_customFields_by_catid($maincatid=null,$subcatid=null,$require=true,$fields=array(),$data=array()){
+function get_customFields_by_catid($maincatid = null, $subcatid = null, $require = true, $fields = array(), $data = array())
+{
 
     global $config;
     $custom_fields = array();
     $pdo = ORM::get_db();
-    if(isset($subcatid) && $subcatid != "" && is_numeric($subcatid)){
-        $query = "SELECT * FROM `".$config['db']['pre']."custom_fields` WHERE find_in_set($subcatid,custom_subcatid) <> 0 order by custom_order ASC";
-    }elseif(isset($maincatid) && $maincatid != "" && is_numeric($maincatid)){
-        $query = "SELECT * FROM `".$config['db']['pre']."custom_fields` WHERE find_in_set($maincatid,custom_catid) <> 0 order by custom_order ASC";
-    }else{
-        $query = "SELECT * FROM `".$config['db']['pre']."custom_fields` WHERE custom_anycat = 'any' order by custom_order ASC";
+    if (isset($subcatid) && $subcatid != "" && is_numeric($subcatid)) {
+        $query = "SELECT * FROM `" . $config['db']['pre'] . "custom_fields` WHERE find_in_set($subcatid,custom_subcatid) <> 0 order by custom_order ASC";
+    } elseif (isset($maincatid) && $maincatid != "" && is_numeric($maincatid)) {
+        $query = "SELECT * FROM `" . $config['db']['pre'] . "custom_fields` WHERE find_in_set($maincatid,custom_catid) <> 0 order by custom_order ASC";
+    } else {
+        $query = "SELECT * FROM `" . $config['db']['pre'] . "custom_fields` WHERE custom_anycat = 'any' order by custom_order ASC";
     }
     $result = $pdo->query($query);
-    foreach ($result as $info)
-    {
+    foreach ($result as $info) {
         $custom_fields[$info['custom_id']]['id'] = $info['custom_id'];
         $custom_fields[$info['custom_id']]['type'] = $info['custom_type'];
         $custom_fields[$info['custom_id']]['name'] = $info['custom_name'];
@@ -728,242 +730,198 @@ function get_customFields_by_catid($maincatid=null,$subcatid=null,$require=true,
 
 
 
-        if($config['lang_code'] != 'en' && $config['userlangsel'] == '1'){
-            if($info['translation_lang'] != '' && $info['translation_name'] != ''){
-                $translation_lang = explode(',',$info['translation_lang']);
-                $translation_name = explode(',',$info['translation_name']);
+        if ($config['lang_code'] != 'en' && $config['userlangsel'] == '1') {
+            if ($info['translation_lang'] != '' && $info['translation_name'] != '') {
+                $translation_lang = explode(',', $info['translation_lang']);
+                $translation_name = explode(',', $info['translation_name']);
 
                 $count = 0;
-                foreach($translation_lang as $key=>$value)
-                {
-                    if($value != '')
-                    {
+                foreach ($translation_lang as $key => $value) {
+                    if ($value != '') {
                         $translation[$translation_lang[$key]] = $translation_name[$key];
 
                         $count++;
                     }
                 }
 
-                $trans_name = (isset($translation[$config['lang_code']]))? $translation[$config['lang_code']] : '';
+                $trans_name = (isset($translation[$config['lang_code']])) ? $translation[$config['lang_code']] : '';
 
-                if($trans_name != ''){
+                if ($trans_name != '') {
                     $custom_fields[$info['custom_id']]['title'] = stripslashes($trans_name);
-                }else{
+                } else {
                     $custom_fields[$info['custom_id']]['title'] = stripslashes($info['custom_title']);
                 }
             }
         }
 
         $required = "";
-        if($require){
-            if($info['custom_required'] == 1){
+        if ($require) {
+            if ($info['custom_required'] == 1) {
                 $required = "required";
                 $custom_fields[$info['custom_id']]['required'] = "required";
-            }
-            else{
+            } else {
                 $custom_fields[$info['custom_id']]['required'] = "";
             }
         }
 
-        if(isset($_REQUEST['custom'][$info['custom_id']]))
-        {
-            if($custom_fields[$info['custom_id']]['type'] == "checkboxes"){
-                $checkbox1=$_REQUEST['custom'][$info['custom_id']];
-                if(is_array($checkbox1)){
-                    $chk="";
+        if (isset($_REQUEST['custom'][$info['custom_id']])) {
+            if ($custom_fields[$info['custom_id']]['type'] == "checkboxes") {
+                $checkbox1 = $_REQUEST['custom'][$info['custom_id']];
+                if (is_array($checkbox1)) {
+                    $chk = "";
                     $chkCount = 0;
-                    foreach($checkbox1 as $chk1)
-                    {
-                        if($chkCount == 0)
+                    foreach ($checkbox1 as $chk1) {
+                        if ($chkCount == 0)
                             $chk .= $chk1;
                         else
-                            $chk .= ",".$chk1;
+                            $chk .= "," . $chk1;
 
                         $chkCount++;
                     }
                     $custom_fields[$info['custom_id']]['default'] = $chk;
-                }
-                else{
+                } else {
                     $custom_fields[$info['custom_id']]['default'] = $_REQUEST['custom'][$info['custom_id']];
                 }
-
-            }
-            else{
+            } else {
                 //$custom_fields[$info['custom_id']]['default'] = substr(strip_tags($_REQUEST['custom'][$info['custom_id']]),0,$info['custom_max']);
                 $custom_fields[$info['custom_id']]['default'] = $_REQUEST['custom'][$info['custom_id']];
             }
 
             $custom_fields[$info['custom_id']]['userent'] = 1;
-        }
-        else
-        {
+        } else {
             $custom_fields[$info['custom_id']]['default'] = $info['custom_default'];
             $custom_fields[$info['custom_id']]['userent'] = 0;
         }
 
-        foreach($fields as $key=>$value)
-        {
-            if($value != '')
-            {
-                if($value == $info['custom_id']){
+        foreach ($fields as $key => $value) {
+            if ($value != '') {
+                if ($value == $info['custom_id']) {
                     $custom_fields[$info['custom_id']]['default'] = $data[$key];
                     break;
                 }
-
             }
         }
 
         //Text-field
-        if($info['custom_type'] == 'text-field'){
-            $textbox = '<input name="custom['.$info['custom_id'].']" id="custom['.$info['custom_id'].']" class="form-control with-border"  type="text" value="'.$custom_fields[$info['custom_id']]['default'].'" '.$required.' placeholder="'.$custom_fields[$info['custom_id']]['title'].'"/>';
+        if ($info['custom_type'] == 'text-field') {
+            $textbox = '<input name="custom[' . $info['custom_id'] . ']" id="custom[' . $info['custom_id'] . ']" class="form-control with-border"  type="text" value="' . $custom_fields[$info['custom_id']]['default'] . '" ' . $required . ' placeholder="' . $custom_fields[$info['custom_id']]['title'] . '"/>';
             $custom_fields[$info['custom_id']]['textbox'] = $textbox;
-        }
-        else{
+        } else {
             $custom_fields[$info['custom_id']]['textbox'] = '';
         }
 
         //Textarea
-        if($info['custom_type'] == 'textarea'){
-            $textarea= '<textarea class="materialize-textarea form-control with-border" name="custom['.$info['custom_id'].']" id="custom['.$info['custom_id'].']" '.$required.' placeholder="'.$custom_fields[$info['custom_id']]['title'].'">'.$custom_fields[$info['custom_id']]['default'].'</textarea><p class="help-block">Html tags are allow.</p>';
+        if ($info['custom_type'] == 'textarea') {
+            $textarea = '<textarea class="materialize-textarea form-control with-border" name="custom[' . $info['custom_id'] . ']" id="custom[' . $info['custom_id'] . ']" ' . $required . ' placeholder="' . $custom_fields[$info['custom_id']]['title'] . '">' . $custom_fields[$info['custom_id']]['default'] . '</textarea><p class="help-block">Html tags are allow.</p>';
             $custom_fields[$info['custom_id']]['textarea'] = $textarea;
-        }
-        else{
+        } else {
             $custom_fields[$info['custom_id']]['textarea'] = '';
         }
 
         //SelectList
-        if($info['custom_type'] == 'drop-down')
-        {
-            $options = explode(',',stripslashes($info['custom_options']));
+        if ($info['custom_type'] == 'drop-down') {
+            $options = explode(',', stripslashes($info['custom_options']));
 
             //$selectbox = '<select class="meterialselect" name="custom['.$info['custom_id'].']" '.$required.'><option value="" selected>'.$info['custom_title'].'</option>';
             $selectbox = '';
-            foreach($options as $key3=>$value3)
-            {
+            foreach ($options as $key3 => $value3) {
                 $option_title = get_customOption_by_id($value3);
-                if($value3 == $custom_fields[$info['custom_id']]['default'])
-                {
-                    $selectbox.= '<option value="'.$value3.'" selected>'.$option_title.'</option>';
-                }
-                else
-                {
-                    $selectbox.= '<option value="'.$value3.'">'.$option_title.'</option>';
+                if ($value3 == $custom_fields[$info['custom_id']]['default']) {
+                    $selectbox .= '<option value="' . $value3 . '" selected>' . $option_title . '</option>';
+                } else {
+                    $selectbox .= '<option value="' . $value3 . '">' . $option_title . '</option>';
                 }
             }
             //$selectbox.= '</select>';
 
             $custom_fields[$info['custom_id']]['selectbox'] = $selectbox;
-        }
-        else
-        {
+        } else {
             $custom_fields[$info['custom_id']]['selectbox'] = '';
         }
 
         //RadioButton
-        if($info['custom_type'] == 'radio-buttons')
-        {
-            $options = explode(',',stripslashes($info['custom_options']));
+        if ($info['custom_type'] == 'radio-buttons') {
+            $options = explode(',', stripslashes($info['custom_options']));
             $radiobtn = "";
             $i = 0;
-            foreach($options as $key3=>$value3)
-            {
+            foreach ($options as $key3 => $value3) {
                 $option_title = get_customOption_by_id($value3);
-                if($config['tpl_name'] == 'modern-theme'){
+                if ($config['tpl_name'] == 'modern-theme') {
 
-                    if($value3 == $custom_fields[$info['custom_id']]['default'])
-                    {
-                        $radiobtn .= '<div class="checkbox"><label><input type="radio"  name="custom['.$info['custom_id'].']" value="'.$value3.'" checked> '.$option_title.' </div>';
+                    if ($value3 == $custom_fields[$info['custom_id']]['default']) {
+                        $radiobtn .= '<div class="checkbox"><label><input type="radio"  name="custom[' . $info['custom_id'] . ']" value="' . $value3 . '" checked> ' . $option_title . ' </div>';
+                    } else {
+                        $radiobtn .= '<div class="checkbox"><label><input type="radio"  name="custom[' . $info['custom_id'] . ']" value="' . $value3 . '"> ' . $option_title . ' </div>';
                     }
-                    else
-                    {
-                        $radiobtn .= '<div class="checkbox"><label><input type="radio"  name="custom['.$info['custom_id'].']" value="'.$value3.'"> '.$option_title.' </div>';
-                    }
+                } else if ($config['tpl_name'] == 'thenext-theme') {
 
-                }
-                else if($config['tpl_name'] == 'thenext-theme'){
-
-                    if($value3 == $custom_fields[$info['custom_id']]['default'])
-                    {
-                        $radiobtn .= '<div class="radio radio-primary radio-inline"><input class="with-gap" type="radio" name="custom['.$info['custom_id'].']" id="'.$value3.$i.'" value="'.$value3.'" checked />';
-                        $radiobtn .= '<label for="'.$value3.$i.'"><span class="radio-label"></span>'.$option_title.'</label></div><br>';
+                    if ($value3 == $custom_fields[$info['custom_id']]['default']) {
+                        $radiobtn .= '<div class="radio radio-primary radio-inline"><input class="with-gap" type="radio" name="custom[' . $info['custom_id'] . ']" id="' . $value3 . $i . '" value="' . $value3 . '" checked />';
+                        $radiobtn .= '<label for="' . $value3 . $i . '"><span class="radio-label"></span>' . $option_title . '</label></div><br>';
+                    } else {
+                        $radiobtn .= '<div class="radio radio-primary radio-inline"><input class="with-gap" type="radio" name="custom[' . $info['custom_id'] . ']" id="' . $value3 . $i . '" value="' . $value3 . '" />';
+                        $radiobtn .= '<label for="' . $value3 . $i . '"><span class="radio-label"></span>' . $option_title . '</label></div><br>';
                     }
-                    else
-                    {
-                        $radiobtn .= '<div class="radio radio-primary radio-inline"><input class="with-gap" type="radio" name="custom['.$info['custom_id'].']" id="'.$value3.$i.'" value="'.$value3.'" />';
-                        $radiobtn .= '<label for="'.$value3.$i.'"><span class="radio-label"></span>'.$option_title.'</label></div><br>';
-                    }
-
-                }
-                else{
-                    if($value3 == $custom_fields[$info['custom_id']]['default'])
-                    {
-                        $radiobtn .= '<div class="radio radio-primary radio-inline"><input class="with-gap" type="radio" name="custom['.$info['custom_id'].']" id="'.$value3.$i.'" value="'.$value3.'" checked />';
-                        $radiobtn .= '<label for="'.$value3.$i.'">'.$option_title.'</label></div>';
-                    }
-                    else
-                    {
-                        $radiobtn .= '<div class="radio radio-primary radio-inline"><input class="with-gap" type="radio" name="custom['.$info['custom_id'].']" id="'.$value3.$i.'" value="'.$value3.'" />';
-                        $radiobtn .= '<label for="'.$value3.$i.'">'.$option_title.'</label></div>';
+                } else {
+                    if ($value3 == $custom_fields[$info['custom_id']]['default']) {
+                        $radiobtn .= '<div class="radio radio-primary radio-inline"><input class="with-gap" type="radio" name="custom[' . $info['custom_id'] . ']" id="' . $value3 . $i . '" value="' . $value3 . '" checked />';
+                        $radiobtn .= '<label for="' . $value3 . $i . '">' . $option_title . '</label></div>';
+                    } else {
+                        $radiobtn .= '<div class="radio radio-primary radio-inline"><input class="with-gap" type="radio" name="custom[' . $info['custom_id'] . ']" id="' . $value3 . $i . '" value="' . $value3 . '" />';
+                        $radiobtn .= '<label for="' . $value3 . $i . '">' . $option_title . '</label></div>';
                     }
                 }
 
                 $i++;
             }
             $custom_fields[$info['custom_id']]['radio'] = $radiobtn;
-        }
-        else
-        {
+        } else {
             $custom_fields[$info['custom_id']]['radio'] = '';
         }
 
         //Checkbox
-        if($info['custom_type'] == 'checkboxes')
-        {
-            $options = explode(',',stripslashes($info['custom_options']));
+        if ($info['custom_type'] == 'checkboxes') {
+            $options = explode(',', stripslashes($info['custom_options']));
             $Checkbox = "";
             $CheckboxBootstrap = "";
             $modernThemeCheckbox = '';
             $thenextThemeCheckbox = '';
             $j = 0;
             $selected = "";
-            foreach($options as $key4=>$value4)
-            {
+            foreach ($options as $key4 => $value4) {
                 //print_r($_REQUEST['custom'][$info['custom_id']]);
                 $default_checkbox = $custom_fields[$info['custom_id']]['default'];
-                if(is_array($default_checkbox)){
+                if (is_array($default_checkbox)) {
                     $checked = $custom_fields[$info['custom_id']]['default'];
-                }else{
-                    $checked = explode(',',$custom_fields[$info['custom_id']]['default']);
+                } else {
+                    $checked = explode(',', $custom_fields[$info['custom_id']]['default']);
                 }
 
-                foreach ($checked as $val)
-                {
-                    if($value4 == $val)
-                    {
+                foreach ($checked as $val) {
+                    if ($value4 == $val) {
                         $selected = "checked";
                         break;
-                    }
-                    else{
+                    } else {
                         $selected = "";
                     }
                 }
 
                 $option_title = get_customOption_by_id($value4);
-                $Checkbox .= '<div class="col-md-4 col-sm-4"><input class="with-gap" type="checkbox" name="custom['.$info['custom_id'].'][]" id="'.$value4.$j.'" value="'.$value4.'" '.$selected.' />';
-                $Checkbox .= '<label for="'.$value4.$j.'">'.$option_title.'</label></div>';
+                $Checkbox .= '<div class="col-md-4 col-sm-4"><input class="with-gap" type="checkbox" name="custom[' . $info['custom_id'] . '][]" id="' . $value4 . $j . '" value="' . $value4 . '" ' . $selected . ' />';
+                $Checkbox .= '<label for="' . $value4 . $j . '">' . $option_title . '</label></div>';
 
                 //$CheckboxBootstrap .= '<label for="'.$value4.$j.'" class="'.$selected.'">'.$value4.'<input class="with-gap" type="checkbox" name="custom['.$info['custom_id'].'][]" id="'.$value4.$j.'" value="'.$value4.'" '.$selected.' /></label>';
 
                 $CheckboxBootstrap .= '
                 <div class="checkbox checkbox-inline checkbox-primary">
-                    <input type="checkbox" name="custom['.$info['custom_id'].'][]" id="'.$value4.$j.'" value="'.$value4.'" '.$selected.' />
-                    <label for="'.$value4.$j.'" >'.$option_title.'</label>
+                    <input type="checkbox" name="custom[' . $info['custom_id'] . '][]" id="' . $value4 . $j . '" value="' . $value4 . '" ' . $selected . ' />
+                    <label for="' . $value4 . $j . '" >' . $option_title . '</label>
                 </div>';
 
-                $modernThemeCheckbox .= '<div class="checkbox"><label><input type="checkbox" name="custom['.$info['custom_id'].'][]" value="'.$value4.'" '.$selected.'> '.$option_title.' </label></div>';
+                $modernThemeCheckbox .= '<div class="checkbox"><label><input type="checkbox" name="custom[' . $info['custom_id'] . '][]" value="' . $value4 . '" ' . $selected . '> ' . $option_title . ' </label></div>';
 
-                $thenextThemeCheckbox .= '<div class="checkbox"><input type="checkbox" name="custom['.$info['custom_id'].'][]" id="'.$value4.$j.'" value="'.$value4.'" '.$selected.' />';
-                $thenextThemeCheckbox .= '<label for="'.$value4.$j.'"><span class="checkbox-icon"></span>'.$option_title.'</label></div><br>';
+                $thenextThemeCheckbox .= '<div class="checkbox"><input type="checkbox" name="custom[' . $info['custom_id'] . '][]" id="' . $value4 . $j . '" value="' . $value4 . '" ' . $selected . ' />';
+                $thenextThemeCheckbox .= '<label for="' . $value4 . $j . '"><span class="checkbox-icon"></span>' . $option_title . '</label></div><br>';
 
                 $j++;
             }
@@ -971,37 +929,37 @@ function get_customFields_by_catid($maincatid=null,$subcatid=null,$require=true,
             $custom_fields[$info['custom_id']]['checkboxBootstrap'] = $CheckboxBootstrap;
             $custom_fields[$info['custom_id']]['modernThemeCheckbox'] = $modernThemeCheckbox;
             $custom_fields[$info['custom_id']]['thenextThemeCheckbox'] = $thenextThemeCheckbox;
-        }
-        else
-        {
+        } else {
             $custom_fields[$info['custom_id']]['checkbox'] = '';
             $custom_fields[$info['custom_id']]['checkboxBootstrap'] = '';
             $custom_fields[$info['custom_id']]['modernThemeCheckbox'] = '';
             $custom_fields[$info['custom_id']]['thenextThemeCheckbox'] = '';
-
         }
     }
 
     return $custom_fields;
 }
 
-function create_slug($string){
+function create_slug($string)
+{
     return slugify($string);
 }
 
-function create_post_slug($title){
+function create_post_slug($title)
+{
     global $config;
     $slug = create_slug($title);
-    $numHits = ORM::for_table($config['db']['pre'].'product')
-        ->where_like('slug', ''.$slug.'%')
+    $numHits = ORM::for_table($config['db']['pre'] . 'product')
+        ->where_like('slug', '' . $slug . '%')
         ->count();
 
-    return ($numHits > 0) ? ($slug.'-'.$numHits) : $slug;
+    return ($numHits > 0) ? ($slug . '-' . $numHits) : $slug;
 }
 
-function check_category_exists($cat_id){
+function check_category_exists($cat_id)
+{
     global $config;
-    $count = ORM::for_table($config['db']['pre'].'catagory_main')
+    $count = ORM::for_table($config['db']['pre'] . 'catagory_main')
         ->where('cat_id', $cat_id)
         ->count();
 
@@ -1013,9 +971,10 @@ function check_category_exists($cat_id){
     }
 }
 
-function check_sub_category_exists($cat_id){
+function check_sub_category_exists($cat_id)
+{
     global $config;
-    $count = ORM::for_table($config['db']['pre'].'catagory_sub')
+    $count = ORM::for_table($config['db']['pre'] . 'catagory_sub')
         ->where('sub_cat_id', $cat_id)
         ->count();
 
@@ -1027,17 +986,18 @@ function check_sub_category_exists($cat_id){
     }
 }
 
-function get_category_id_by_slug($slug){
+function get_category_id_by_slug($slug)
+{
     global $config;
-    $info = ORM::for_table($config['db']['pre'].'catagory_main')
+    $info = ORM::for_table($config['db']['pre'] . 'catagory_main')
         ->select('cat_id')
         ->where('slug', $slug)
         ->find_one();
 
-    if(!empty($info)){
+    if (!empty($info)) {
         return $info['cat_id'];
-    }else{
-        $info = ORM::for_table($config['db']['pre'].'category_translation')
+    } else {
+        $info = ORM::for_table($config['db']['pre'] . 'category_translation')
             ->select('translation_id')
             ->where(array(
                 'slug' => $slug,
@@ -1048,17 +1008,18 @@ function get_category_id_by_slug($slug){
     }
 }
 
-function get_subcategory_id_by_slug($slug){
+function get_subcategory_id_by_slug($slug)
+{
     global $config;
-    $info = ORM::for_table($config['db']['pre'].'catagory_sub')
+    $info = ORM::for_table($config['db']['pre'] . 'catagory_sub')
         ->select('sub_cat_id')
         ->where('slug', $slug)
         ->find_one();
 
-    if(!empty($info)){
+    if (!empty($info)) {
         return $info['sub_cat_id'];
-    }else{
-        $info = ORM::for_table($config['db']['pre'].'category_translation')
+    } else {
+        $info = ORM::for_table($config['db']['pre'] . 'category_translation')
             ->select('translation_id')
             ->where(array(
                 'slug' => $slug,
@@ -1069,40 +1030,44 @@ function get_subcategory_id_by_slug($slug){
     }
 }
 
-function create_category_slug($title){
+function create_category_slug($title)
+{
     global $config;
     $slug = create_slug($title);
-    $numHits = ORM::for_table($config['db']['pre'].'catagory_main')
-        ->where_like('slug', ''.$slug.'%')
+    $numHits = ORM::for_table($config['db']['pre'] . 'catagory_main')
+        ->where_like('slug', '' . $slug . '%')
         ->count();
 
-    return ($numHits > 0) ? ($slug.'-'.$numHits) : $slug;
+    return ($numHits > 0) ? ($slug . '-' . $numHits) : $slug;
 }
 
-function create_sub_category_slug($title){
+function create_sub_category_slug($title)
+{
     global $config;
     $slug = create_slug($title);
-    $numHits = ORM::for_table($config['db']['pre'].'catagory_sub')
-        ->where_like('slug', ''.$slug.'%')
+    $numHits = ORM::for_table($config['db']['pre'] . 'catagory_sub')
+        ->where_like('slug', '' . $slug . '%')
         ->count();
 
-    return ($numHits > 0) ? ($slug.'-'.$numHits) : $slug;
+    return ($numHits > 0) ? ($slug . '-' . $numHits) : $slug;
 }
 
-function create_category_translation_slug($title){
+function create_category_translation_slug($title)
+{
     global $config;
     $slug = create_slug($title);
-    $numHits = ORM::for_table($config['db']['pre'].'category_translation')
-        ->where_like('slug', ''.$slug.'%')
+    $numHits = ORM::for_table($config['db']['pre'] . 'category_translation')
+        ->where_like('slug', '' . $slug . '%')
         ->count();
 
-    return ($numHits > 0) ? ($slug.'-'.$numHits) : $slug;
+    return ($numHits > 0) ? ($slug . '-' . $numHits) : $slug;
 }
 
-function get_category_translation($cattype,$catid){
+function get_category_translation($cattype, $catid)
+{
     global $config;
-    $info = ORM::for_table($config['db']['pre'].'category_translation')
-        ->select_many('title','slug')
+    $info = ORM::for_table($config['db']['pre'] . 'category_translation')
+        ->select_many('title', 'slug')
         ->where(array(
             'translation_id' => $catid,
             'lang_code' => $config['lang_code'],
@@ -1112,27 +1077,29 @@ function get_category_translation($cattype,$catid){
     return $info;
 }
 
-function delete_language_translation($type,$translation_id){
+function delete_language_translation($type, $translation_id)
+{
     global $config;
-    $result = ORM::for_table($config['db']['pre'].'category_translation')
+    $result = ORM::for_table($config['db']['pre'] . 'category_translation')
         ->where(array(
             'translation_id' => $translation_id,
             'category_type' => $type
         ))
         ->delete_many();
 
-    if($result){
+    if ($result) {
         return true;
-    }else{
+    } else {
         return false;
     }
 }
 
-function get_maincategory($selected="",$selected_text='selected',$adcount=false){
+function get_maincategory($selected = "", $selected_text = 'selected', $adcount = false)
+{
     global $config;
     $cat = array();
 
-    $result = ORM::for_table($config['db']['pre'].'catagory_main')
+    $result = ORM::for_table($config['db']['pre'] . 'catagory_main')
         ->order_by_asc('cat_order')
         ->find_many();
     foreach ($result as $info) {
@@ -1140,45 +1107,38 @@ function get_maincategory($selected="",$selected_text='selected',$adcount=false)
         $cat[$info['cat_id']]['icon'] = $info['icon'];
         $cat[$info['cat_id']]['picture'] = $info['picture'];
 
-        if($config['lang_code'] != 'en' && $config['userlangsel'] == '1'){
-            $maincat = get_category_translation("main",$info['cat_id']);
+        if ($config['lang_code'] != 'en' && $config['userlangsel'] == '1') {
+            $maincat = get_category_translation("main", $info['cat_id']);
             $cat[$info['cat_id']]['name'] = $maincat['title'];
             $cat[$info['cat_id']]['slug'] = $maincat['slug'];
-        }else{
+        } else {
             $cat[$info['cat_id']]['name'] = $info['cat_name'];
             $cat[$info['cat_id']]['slug'] = $info['slug'];
         }
 
         $cat_slug = $cat[$info['cat_id']]['slug'];
-        $cat[$info['cat_id']]['link'] = $config['site_url'].'category/'.$cat_slug;
+        $cat[$info['cat_id']]['link'] = $config['site_url'] . 'category/' . $cat_slug;
 
-        if($adcount){
-            $cat[$info['cat_id']]['adcount'] = get_items_count(false,"active",false,null,$info['cat_id'],true);
+        if ($adcount) {
+            $cat[$info['cat_id']]['adcount'] = get_items_count(false, "active", false, null, $info['cat_id'], true);
         }
 
-        if($selected!="")
-        {
-            if(is_array($selected))
-            {
-                foreach($selected as $select)
-                {
-                    $select = strtoupper(str_replace('"','',$select));
-                    if($select == $info['cat_id'])
-                    {
+        if ($selected != "") {
+            if (is_array($selected)) {
+                foreach ($selected as $select) {
+                    $select = strtoupper(str_replace('"', '', $select));
+                    if ($select == $info['cat_id']) {
                         $cat[$info['cat_id']]['selected'] = $selected_text;
                     }
                 }
-            }
-            else{
-                if($selected==$info['cat_id'] || $selected==$info['cat_name'])
-                {
+            } else {
+                if ($selected == $info['cat_id'] || $selected == $info['cat_name']) {
                     $cat[$info['cat_id']]['selected'] = $selected_text;
-                }else{
+                } else {
                     $cat[$info['cat_id']]['selected'] = "";
                 }
             }
-        }else
-        {
+        } else {
             $cat[$info['cat_id']]['selected'] = "";
         }
     }
@@ -1186,34 +1146,35 @@ function get_maincategory($selected="",$selected_text='selected',$adcount=false)
     return $cat;
 }
 
-function get_maincat_by_id($id){
+function get_maincat_by_id($id)
+{
     global $config;
-    $info = ORM::for_table($config['db']['pre'].'catagory_main')
-        ->where('cat_id',$id)
+    $info = ORM::for_table($config['db']['pre'] . 'catagory_main')
+        ->where('cat_id', $id)
         ->find_one();
-    if($config['lang_code'] != 'en' && $config['userlangsel'] == '1'){
-        $maincat = get_category_translation("main",$info['cat_id']);
+    if ($config['lang_code'] != 'en' && $config['userlangsel'] == '1') {
+        $maincat = get_category_translation("main", $info['cat_id']);
         $info['cat_name'] = $maincat['title'];
         $info['slug'] = $maincat['slug'];
-
     }
     return $info;
 }
 
-function get_subcategories(){
+function get_subcategories()
+{
     global $config;
-    $info = ORM::for_table($config['db']['pre'].'catagory_sub')
+    $info = ORM::for_table($config['db']['pre'] . 'catagory_sub')
         ->find_many();
 
     $subcat = array();
-    foreach ($info as $key => $value){
+    foreach ($info as $key => $value) {
         $subcat[$key]['id'] = $value['sub_cat_id'];
         $subcat[$key]['main_cat_id'] = $value['main_cat_id'];
         $subcat[$key]['name'] = $value['sub_cat_name'];
         $subcat[$key]['slug'] = $value['slug'];
 
-        if($config['lang_code'] != 'en' && $config['userlangsel'] == '1'){
-            $subcat_trans = get_category_translation("sub",$value['sub_cat_id']);
+        if ($config['lang_code'] != 'en' && $config['userlangsel'] == '1') {
+            $subcat_trans = get_category_translation("sub", $value['sub_cat_id']);
             $subcat[$key]['name'] = $subcat_trans['title'];
             $subcat[$key]['slug'] = $subcat_trans['slug'];
         }
@@ -1222,38 +1183,40 @@ function get_subcategories(){
     return $subcat;
 }
 
-function get_subcat_by_id($id){
+function get_subcat_by_id($id)
+{
     global $config;
-    $info = ORM::for_table($config['db']['pre'].'catagory_sub')
-        ->where('sub_cat_id',$id)
+    $info = ORM::for_table($config['db']['pre'] . 'catagory_sub')
+        ->where('sub_cat_id', $id)
         ->find_one();
-    if($config['lang_code'] != 'en' && $config['userlangsel'] == '1'){
-        $subcat = get_category_translation("sub",$info['sub_cat_id']);
+    if ($config['lang_code'] != 'en' && $config['userlangsel'] == '1') {
+        $subcat = get_category_translation("sub", $info['sub_cat_id']);
         $info['sub_cat_name'] = $subcat['title'];
         $info['slug'] = $subcat['slug'];
     }
     return $info;
 }
 
-function get_subcat_of_maincat($category_id,$adcount=false,$selected="",$selected_text='selected'){
+function get_subcat_of_maincat($category_id, $adcount = false, $selected = "", $selected_text = 'selected')
+{
     global $config;
     $subcat = array();
-    $result = ORM::for_table($config['db']['pre'].'catagory_sub')
-        ->where('main_cat_id',$category_id)
+    $result = ORM::for_table($config['db']['pre'] . 'catagory_sub')
+        ->where('main_cat_id', $category_id)
         ->order_by_asc('cat_order')
         ->find_many();
 
-    foreach($result as $info){
+    foreach ($result as $info) {
         $subcat[$info['sub_cat_id']]['id'] = $info['sub_cat_id'];
         $subcat[$info['sub_cat_id']]['photo_show'] = $info['photo_show'];
         $subcat[$info['sub_cat_id']]['price_show'] = $info['price_show'];
 
-        if($config['lang_code'] != 'en' && $config['userlangsel'] == '1'){
-            $subcategory = get_category_translation("sub",$info['sub_cat_id']);
+        if ($config['lang_code'] != 'en' && $config['userlangsel'] == '1') {
+            $subcategory = get_category_translation("sub", $info['sub_cat_id']);
 
             $subcat[$info['sub_cat_id']]['name'] = $subcategory['title'];
             $subcat[$info['sub_cat_id']]['slug'] = $subcategory['slug'];
-        }else{
+        } else {
             $subcat[$info['sub_cat_id']]['name'] = $info['sub_cat_name'];
             $subcat[$info['sub_cat_id']]['slug'] =  $info['slug'];
         }
@@ -1262,19 +1225,17 @@ function get_subcat_of_maincat($category_id,$adcount=false,$selected="",$selecte
         $category_slug = $get_main['slug'];
 
         $subcat_slug = $subcat[$info['sub_cat_id']]['slug'];
-        $subcat[$info['sub_cat_id']]['link'] = $config['site_url'].'category/'.$category_slug.'/'.$subcat_slug;
+        $subcat[$info['sub_cat_id']]['link'] = $config['site_url'] . 'category/' . $category_slug . '/' . $subcat_slug;
 
-        if($adcount){
-            $subcat[$info['sub_cat_id']]['adcount'] = get_items_count(false,"active",false,$info['sub_cat_id'],null,true);
+        if ($adcount) {
+            $subcat[$info['sub_cat_id']]['adcount'] = get_items_count(false, "active", false, $info['sub_cat_id'], null, true);
         }
 
-        if($selected!="") {
-            if($selected==$info['sub_cat_id'] || $selected==$info['sub_cat_name'])
-            {
+        if ($selected != "") {
+            if ($selected == $info['sub_cat_id'] || $selected == $info['sub_cat_name']) {
                 $subcat[$info['sub_cat_id']]['selected'] = $selected_text;
             }
-        }else
-        {
+        } else {
             $subcat[$info['sub_cat_id']]['selected'] = "";
         }
     }
@@ -1282,50 +1243,51 @@ function get_subcat_of_maincat($category_id,$adcount=false,$selected="",$selecte
     return $subcat;
 }
 
-function get_categories_dropdown($lang){
+function get_categories_dropdown($lang)
+{
     global $config;
     $dropdown = '<ul class="dropdown-menu category-change" id="category-change">
-                          <li><a href="#" data-cat-type="all"><i class="fa fa-th"></i>'.$lang['ALL_CATEGORIES'].'</a></li>';
+                          <li><a href="#" data-cat-type="all"><i class="fa fa-th"></i>' . $lang['ALL_CATEGORIES'] . '</a></li>';
 
-    $result1 = ORM::for_table($config['db']['pre'].'catagory_main')
+    $result1 = ORM::for_table($config['db']['pre'] . 'catagory_main')
         ->order_by_asc('cat_order')
         ->find_many();
 
-    foreach($result1 as $info1){
+    foreach ($result1 as $info1) {
 
         $cat_picture = $info1['picture'];
         $cat_icon = $info1['icon'];
         $catname = $info1['cat_name'];
         $cat_id = $info1['cat_id'];
         $cat_picture = $info1['picture'];
-        if($config['lang_code'] != 'en' && $config['userlangsel'] == '1'){
-            $maincat = get_category_translation("main",$info1['cat_id']);
+        if ($config['lang_code'] != 'en' && $config['userlangsel'] == '1') {
+            $maincat = get_category_translation("main", $info1['cat_id']);
             $catname = $maincat['title'];
         }
 
-        if($cat_picture != ""){
-            $icon = '<img src="'.$cat_picture.'" style="width: 20px;"/>';
-        }else{
-            $icon = '<i class="'.$cat_icon.'"></i>';
+        if ($cat_picture != "") {
+            $icon = '<img src="' . $cat_picture . '" style="width: 20px;"/>';
+        } else {
+            $icon = '<i class="' . $cat_icon . '"></i>';
         }
-        $dropdown .= '<li><a href="#" data-ajax-id="'.$cat_id.'" data-cat-type="maincat">'.$icon.' '.$catname.'</a><ul>';
+        $dropdown .= '<li><a href="#" data-ajax-id="' . $cat_id . '" data-cat-type="maincat">' . $icon . ' ' . $catname . '</a><ul>';
 
-        $result = ORM::for_table($config['db']['pre'].'catagory_sub')
-            ->where('main_cat_id',$cat_id)
+        $result = ORM::for_table($config['db']['pre'] . 'catagory_sub')
+            ->where('main_cat_id', $cat_id)
             ->order_by_asc('cat_order')
             ->find_many();
 
-        foreach($result as $info){
+        foreach ($result as $info) {
             $subcat_id = $info['sub_cat_id'];
 
-            if($config['lang_code'] != 'en' && $config['userlangsel'] == '1'){
-                $subcat = get_category_translation("sub",$info['sub_cat_id']);
+            if ($config['lang_code'] != 'en' && $config['userlangsel'] == '1') {
+                $subcat = get_category_translation("sub", $info['sub_cat_id']);
                 $subcat_name = $subcat['title'];
-            }else{
+            } else {
                 $subcat_name = $info['sub_cat_name'];
             }
 
-            $dropdown .= '<li><a href="#" data-ajax-id="'.$subcat_id.'" data-cat-type="subcat">'.$subcat_name.'</a></li>';
+            $dropdown .= '<li><a href="#" data-ajax-id="' . $subcat_id . '" data-cat-type="subcat">' . $subcat_name . '</a></li>';
         }
 
         $dropdown .= '</ul></li>';
@@ -1336,7 +1298,8 @@ function get_categories_dropdown($lang){
     return $dropdown;
 }
 
-function get_categories($selected=array(),$selected_text='selected'){
+function get_categories($selected = array(), $selected_text = 'selected')
+{
     global $config;
 
     $k = 1;
@@ -1345,40 +1308,30 @@ function get_categories($selected=array(),$selected_text='selected'){
     $jobtypes2 = array();
     $parents = array();
 
-    $result = ORM::for_table($config['db']['pre'].'catagory_sub')
+    $result = ORM::for_table($config['db']['pre'] . 'catagory_sub')
         ->order_by_asc('cat_order')
         ->find_many();
 
-    foreach($result as $info){
-        if(!isset($info['parent_id']))
-        {
+    foreach ($result as $info) {
+        if (!isset($info['parent_id'])) {
             $info['parent_id'] = 0;
-        }
-        else
-        {
-            if(isset($parents[$info['parent_id']]))
-            {
-                $parents[$info['parent_id']] = ($parents[$info['parent_id']]+1);
-            }
-            else
-            {
+        } else {
+            if (isset($parents[$info['parent_id']])) {
+                $parents[$info['parent_id']] = ($parents[$info['parent_id']] + 1);
+            } else {
                 $parents[$info['parent_id']] = 1;
             }
         }
 
-        if($info['main_cat_id'] == $k2)
-        {
+        if ($info['main_cat_id'] == $k2) {
             $jobtypes[$info['parent_id']][$info['sub_cat_id']]['sec'] = 'show';
             $k2++;
-        }
-        else
-        {
+        } else {
             $jobtypes[$info['parent_id']][$info['sub_cat_id']]['sec'] = $k2;
         }
-        if($info['main_cat_id'] == $k)
-        {
-            $info1 = ORM::for_table($config['db']['pre'].'catagory_main')
-                ->where('cat_id',$info['main_cat_id'])
+        if ($info['main_cat_id'] == $k) {
+            $info1 = ORM::for_table($config['db']['pre'] . 'catagory_main')
+                ->where('cat_id', $info['main_cat_id'])
                 ->find_one();
 
             $jobtypes[$info['parent_id']][$info['sub_cat_id']]['icon'] = $info1['icon'];
@@ -1386,38 +1339,31 @@ function get_categories($selected=array(),$selected_text='selected'){
             $jobtypes[$info['parent_id']][$info['sub_cat_id']]['main_id'] = $info1['cat_id'];
             $jobtypes[$info['parent_id']][$info['sub_cat_id']]['show'] = 'yes';
 
-            if($config['lang_code'] != 'en' && $config['userlangsel'] == '1'){
-                $maincat = get_category_translation("main",$info1['cat_id']);
+            if ($config['lang_code'] != 'en' && $config['userlangsel'] == '1') {
+                $maincat = get_category_translation("main", $info1['cat_id']);
                 $jobtypes[$info['parent_id']][$info['sub_cat_id']]['main_title'] = $maincat['title'];
             }
 
-            if($k == 1)
-            {
+            if ($k == 1) {
                 $jobtypes[$info['parent_id']][$info['sub_cat_id']]['select'] = 'show';
             }
 
             $k++;
-
-        }
-        else
-        {
+        } else {
             $jobtypes[$info['parent_id']][$info['sub_cat_id']]['show'] = 'no';
         }
 
-        if($info['main_cat_id']++)
-        {
+        if ($info['main_cat_id']++) {
             $jobtypes[$info['parent_id']][$info['sub_cat_id']]['section'] = 'show';
-        }
-        else
-        {
+        } else {
             $jobtypes[$info['parent_id']][$info['sub_cat_id']]['section'] = 'notshow';
         }
 
 
-        if($config['lang_code'] != 'en' && $config['userlangsel'] == '1'){
-            $subcat = get_category_translation("sub",$info['sub_cat_id']);
+        if ($config['lang_code'] != 'en' && $config['userlangsel'] == '1') {
+            $subcat = get_category_translation("sub", $info['sub_cat_id']);
             $jobtypes[$info['parent_id']][$info['sub_cat_id']]['title'] = $subcat['title'];
-        }else{
+        } else {
             $jobtypes[$info['parent_id']][$info['sub_cat_id']]['title'] = stripslashes($info['sub_cat_name']);
         }
         $jobtypes[$info['parent_id']][$info['sub_cat_id']]['id'] = $info['sub_cat_id'];
@@ -1425,22 +1371,17 @@ function get_categories($selected=array(),$selected_text='selected'){
         $jobtypes[$info['parent_id']][$info['sub_cat_id']]['parent_id'] = $info['parent_id'];
         $jobtypes[$info['parent_id']][$info['sub_cat_id']]['catcount'] = 0;
         $jobtypes[$info['parent_id']][$info['sub_cat_id']]['counter'] = 0;
-        $jobtypes[$info['parent_id']][$info['sub_cat_id']]['totalads'] = get_items_count(false,"active",$info['sub_cat_id']);
-        foreach($selected as $select)
-        {
-            if($select==$info['sub_cat_id'])
-            {
+        $jobtypes[$info['parent_id']][$info['sub_cat_id']]['totalads'] = get_items_count(false, "active", $info['sub_cat_id']);
+        foreach ($selected as $select) {
+            if ($select == $info['sub_cat_id']) {
                 $jobtypes[$info['parent_id']][$info['sub_cat_id']]['selected'] = $selected_text;
             }
         }
     }
 
-    foreach($jobtypes as $key=>$value)
-    {
-        foreach($value as $key2=>$value2)
-        {
-            if(isset($parents[$key2]))
-            {
+    foreach ($jobtypes as $key => $value) {
+        foreach ($value as $key2 => $value2) {
+            if (isset($parents[$key2])) {
                 $jobtypes[$key][$key2]['catcount']  = $parents[$key2];
             }
         }
@@ -1448,25 +1389,19 @@ function get_categories($selected=array(),$selected_text='selected'){
 
     $counter = 1;
 
-    foreach($jobtypes[0] as $key=>$value)
-    {
+    foreach ($jobtypes[0] as $key => $value) {
         $value['counter'] = $counter;
-        if($value['catcount'])
-        {
+        if ($value['catcount']) {
             $value['ctype'] = 1;
-        }
-        else
-        {
+        } else {
             $value['ctype'] = 0;
         }
 
         $jobtypes2[$key] =  $value;
         $counter++;
 
-        if(isset($jobtypes[$key]))
-        {
-            foreach($jobtypes[$key] as $key2=>$value2)
-            {
+        if (isset($jobtypes[$key])) {
+            foreach ($jobtypes[$key] as $key2 => $value2) {
                 $value2['counter'] = $counter;
                 $value2['ctype'] = 2;
 
@@ -1478,13 +1413,12 @@ function get_categories($selected=array(),$selected_text='selected'){
     }
 
     return $jobtypes2;
-
 }
 
 function averageRating_by_itemid($productid)
 {
-    global $config,$lang;
-    $q_star1_result = ORM::for_table($config['db']['pre'].'reviews')
+    global $config, $lang;
+    $q_star1_result = ORM::for_table($config['db']['pre'] . 'reviews')
         ->where(array(
             'rating' => '1',
             'publish' => '1',
@@ -1492,7 +1426,7 @@ function averageRating_by_itemid($productid)
         ))
         ->count();
 
-    $q_star2_result = ORM::for_table($config['db']['pre'].'reviews')
+    $q_star2_result = ORM::for_table($config['db']['pre'] . 'reviews')
         ->where(array(
             'rating' => '2',
             'publish' => '1',
@@ -1500,7 +1434,7 @@ function averageRating_by_itemid($productid)
         ))
         ->count();
 
-    $q_star3_result = ORM::for_table($config['db']['pre'].'reviews')
+    $q_star3_result = ORM::for_table($config['db']['pre'] . 'reviews')
         ->where(array(
             'rating' => '3',
             'publish' => '1',
@@ -1508,7 +1442,7 @@ function averageRating_by_itemid($productid)
         ))
         ->count();
 
-    $q_star4_result = ORM::for_table($config['db']['pre'].'reviews')
+    $q_star4_result = ORM::for_table($config['db']['pre'] . 'reviews')
         ->where(array(
             'rating' => '4',
             'publish' => '1',
@@ -1516,7 +1450,7 @@ function averageRating_by_itemid($productid)
         ))
         ->count();
 
-    $q_star5_result = ORM::for_table($config['db']['pre'].'reviews')
+    $q_star5_result = ORM::for_table($config['db']['pre'] . 'reviews')
         ->where(array(
             'rating' => '5',
             'publish' => '1',
@@ -1527,30 +1461,30 @@ function averageRating_by_itemid($productid)
     $total = $q_star1_result + $q_star2_result + $q_star3_result + $q_star4_result + $q_star5_result;
 
     if ($total != 0) {
-        $rating = ($q_star1_result*1 + $q_star2_result*2 + $q_star3_result*3 + $q_star4_result*4 + $q_star5_result*5) / $total;
+        $rating = ($q_star1_result * 1 + $q_star2_result * 2 + $q_star3_result * 3 + $q_star4_result * 4 + $q_star5_result * 5) / $total;
     } else {
         $rating = 0;
     }
 
     $rating = round($rating * 2) / 2;
 
-    if($total != 0){
-        return '<div class="rating-passive" data-rating="'.$rating.'"><span>('.$total.')</span><span class="stars"></span></div>';
-    }else{
+    if ($total != 0) {
+        return '<div class="rating-passive" data-rating="' . $rating . '"><span>(' . $total . ')</span><span class="stars"></span></div>';
+    } else {
         return '';
     }
-
 }
 
-function get_item_by_id($product_id){
+function get_item_by_id($product_id)
+{
     global $config;
     $iteminfo = array();
 
-    $info = ORM::for_table($config['db']['pre'].'product')
-        ->where('id',$product_id)
+    $info = ORM::for_table($config['db']['pre'] . 'product')
+        ->where('id', $product_id)
         ->find_one();
 
-    if(!empty($info)){
+    if (!empty($info)) {
 
         $iteminfo['id'] = $info['id'];
         $iteminfo['title'] = $info['product_name'];
@@ -1569,7 +1503,7 @@ function get_item_by_id($product_id){
 
 
         $item_author_id = $info['user_id'];
-        $info2 = get_user_data(null,$item_author_id);
+        $info2 = get_user_data(null, $item_author_id);
 
         $iteminfo['author_id'] = $item_author_id;
         $iteminfo['author_name'] = ucfirst($info2['name']);
@@ -1578,59 +1512,59 @@ function get_item_by_id($product_id){
         $iteminfo['author_image'] = $info2['image'];
 
         return $iteminfo;
-    }
-    else {
+    } else {
         return false;
     }
 }
 
-function get_items($userid=null,$status=null,$premium=false,$page=null,$limit=null,$sort="id",$location=false,$order=false,$sort_order="DESC"){
+function get_items($userid = null, $status = null, $premium = false, $page = null, $limit = null, $sort = "id", $location = false, $order = false, $sort_order = "DESC")
+{
 
-    global $config,$lang;
+    global $config, $lang;
     $where = '';
     $item = array();
-    if($userid != null){
-        if($where == '')
-            $where .= "where p.user_id = '".$userid."'";
+    if ($userid != null) {
+        if ($where == '')
+            $where .= "where p.user_id = '" . $userid . "'";
         else
-            $where .= " AND p.user_id = '".$userid."'";
+            $where .= " AND p.user_id = '" . $userid . "'";
     }
-    if($status != null && $status != "hide"){
-        if($where == '')
-            $where .= "where p.status = '".$status."'";
+    if ($status != null && $status != "hide") {
+        if ($where == '')
+            $where .= "where p.status = '" . $status . "'";
         else
-            $where .= " AND p.status = '".$status."'";
+            $where .= " AND p.status = '" . $status . "'";
     }
 
-    if($status == "hide"){
-        if($where == '')
+    if ($status == "hide") {
+        if ($where == '')
             $where .= "where p.hide = '1'";
         else
             $where .= " AND p.hide = '1'";
-    }else{
-        if($where == '')
+    } else {
+        if ($where == '')
             $where .= "where p.hide = '0'";
         else
             $where .= " AND p.hide = '0'";
     }
 
-    if($premium){
-        if($where == '')
+    if ($premium) {
+        if ($where == '')
             $where .= "where (g.show_on_home = 'yes' or p.featured = '1' or p.urgent = '1' or p.highlight = '1')";
         else
             $where .= " AND (g.show_on_home = 'yes' or p.featured = '1' or p.urgent = '1' or p.highlight = '1')";
     }
 
-    if($location){
+    if ($location) {
         $country_code = check_user_country();
-        if($where == '')
-            $where .= "where p.country = '".$country_code."'";
+        if ($where == '')
+            $where .= "where p.country = '" . $country_code . "'";
         else
-            $where .= " AND p.country = '".$country_code."'";
+            $where .= " AND p.country = '" . $country_code . "'";
     }
 
-   if($order){
-       $order_by = "
+    if ($order) {
+        $order_by = "
       (CASE
         WHEN g.show_on_home = 'yes' and p.featured = '1' and p.urgent = '1' and p.highlight = '1' THEN 1
         WHEN g.show_on_home = 'yes' and p.urgent = '1' and p.featured = '1' THEN 2
@@ -1641,30 +1575,29 @@ function get_items($userid=null,$status=null,$premium=false,$page=null,$limit=nu
         WHEN g.show_on_home = 'yes' and p.highlight = '1' THEN 7
         WHEN g.show_on_home = 'yes' THEN 8
         ELSE 9
-      END), ".$sort." ".$sort_order;
-       //$order_by = $sort." ".$sort_order;
-    }else{
-       $order_by = $sort." ".$sort_order;
-   }
+      END), " . $sort . " " . $sort_order;
+        //$order_by = $sort." ".$sort_order;
+    } else {
+        $order_by = $sort . " " . $sort_order;
+    }
 
     $pagelimit = "";
-    if($page != null && $limit != null){
-        $pagelimit = "LIMIT  ".($page-1)*$limit.",".$limit;
+    if ($page != null && $limit != null) {
+        $pagelimit = "LIMIT  " . ($page - 1) * $limit . "," . $limit;
     }
 
     $query = "SELECT p.id,p.product_name,p.featured,p.urgent,p.highlight,p.price,p.category,p.sub_category,p.tag,p.screen_shot,p.user_id,p.city,p.country,p.status,p.hide,p.created_at,p.expire_date,p.view,
 u.group_id, g.show_on_home
-FROM `".$config['db']['pre']."product` as p
-INNER JOIN `".$config['db']['pre']."user` as u ON u.id = p.user_id
-INNER JOIN `".$config['db']['pre']."usergroups` as g ON g.group_id = u.group_id
+FROM `" . $config['db']['pre'] . "product` as p
+INNER JOIN `" . $config['db']['pre'] . "user` as u ON u.id = p.user_id
+INNER JOIN `" . $config['db']['pre'] . "usergroups` as g ON g.group_id = u.group_id
 $where ORDER BY $order_by $pagelimit";
 
-    $result = ORM::for_table($config['db']['pre'].'product')->raw_query($query)->find_many();
+    $result = ORM::for_table($config['db']['pre'] . 'product')->raw_query($query)->find_many();
 
     if ($result) {
         $client_country_code = get_client_country_by_ip();
-        foreach ($result as $info)
-        {
+        foreach ($result as $info) {
             $item[$info['id']]['id'] = $info['id'];
             $item[$info['id']]['user_id'] = $info['user_id'];
             $item[$info['id']]['product_name'] = $info['product_name'];
@@ -1674,7 +1607,7 @@ $where ORDER BY $order_by $pagelimit";
             $item[$info['id']]['featured'] = $info['featured'];
             $item[$info['id']]['urgent'] = $info['urgent'];
             $item[$info['id']]['highlight'] = $info['highlight'];
-            $item[$info['id']]['highlight_bgClr'] = ($info['highlight'] == 1)? "highlight-premium-ad" : "";
+            $item[$info['id']]['highlight_bgClr'] = ($info['highlight'] == 1) ? "highlight-premium-ad" : "";
 
             $cityname = get_cityName_by_id($info['city']);
             $item[$info['id']]['location'] = $cityname;
@@ -1697,118 +1630,287 @@ $where ORDER BY $order_by $pagelimit";
 
             $item[$info['id']]['favorite'] = check_product_favorite($info['id']);
 
-            if($info['tag'] != ''){
+            if ($info['tag'] != '') {
                 $item[$info['id']]['showtag'] = "1";
                 $tag = explode(',', $info['tag']);
                 $tag2 = array();
-                foreach ($tag as $val)
-                {
+                foreach ($tag as $val) {
                     //REMOVE SPACE FROM $VALUE ----
-                    $val = preg_replace("/[\s_]/","-", trim($val));
-                    $tag2[] = '<li><a href="'.$config['site_url'].'listing?keywords='.$val.'">'.$val.'</a> </li>';
+                    $val = preg_replace("/[\s_]/", "-", trim($val));
+                    $tag2[] = '<li><a href="' . $config['site_url'] . 'listing?keywords=' . $val . '">' . $val . '</a> </li>';
                 }
                 $item[$info['id']]['tag'] = implode('  ', $tag2);
-            }else{
+            } else {
                 $item[$info['id']]['tag'] = "";
                 $item[$info['id']]['showtag'] = "0";
             }
 
-            $picture     =   explode(',' ,$info['screen_shot']);
+            $picture     =   explode(',', $info['screen_shot']);
             $item[$info['id']]['pic_count'] = count($picture);
 
-            if($picture[0] != ""){
+            if ($picture[0] != "") {
                 $item[$info['id']]['picture'] = $picture[0];
-            }else{
+            } else {
                 $item[$info['id']]['picture'] = "default.png";
             }
 
-            $price = price_format($info['price'],$info['country']);
+            $price = price_format($info['price'], $info['country']);
             $item[$info['id']]['price'] = $price;
 
             $main_currency_code = get_currency_code($info['country']);
             $main_ex_rate = get_exchange_rate($main_currency_code);
             $alt_currency_code = get_currency_code($client_country_code);
             $alt_ex_rate = get_exchange_rate($alt_currency_code);
-            if($alt_currency_code != $main_currency_code){
+            if ($alt_currency_code != $main_currency_code) {
                 $alt_price_amount = ($info['price'] / $main_ex_rate) * $alt_ex_rate;
                 $alt_price = price_format($alt_price_amount, $client_country_code);
                 $item[$info['id']]['alt_price'] = $alt_price;
-            }else{
+            } else {
                 $item[$info['id']]['alt_price'] = '';
             }
-        
 
-            $userinfo = get_user_data(null,$info['user_id']);
+
+            $userinfo = get_user_data(null, $info['user_id']);
 
             $item[$info['id']]['userpic'] = $userinfo['image'];
             $item[$info['id']]['authorname'] = $userinfo['name'];
             $item[$info['id']]['username'] = $userinfo['username'];
             $author_url = create_slug($userinfo['username']);
 
-            $item[$info['id']]['author_link'] = $config['site_url'].'profile/'.$author_url;
+            $item[$info['id']]['author_link'] = $config['site_url'] . 'profile/' . $author_url;
 
-            if(check_user_upgrades($info['user_id']))
-            {
+            if (check_user_upgrades($info['user_id'])) {
                 $sub_info = get_user_membership_detail($info['user_id']);
                 $item[$info['id']]['sub_title'] = $sub_info['sub_title'];
                 $item[$info['id']]['sub_image'] = $sub_info['sub_image'];
-            }else{
+            } else {
                 $item[$info['id']]['sub_title'] = '';
                 $item[$info['id']]['sub_image'] = '';
             }
             $pro_url = create_slug($info['product_name']);
-            $item[$info['id']]['link'] = $config['site_url'].'ad/' . $info['id'] . '/'.$pro_url;
-            $item[$info['id']]['catlink'] = $config['site_url'].'category/'.$get_main['slug'];
-            $item[$info['id']]['subcatlink'] = $config['site_url'].'category/'.$get_main['slug'].'/'.$get_sub['slug'];
+            $item[$info['id']]['link'] = $config['site_url'] . 'ad/' . $info['id'] . '/' . $pro_url;
+            $item[$info['id']]['catlink'] = $config['site_url'] . 'category/' . $get_main['slug'];
+            $item[$info['id']]['subcatlink'] = $config['site_url'] . 'category/' . $get_main['slug'] . '/' . $get_sub['slug'];
 
             $city = create_slug($item[$info['id']]['city']);
-            $item[$info['id']]['citylink'] = $config['site_url'].'city/'.$info['city'].'/'.$city;
+            $item[$info['id']]['citylink'] = $config['site_url'] . 'city/' . $info['city'] . '/' . $city;
 
             $item[$info['id']]['rating'] = averageRating_by_itemid($info['id']);
         }
-    }
-    else {
+    } else {
         //echo "0 results";
     }
     return $item;
 }
 
-function get_resubmited_items($userid=false,$status=null,$page=null,$limit=null,$sort="id"){
+function admin_get_items($userid = null, $status = null, $premium = false, $page = null, $limit = null, $sort = "id", $location = false, $order = false, $sort_order = "DESC")
+{
 
-    global $config,$lang;
+    global $config, $lang;
     $where = '';
     $item = array();
-    if($userid){
-        if($where == '')
-            $where .= "where user_id = '".$userid."'";
+    if ($userid != null) {
+        if ($where == '')
+            $where .= "where p.user_id = '" . $userid . "'";
         else
-            $where .= " AND user_id = '".$userid."'";
+            $where .= " AND p.user_id = '" . $userid . "'";
     }
-    if($status != null){
-        if($where == '')
-            $where .= "where status = '".$status."'";
+    if ($status != null && $status != "hide") {
+        if ($where == '')
+            $where .= "where p.status = '" . $status . "'";
         else
-            $where .= " AND status = '".$status."'";
+            $where .= " AND p.status = '" . $status . "'";
+    }
+
+    if ($status == "hide") {
+        if ($where == '')
+            $where .= "where p.hide = '1'";
+        else
+            $where .= " AND p.hide = '1'";
+    } else {
+        if ($where == '')
+            $where .= "where p.hide = '0'";
+        else
+            $where .= " AND p.hide = '0'";
+    }
+
+    if ($premium) {
+        if ($where == '')
+            $where .= "where (g.show_on_home = 'yes' or p.featured = '1' or p.urgent = '1' or p.highlight = '1')";
+        else
+            $where .= " AND (g.show_on_home = 'yes' or p.featured = '1' or p.urgent = '1' or p.highlight = '1')";
+    }
+
+    if ($location) {
+        $country_code = check_user_country();
+        if ($where == '')
+            $where .= "where p.country = '" . $country_code . "'";
+        else
+            $where .= " AND p.country = '" . $country_code . "'";
+    }
+
+    if ($order) {
+        $order_by = "
+      (CASE
+        WHEN g.show_on_home = 'yes' and p.featured = '1' and p.urgent = '1' and p.highlight = '1' THEN 1
+        WHEN g.show_on_home = 'yes' and p.urgent = '1' and p.featured = '1' THEN 2
+        WHEN g.show_on_home = 'yes' and p.urgent = '1' and p.highlight = '1' THEN 3
+        WHEN g.show_on_home = 'yes' and p.featured = '1' and p.highlight = '1' THEN 4
+        WHEN g.show_on_home = 'yes' and p.urgent = '1' THEN 5
+        WHEN g.show_on_home = 'yes' and p.featured = '1' THEN 6
+        WHEN g.show_on_home = 'yes' and p.highlight = '1' THEN 7
+        WHEN g.show_on_home = 'yes' THEN 8
+        ELSE 9
+      END), " . $sort . " " . $sort_order;
+        //$order_by = $sort." ".$sort_order;
+    } else {
+        $order_by = $sort . " " . $sort_order;
     }
 
     $pagelimit = "";
-    if($page != null && $limit != null){
-        $pagelimit = "LIMIT  ".($page-1)*$limit.",".$limit;
+    if ($page != null && $limit != null) {
+        $pagelimit = "LIMIT  " . ($page - 1) * $limit . "," . $limit;
     }
-    $query = "SELECT * FROM `".$config['db']['pre']."product_resubmit` $where ORDER BY $sort DESC $pagelimit";
-    $result = ORM::for_table($config['db']['pre'].'product_resubmit')->raw_query($query)->find_many();
+
+    $query = "SELECT p.id,p.product_name,p.featured,p.urgent,p.highlight,p.price,p.category,p.sub_category,p.tag,p.screen_shot,p.user_id,p.city,p.country,p.status,p.hide,p.created_at,p.expire_date,p.view,
+u.group_id, g.show_on_home
+FROM `" . $config['db']['pre'] . "product` as p
+INNER JOIN `" . $config['db']['pre'] . "user` as u ON u.id = p.user_id
+INNER JOIN `" . $config['db']['pre'] . "usergroups` as g ON g.group_id = u.group_id
+$where ORDER BY $order_by $pagelimit";
+
+    $result = ORM::for_table($config['db']['pre'] . 'product')->raw_query($query)->find_many();
+
     if ($result) {
-        foreach ($result as $info)
-        {
+        foreach ($result as $info) {
+            $item[$info['id']]['id'] = $info['id'];
+            $item[$info['id']]['user_id'] = $info['user_id'];
+            $item[$info['id']]['product_name'] = $info['product_name'];
+            $item[$info['id']]['cat_id'] = $info['category'];
+            $item[$info['id']]['sub_cat_id'] = $info['sub_category'];
+            $item[$info['id']]['price'] = $info['price'];
+            $item[$info['id']]['featured'] = $info['featured'];
+            $item[$info['id']]['urgent'] = $info['urgent'];
+            $item[$info['id']]['highlight'] = $info['highlight'];
+            $item[$info['id']]['highlight_bgClr'] = ($info['highlight'] == 1) ? "highlight-premium-ad" : "";
+
+            $cityname = get_cityName_by_id($info['city']);
+            $item[$info['id']]['location'] = $cityname;
+            $item[$info['id']]['city'] = $cityname;
+            $item[$info['id']]['status'] = $info['status'];
+            $item[$info['id']]['hide'] = $info['hide'];
+            $item[$info['id']]['view'] = $info['view'];
+
+            $item[$info['id']]['created_at'] = timeAgo($info['created_at']);
+            $expire_date_timestamp = $info['expire_date'];
+            $expire_date = date('d-M-y', $expire_date_timestamp);
+            $item[$info['id']]['expire_date'] = $expire_date;
+
+            $item[$info['id']]['cat_id'] = $info['category'];
+            $item[$info['id']]['sub_cat_id'] = $info['sub_category'];
+            $get_main = get_maincat_by_id($info['category']);
+            $get_sub = get_subcat_by_id($info['sub_category']);
+            $item[$info['id']]['category'] = $get_main['cat_name'];
+            $item[$info['id']]['sub_category'] = $get_sub['sub_cat_name'];
+
+            $item[$info['id']]['favorite'] = check_product_favorite($info['id']);
+
+            if ($info['tag'] != '') {
+                $item[$info['id']]['showtag'] = "1";
+                $tag = explode(',', $info['tag']);
+                $tag2 = array();
+                foreach ($tag as $val) {
+                    //REMOVE SPACE FROM $VALUE ----
+                    $val = preg_replace("/[\s_]/", "-", trim($val));
+                    $tag2[] = '<li><a href="' . $config['site_url'] . 'listing?keywords=' . $val . '">' . $val . '</a> </li>';
+                }
+                $item[$info['id']]['tag'] = implode('  ', $tag2);
+            } else {
+                $item[$info['id']]['tag'] = "";
+                $item[$info['id']]['showtag'] = "0";
+            }
+
+            $picture     =   explode(',', $info['screen_shot']);
+            $item[$info['id']]['pic_count'] = count($picture);
+
+            if ($picture[0] != "") {
+                $item[$info['id']]['picture'] = $picture[0];
+            } else {
+                $item[$info['id']]['picture'] = "default.png";
+            }
+
+            $price = price_format($info['price'], $info['country']);
+            $item[$info['id']]['price'] = $price;
+
+            $userinfo = get_user_data(null, $info['user_id']);
+
+            $item[$info['id']]['userpic'] = $userinfo['image'];
+            $item[$info['id']]['authorname'] = $userinfo['name'];
+            $item[$info['id']]['username'] = $userinfo['username'];
+            $author_url = create_slug($userinfo['username']);
+
+            $item[$info['id']]['author_link'] = $config['site_url'] . 'profile/' . $author_url;
+
+            if (check_user_upgrades($info['user_id'])) {
+                $sub_info = get_user_membership_detail($info['user_id']);
+                $item[$info['id']]['sub_title'] = $sub_info['sub_title'];
+                $item[$info['id']]['sub_image'] = $sub_info['sub_image'];
+            } else {
+                $item[$info['id']]['sub_title'] = '';
+                $item[$info['id']]['sub_image'] = '';
+            }
+            $pro_url = create_slug($info['product_name']);
+            $item[$info['id']]['link'] = $config['site_url'] . 'ad/' . $info['id'] . '/' . $pro_url;
+            $item[$info['id']]['catlink'] = $config['site_url'] . 'category/' . $get_main['slug'];
+            $item[$info['id']]['subcatlink'] = $config['site_url'] . 'category/' . $get_main['slug'] . '/' . $get_sub['slug'];
+
+            $city = create_slug($item[$info['id']]['city']);
+            $item[$info['id']]['citylink'] = $config['site_url'] . 'city/' . $info['city'] . '/' . $city;
+
+            $item[$info['id']]['rating'] = averageRating_by_itemid($info['id']);
+        }
+    } else {
+        //echo "0 results";
+    }
+    return $item;
+}
+
+function get_resubmited_items($userid = false, $status = null, $page = null, $limit = null, $sort = "id")
+{
+
+    global $config, $lang;
+    $where = '';
+    $item = array();
+    if ($userid) {
+        if ($where == '')
+            $where .= "where user_id = '" . $userid . "'";
+        else
+            $where .= " AND user_id = '" . $userid . "'";
+    }
+    if ($status != null) {
+        if ($where == '')
+            $where .= "where status = '" . $status . "'";
+        else
+            $where .= " AND status = '" . $status . "'";
+    }
+
+    $pagelimit = "";
+    if ($page != null && $limit != null) {
+        $pagelimit = "LIMIT  " . ($page - 1) * $limit . "," . $limit;
+    }
+    $query = "SELECT * FROM `" . $config['db']['pre'] . "product_resubmit` $where ORDER BY $sort DESC $pagelimit";
+    $result = ORM::for_table($config['db']['pre'] . 'product_resubmit')->raw_query($query)->find_many();
+    if ($result) {
+        foreach ($result as $info) {
             //$item[$info['id']]['product_name'] = strlimiter($info['product_name'],16);
             $item[$info['id']]['id'] = $info['id'];
             $item[$info['id']]['product_id'] = $info['product_id'];
             $item[$info['id']]['product_name'] = $info['product_name'];
-            $item[$info['id']]['desc'] = strlimiter($info['description'],80);
+            $item[$info['id']]['desc'] = strlimiter($info['description'], 80);
             $item[$info['id']]['featured'] = $info['featured'];
             $item[$info['id']]['urgent'] = $info['urgent'];
             $item[$info['id']]['highlight'] = $info['highlight'];
-            $item[$info['id']]['address'] = strlimiter($info['location'],20);
+            $item[$info['id']]['address'] = strlimiter($info['location'], 20);
             $item[$info['id']]['location'] = get_cityName_by_id($info['city']);
             $item[$info['id']]['city'] = $info['city'];
             $item[$info['id']]['state'] = $info['state'];
@@ -1817,7 +1919,7 @@ function get_resubmited_items($userid=false,$status=null,$page=null,$limit=null,
             $item[$info['id']]['created_at'] = timeago($info['created_at']);
             $item[$info['id']]['author_id'] = $info['user_id'];
 
-            $price = price_format($info['price'],$info['country']);
+            $price = price_format($info['price'], $info['country']);
             $item[$info['id']]['price'] = $price;
 
             $item[$info['id']]['cat_id'] = $info['category'];
@@ -1834,51 +1936,50 @@ function get_resubmited_items($userid=false,$status=null,$page=null,$limit=null,
 
             $tag = explode(',', $info['tag']);
             $tag2 = array();
-            foreach ($tag as $val)
-            {
+            foreach ($tag as $val) {
                 //REMOVE SPACE FROM $VALUE ----
                 $val = trim($val);
-                $tag2[] = '<li><a href="'.$config['site_url'].'listing?keywords='.$val.'">'.$val.'</a> </li>';
+                $tag2[] = '<li><a href="' . $config['site_url'] . 'listing?keywords=' . $val . '">' . $val . '</a> </li>';
             }
             $item[$info['id']]['tag'] = implode('  ', $tag2);
 
-            $picture     =   explode(',' ,$info['screen_shot']);
+            $picture     =   explode(',', $info['screen_shot']);
             $item[$info['id']]['pic_count'] = count($picture);
 
-            if($picture[0] != ""){
+            if ($picture[0] != "") {
                 $item[$info['id']]['picture'] = $picture[0];
-            }else{
+            } else {
                 $item[$info['id']]['picture'] = "default.png";
             }
 
             $pro_url = create_slug($info['product_name']);
 
-            $item[$info['id']]['link'] = $config['site_url'].'ad/' . $info['id'] . '/'.$pro_url;
+            $item[$info['id']]['link'] = $config['site_url'] . 'ad/' . $info['id'] . '/' . $pro_url;
 
 
-            $userinfo = get_user_data(null,$info['user_id']);
+            $userinfo = get_user_data(null, $info['user_id']);
 
             $item[$info['id']]['username'] = $userinfo['username'];
             $author_url = create_slug($userinfo['username']);
 
-            $item[$info['id']]['author_link'] = $config['site_url'].'profile/'.$author_url;
+            $item[$info['id']]['author_link'] = $config['site_url'] . 'profile/' . $author_url;
 
-            $item[$info['id']]['catlink'] = $config['site_url'].'category/'.$catslug;
+            $item[$info['id']]['catlink'] = $config['site_url'] . 'category/' . $catslug;
 
-            $item[$info['id']]['subcatlink'] = $config['site_url'].'category/'.$catslug.'/'.$subcatslug;
+            $item[$info['id']]['subcatlink'] = $config['site_url'] . 'category/' . $catslug . '/' . $subcatslug;
 
             $city = create_slug($item[$info['id']]['city']);
-            $item[$info['id']]['citylink'] = $config['site_url'].'city/'.$info['city'].'/'.$city;
+            $item[$info['id']]['citylink'] = $config['site_url'] . 'city/' . $info['city'] . '/' . $city;
         }
-    }
-    else {
+    } else {
         //echo "0 results";
     }
     return $item;
 }
 
-function check_validation_for_subscribePlan(){
-    global $config,$lang;
+function check_validation_for_subscribePlan()
+{
+    global $config, $lang;
 
     $userdata = get_user_data($_SESSION['user']['username']);
     $email      = $userdata['email'];
@@ -1888,36 +1989,37 @@ function check_validation_for_subscribePlan(){
     $address    = $userdata['address'];
 
 
-    if($email == null or $name == null or $phone == null or $address == null){
-        message($lang['INFORMATION'],$lang['USERDATA_REQ_SUBSCRIBE'],'',false);
+    if ($email == null or $name == null or $phone == null or $address == null) {
+        message($lang['INFORMATION'], $lang['USERDATA_REQ_SUBSCRIBE'], '', false);
     }
 }
 
-function renew_item_by_userid($userid=null){
+function renew_item_by_userid($userid = null)
+{
     global $config;
     $pdo = ORM::get_db();
     // Get usergroup details
-    $user_info = ORM::for_table($config['db']['pre'].'user')
+    $user_info = ORM::for_table($config['db']['pre'] . 'user')
         ->select('group_id')
         ->find_one($userid);
 
-    $group_id = isset($user_info['group_id'])? $user_info['group_id'] : 0;
+    $group_id = isset($user_info['group_id']) ? $user_info['group_id'] : 0;
 
     $timenow = date('Y-m-d H:i:s');
-    if($group_id > 0) {
+    if ($group_id > 0) {
         // Get membership details
         $group_get_info = get_usergroup_settings($group_id);
 
         $ad_duration = $group_get_info['ad_duration'];
-        $expire_time = date('Y-m-d H:i:s', strtotime($timenow . ' +'.$ad_duration.' day'));
+        $expire_time = date('Y-m-d H:i:s', strtotime($timenow . ' +' . $ad_duration . ' day'));
         $expire_timestamp = strtotime($expire_time);
-    }else{
+    } else {
         $ad_duration = 7;
-        $expire_time = date('Y-m-d H:i:s', strtotime($timenow . ' +'.$ad_duration.' day'));
+        $expire_time = date('Y-m-d H:i:s', strtotime($timenow . ' +' . $ad_duration . ' day'));
         $expire_timestamp = strtotime($expire_time);
     }
 
-    $query = "UPDATE `".$config['db']['pre']."product` SET
+    $query = "UPDATE `" . $config['db']['pre'] . "product` SET
     `status` = 'active', `expire_date` = '" . $expire_timestamp . "'
     WHERE  user_id='" . $userid . "'";
     $pdo->query($query);
@@ -1931,17 +2033,19 @@ get_items_count
 ++++++++++
 ==========*/
 
-function resubmited_ads_count($id){
+function resubmited_ads_count($id)
+{
     global $config;
-    $num_rows = ORM::for_table($config['db']['pre'].'product_resubmit')
-        ->where('user_id',$id)
+    $num_rows = ORM::for_table($config['db']['pre'] . 'product_resubmit')
+        ->where('user_id', $id)
         ->count();
     return $num_rows;
 }
 
-function myads_count($id){
+function myads_count($id)
+{
     global $config;
-    $num_rows = ORM::for_table($config['db']['pre'].'product')
+    $num_rows = ORM::for_table($config['db']['pre'] . 'product')
         ->where(array(
             'status' => "active",
             'user_id' => $id
@@ -1950,9 +2054,10 @@ function myads_count($id){
     return $num_rows;
 }
 
-function active_ads_count($id){
+function active_ads_count($id)
+{
     global $config;
-    $num_rows = ORM::for_table($config['db']['pre'].'product')
+    $num_rows = ORM::for_table($config['db']['pre'] . 'product')
         ->where(array(
             'status' => "active",
             'user_id' => $id
@@ -1961,20 +2066,22 @@ function active_ads_count($id){
     return $num_rows;
 }
 
-function pending_ads_count($id){
+function pending_ads_count($id)
+{
     global $config;
-    $num_rows = ORM::for_table($config['db']['pre'].'product')
-    ->where(array(
-        'status' => "pending",
-        'user_id' => $id
-    ))
-    ->count();
+    $num_rows = ORM::for_table($config['db']['pre'] . 'product')
+        ->where(array(
+            'status' => "pending",
+            'user_id' => $id
+        ))
+        ->count();
     return $num_rows;
 }
 
-function expire_ads_count($id){
+function expire_ads_count($id)
+{
     global $config;
-    $num_rows = ORM::for_table($config['db']['pre'].'product')
+    $num_rows = ORM::for_table($config['db']['pre'] . 'product')
         ->where(array(
             'status' => "expire",
             'user_id' => $id
@@ -1983,9 +2090,10 @@ function expire_ads_count($id){
     return $num_rows;
 }
 
-function hidden_ads_count($id){
+function hidden_ads_count($id)
+{
     global $config;
-    $num_rows = ORM::for_table($config['db']['pre'].'product')
+    $num_rows = ORM::for_table($config['db']['pre'] . 'product')
         ->where(array(
             'hide' => '1',
             'user_id' => $id
@@ -1994,17 +2102,19 @@ function hidden_ads_count($id){
     return $num_rows;
 }
 
-function favorite_ads_count($id){
+function favorite_ads_count($id)
+{
     global $config;
-    $num_rows = ORM::for_table($config['db']['pre'].'favads')
-        ->where('user_id' , $id)
+    $num_rows = ORM::for_table($config['db']['pre'] . 'favads')
+        ->where('user_id', $id)
         ->count();
     return $num_rows;
 }
 
-function count_product_review($productid){
+function count_product_review($productid)
+{
     global $config;
-    $count = ORM::for_table($config['db']['pre'].'reviews')
+    $count = ORM::for_table($config['db']['pre'] . 'reviews')
         ->where(array(
             'productID' => $productid,
             'publish' => '1'
@@ -2013,45 +2123,49 @@ function count_product_review($productid){
     return $count;
 }
 
-function update_itemview($product_id){
+function update_itemview($product_id)
+{
     global $config;
-    $product = ORM::for_table($config['db']['pre'].'product')->find_one($product_id);
+    $product = ORM::for_table($config['db']['pre'] . 'product')->find_one($product_id);
     $product->set_expr('view', 'view+1');
     $product->save();
-
 }
 
-function get_usergroup_settings($group_id){
+function get_usergroup_settings($group_id)
+{
     global $config;
-    $group_info = ORM::for_table($config['db']['pre'].'usergroups')
+    $group_info = ORM::for_table($config['db']['pre'] . 'usergroups')
         ->where('group_id', $group_id)
         ->find_one();
 
     return $group_info;
 }
 
-function check_user_upgrades($user_id){
+function check_user_upgrades($user_id)
+{
     global $config;
-    $check_upgrade = ORM::for_table($config['db']['pre'].'upgrades')
+    $check_upgrade = ORM::for_table($config['db']['pre'] . 'upgrades')
         ->where('user_id', $user_id)
         ->count();
 
     return $check_upgrade;
 }
 
-function get_user_membership_detail($user_id){
+function get_user_membership_detail($user_id)
+{
     global $config;
-    $info = ORM::for_table($config['db']['pre'].'upgrades')
+    $info = ORM::for_table($config['db']['pre'] . 'upgrades')
         ->where('user_id', $user_id)
         ->find_one();
-    $sub_info = ORM::for_table($config['db']['pre'].'subscriptions')
+    $sub_info = ORM::for_table($config['db']['pre'] . 'subscriptions')
         ->where('sub_id', $info['sub_id'])
         ->find_one();
     return $sub_info;
 }
 
-function payment_success_save_detail($access_token){
-    global $config,$lang,$link;
+function payment_success_save_detail($access_token)
+{
+    global $config, $lang, $link;
     $pdo = ORM::get_db();
     $title = $_SESSION['quickad'][$access_token]['name'];
     $amount = $_SESSION['quickad'][$access_token]['amount'];
@@ -2060,74 +2174,64 @@ function payment_success_save_detail($access_token){
     $user_id = $_SESSION['user']['id'];
     $now = time();
 
-    if($payment_type == "subscr"){
+    if ($payment_type == "subscr") {
         $trans_desc = $title;
         $subcription_id = $_SESSION['quickad'][$access_token]['sub_id'];
 
         // Check that the payment is valid
-        $subsc_details = ORM::for_table($config['db']['pre'].'subscriptions')
+        $subsc_details = ORM::for_table($config['db']['pre'] . 'subscriptions')
             ->where('sub_id', $subcription_id)
             ->find_one();
-        if(!empty($subsc_details)){
+        if (!empty($subsc_details)) {
             // output data of each row
 
             $term = 0;
-            if($subsc_details['sub_term'] == 'DAILY') {
+            if ($subsc_details['sub_term'] == 'DAILY') {
                 $term = 86400;
-            }
-            elseif($subsc_details['sub_term'] == 'WEEKLY') {
+            } elseif ($subsc_details['sub_term'] == 'WEEKLY') {
                 $term = 604800;
-            }
-            elseif($subsc_details['sub_term'] == 'MONTHLY') {
+            } elseif ($subsc_details['sub_term'] == 'MONTHLY') {
                 $term = 2678400;
-            }
-            elseif($subsc_details['sub_term'] == 'YEARLY') {
+            } elseif ($subsc_details['sub_term'] == 'YEARLY') {
                 $term = 31536000;
             }
 
             $sub_group_id = $subsc_details['group_id'];
             $sub_amount = $subsc_details['sub_amount'];
 
-            $subsc_check = ORM::for_table($config['db']['pre'].'upgrades')
+            $subsc_check = ORM::for_table($config['db']['pre'] . 'upgrades')
                 ->where('user_id', $user_id)
                 ->count();
-            if($subsc_check == 1)
-            {
+            if ($subsc_check == 1) {
                 $txn_type = 'subscr_update';
-            }
-            else
-            {
+            } else {
                 $txn_type = 'subscr_signup';
             }
 
             // Add time to their subscription
-            $expires = (time()+$term);
+            $expires = (time() + $term);
 
-            if($txn_type == 'subscr_update')
-            {
+            if ($txn_type == 'subscr_update') {
 
-                $query = "UPDATE `".$config['db']['pre']."upgrades` SET `sub_id` = '".validate_input($subcription_id)."',`upgrade_expires` = '".validate_input($expires)."' WHERE `user_id` = '".validate_input($user_id)."' LIMIT 1 ";
+                $query = "UPDATE `" . $config['db']['pre'] . "upgrades` SET `sub_id` = '" . validate_input($subcription_id) . "',`upgrade_expires` = '" . validate_input($expires) . "' WHERE `user_id` = '" . validate_input($user_id) . "' LIMIT 1 ";
                 $pdo->query($query);
 
-                $person = ORM::for_table($config['db']['pre'].'user')->find_one($user_id);
+                $person = ORM::for_table($config['db']['pre'] . 'user')->find_one($user_id);
                 $person->group_id = $sub_group_id;
                 $person->save();
-
-            }
-            elseif($txn_type == 'subscr_signup')
-            {
+            } elseif ($txn_type == 'subscr_signup') {
                 $unique_subscription_id = uniqid();
                 $subscription_status = "Active";
 
-                $subscription_stripe_customer_id = isset($_SESSION['quickad'][$access_token]['customer_id'])? $_SESSION['quickad'][$access_token]['customer_id'] : null;
-                $subscription_stripe_subscription_id = isset($_SESSION['quickad'][$access_token]['subscription_id'])? $_SESSION['quickad'][$access_token]['subscription_id'] : null;
-                $subscription_billing_day = isset($_SESSION['quickad'][$access_token]['billing_day'])? $_SESSION['quickad'][$access_token]['billing_day'] : null;
+                $subscription_stripe_customer_id = isset($_SESSION['quickad'][$access_token]['customer_id']) ? $_SESSION['quickad'][$access_token]['customer_id'] : null;
+                $subscription_stripe_subscription_id = isset($_SESSION['quickad'][$access_token]['subscription_id']) ? $_SESSION['quickad'][$access_token]['subscription_id'] : null;
+                $subscription_billing_day = isset($_SESSION['quickad'][$access_token]['billing_day']) ? $_SESSION['quickad'][$access_token]['billing_day'] : null;
                 $subscription_length = 0;
-                $subscription_interval = isset($_SESSION['quickad'][$access_token]['interval'])? $_SESSION['quickad'][$access_token]['interval'] : null;
-                $subscription_trial_days = isset($_SESSION['quickad'][$access_token]['trial_days'])? $_SESSION['quickad'][$access_token]['trial_days'] : null;
-                $subscription_date_trial_ends = isset($_SESSION['quickad'][$access_token]['date_trial_ends'])? $_SESSION['quickad'][$access_token]['date_trial_ends'] : null;
+                $subscription_interval = isset($_SESSION['quickad'][$access_token]['interval']) ? $_SESSION['quickad'][$access_token]['interval'] : null;
+                $subscription_trial_days = isset($_SESSION['quickad'][$access_token]['trial_days']) ? $_SESSION['quickad'][$access_token]['trial_days'] : null;
+                $subscription_date_trial_ends = isset($_SESSION['quickad'][$access_token]['date_trial_ends']) ? $_SESSION['quickad'][$access_token]['date_trial_ends'] : null;
 
-                $upgrades_insert = ORM::for_table($config['db']['pre'].'upgrades')->create();
+                $upgrades_insert = ORM::for_table($config['db']['pre'] . 'upgrades')->create();
                 $upgrades_insert->sub_id = $subcription_id;
                 $upgrades_insert->user_id = $user_id;
                 $upgrades_insert->upgrade_lasttime = $now;
@@ -2143,25 +2247,25 @@ function payment_success_save_detail($access_token){
                 $upgrades_insert->date_trial_ends = $subscription_date_trial_ends;
                 $upgrades_insert->save();
 
-                $person = ORM::for_table($config['db']['pre'].'user')->find_one($user_id);
+                $person = ORM::for_table($config['db']['pre'] . 'user')->find_one($user_id);
                 $person->group_id = $sub_group_id;
                 $person->save();
             }
 
             //Update Amount in balance table
-            $balance = ORM::for_table($config['db']['pre'].'balance')->find_one(1);
-            $current_amount=$balance['current_balance'];
-            $total_earning=$balance['total_earning'];
+            $balance = ORM::for_table($config['db']['pre'] . 'balance')->find_one(1);
+            $current_amount = $balance['current_balance'];
+            $total_earning = $balance['total_earning'];
 
-            $updated_amount=($sub_amount+$current_amount);
-            $total_earning=($sub_amount+$total_earning);
+            $updated_amount = ($sub_amount + $current_amount);
+            $total_earning = ($sub_amount + $total_earning);
 
             $balance->current_balance = $updated_amount;
             $balance->total_earning = $total_earning;
             $balance->save();
 
             $ip = encode_ip($_SERVER, $_ENV);
-            $trans_insert = ORM::for_table($config['db']['pre'].'transaction')->create();
+            $trans_insert = ORM::for_table($config['db']['pre'] . 'transaction')->create();
             $trans_insert->product_name = $title;
             $trans_insert->product_id = $subcription_id;
             $trans_insert->seller_id = $user_id;
@@ -2175,87 +2279,85 @@ function payment_success_save_detail($access_token){
             $trans_insert->save();
 
             unset($_SESSION['quickad'][$access_token]);
-            message($lang['SUCCESS'],$lang['PAYMENTSUCCESS'],$link['TRANSACTION']);
+            message($lang['SUCCESS'], $lang['PAYMENTSUCCESS'], $link['TRANSACTION']);
             exit();
-        }
-        else{
+        } else {
             unset($_SESSION['quickad'][$access_token]);
-            error($lang['INVALID_TRANSACTION'], __LINE__, __FILE__, 1,$lang,$config,$link);
+            error($lang['INVALID_TRANSACTION'], __LINE__, __FILE__, 1, $lang, $config, $link);
             exit();
         }
-    }
-    else{
+    } else {
         $item_pro_id = $_SESSION['quickad'][$access_token]['product_id'];
         $item_featured = ($_SESSION['quickad'][$access_token]['featured'] == "1") ? "1" : "0";
         $item_urgent =  ($_SESSION['quickad'][$access_token]['urgent'] == "1") ? "1" : "0";
         $item_highlight = ($_SESSION['quickad'][$access_token]['highlight'] == "1") ? "1" : "0";
         $trans_desc = $_SESSION['quickad'][$access_token]['trans_desc'];
 
-        if(check_valid_author($item_pro_id)) {
+        if (check_valid_author($item_pro_id)) {
             $group_id = get_user_group();
             $group_info = get_usergroup_settings($group_id);
             $featured_duration = $group_info['featured_duration'];
             $urgent_duration = $group_info['urgent_duration'];
             $highlight_duration = $group_info['highlight_duration'];
-            if($item_featured == '1'){
-                $f_duration_timestamp = $featured_duration*86400;
-                $featured_exp_date = (time()+$f_duration_timestamp);
-                $featured_insert = ORM::for_table($config['db']['pre'].'product')->find_one($item_pro_id);
+            if ($item_featured == '1') {
+                $f_duration_timestamp = $featured_duration * 86400;
+                $featured_exp_date = (time() + $f_duration_timestamp);
+                $featured_insert = ORM::for_table($config['db']['pre'] . 'product')->find_one($item_pro_id);
                 $featured_insert->featured = '1';
                 $featured_insert->featured_exp_date = $featured_exp_date;
                 $featured_insert->save();
             }
-            if($item_urgent == '1'){
-                $u_duration_timestamp = $urgent_duration*86400;
-                $urgent_exp_date = (time()+$u_duration_timestamp);
-                $urgent_insert = ORM::for_table($config['db']['pre'].'product')->find_one($item_pro_id);
+            if ($item_urgent == '1') {
+                $u_duration_timestamp = $urgent_duration * 86400;
+                $urgent_exp_date = (time() + $u_duration_timestamp);
+                $urgent_insert = ORM::for_table($config['db']['pre'] . 'product')->find_one($item_pro_id);
                 $urgent_insert->urgent = '1';
                 $urgent_insert->urgent_exp_date = $urgent_exp_date;
                 $urgent_insert->save();
             }
-            if($item_highlight == '1'){
-                $h_duration_timestamp = $highlight_duration*86400;
-                $highlight_exp_date = (time()+$h_duration_timestamp);
-                $highlight_insert = ORM::for_table($config['db']['pre'].'product')->find_one($item_pro_id);
+            if ($item_highlight == '1') {
+                $h_duration_timestamp = $highlight_duration * 86400;
+                $highlight_exp_date = (time() + $h_duration_timestamp);
+                $highlight_insert = ORM::for_table($config['db']['pre'] . 'product')->find_one($item_pro_id);
                 $highlight_insert->highlight = '1';
                 $highlight_insert->highlight_exp_date = $highlight_exp_date;
                 $highlight_insert->save();
             }
 
-            if(check_valid_resubmission($item_pro_id)){
-                if($item_featured == '1'){
-                    $f_duration_timestamp = $featured_duration*86400;
-                    $featured_exp_date = (time()+$f_duration_timestamp);
-                    $query = "UPDATE ". $config['db']['pre'] . "product_resubmit set featured = '1',featured_exp_date='$featured_exp_date' where product_id='".$item_pro_id."' LIMIT 1";
+            if (check_valid_resubmission($item_pro_id)) {
+                if ($item_featured == '1') {
+                    $f_duration_timestamp = $featured_duration * 86400;
+                    $featured_exp_date = (time() + $f_duration_timestamp);
+                    $query = "UPDATE " . $config['db']['pre'] . "product_resubmit set featured = '1',featured_exp_date='$featured_exp_date' where product_id='" . $item_pro_id . "' LIMIT 1";
                     $pdo->query($query);
                 }
-                if($item_urgent == '1'){
-                    $u_duration_timestamp = $urgent_duration*86400;
-                    $urgent_exp_date = (time()+$u_duration_timestamp);
-                    $query = "UPDATE ". $config['db']['pre'] . "product_resubmit set urgent = '1',urgent_exp_date='$urgent_exp_date' where product_id='".$item_pro_id."' LIMIT 1";
+                if ($item_urgent == '1') {
+                    $u_duration_timestamp = $urgent_duration * 86400;
+                    $urgent_exp_date = (time() + $u_duration_timestamp);
+                    $query = "UPDATE " . $config['db']['pre'] . "product_resubmit set urgent = '1',urgent_exp_date='$urgent_exp_date' where product_id='" . $item_pro_id . "' LIMIT 1";
                     $pdo->query($query);
                 }
-                if($item_highlight == '1'){
-                    $h_duration_timestamp = $highlight_duration*86400;
-                    $highlight_exp_date = (time()+$h_duration_timestamp);
-                    $query = "UPDATE ". $config['db']['pre'] . "product_resubmit set highlight = '1',highlight_exp_date='$highlight_exp_date' where product_id='".$item_pro_id."' LIMIT 1";
+                if ($item_highlight == '1') {
+                    $h_duration_timestamp = $highlight_duration * 86400;
+                    $highlight_exp_date = (time() + $h_duration_timestamp);
+                    $query = "UPDATE " . $config['db']['pre'] . "product_resubmit set highlight = '1',highlight_exp_date='$highlight_exp_date' where product_id='" . $item_pro_id . "' LIMIT 1";
                     $pdo->query($query);
                 }
             }
 
             //Update Amount in balance table
-            $balance = ORM::for_table($config['db']['pre'].'balance')->find_one(1);
-            $current_amount=$balance['current_balance'];
-            $total_earning=$balance['total_earning'];
+            $balance = ORM::for_table($config['db']['pre'] . 'balance')->find_one(1);
+            $current_amount = $balance['current_balance'];
+            $total_earning = $balance['total_earning'];
 
-            $updated_amount=($amount+$current_amount);
-            $total_earning=($amount+$total_earning);
+            $updated_amount = ($amount + $current_amount);
+            $total_earning = ($amount + $total_earning);
             $balance->current_balance = $updated_amount;
             $balance->total_earning = $total_earning;
             $balance->save();
 
             $ip = encode_ip($_SERVER, $_ENV);
-            $trans_insert = ORM::for_table($config['db']['pre'].'transaction')->create();
+            $trans_insert = ORM::for_table($config['db']['pre'] . 'transaction')->create();
             $trans_insert->product_name = $title;
             $trans_insert->product_id = $item_pro_id;
             $trans_insert->seller_id = $user_id;
@@ -2272,18 +2374,18 @@ function payment_success_save_detail($access_token){
             $trans_insert->save();
 
             unset($_SESSION['quickad'][$access_token]);
-            message($lang['SUCCESS'],$lang['PAYMENTSUCCESS'],$link['TRANSACTION']);
+            message($lang['SUCCESS'], $lang['PAYMENTSUCCESS'], $link['TRANSACTION']);
             exit();
-        }
-        else{
+        } else {
             unset($_SESSION['quickad'][$access_token]);
-            error($lang['INVALID_TRANSACTION'], __LINE__, __FILE__, 1,$lang,$config,$link);
+            error($lang['INVALID_TRANSACTION'], __LINE__, __FILE__, 1, $lang, $config, $link);
             exit();
         }
     }
 }
 
-function payment_fail_save_detail($access_token){
+function payment_fail_save_detail($access_token)
+{
 
     global $config;
     $title = $_SESSION['quickad'][$access_token]['name'];
@@ -2294,11 +2396,11 @@ function payment_fail_save_detail($access_token){
     $now = time();
     $ip = encode_ip($_SERVER, $_ENV);
 
-    if($payment_type == "subscr"){
+    if ($payment_type == "subscr") {
         $trans_desc = $title;
         $subcription_id = $_SESSION['quickad'][$access_token]['sub_id'];
 
-        $trans_insert = ORM::for_table($config['db']['pre'].'transaction')->create();
+        $trans_insert = ORM::for_table($config['db']['pre'] . 'transaction')->create();
         $trans_insert->product_name = $title;
         $trans_insert->product_id = $subcription_id;
         $trans_insert->seller_id = $user_id;
@@ -2310,15 +2412,14 @@ function payment_fail_save_detail($access_token){
         $trans_insert->transaction_description = $trans_desc;
         $trans_insert->transaction_method = 'Subscription';
         $trans_insert->save();
-    }
-    else{
+    } else {
         $item_pro_id = $_SESSION['quickad'][$access_token]['product_id'];
         $item_featured = $_SESSION['quickad'][$access_token]['featured'];
         $item_urgent = $_SESSION['quickad'][$access_token]['urgent'];
         $item_highlight = $_SESSION['quickad'][$access_token]['highlight'];
         $trans_desc = $_SESSION['quickad'][$access_token]['trans_desc'];
 
-        $trans_insert = ORM::for_table($config['db']['pre'].'transaction')->create();
+        $trans_insert = ORM::for_table($config['db']['pre'] . 'transaction')->create();
         $trans_insert->product_name = $title;
         $trans_insert->product_id = $item_pro_id;
         $trans_insert->seller_id = $user_id;
@@ -2338,124 +2439,115 @@ function payment_fail_save_detail($access_token){
     unset($_SESSION['quickad'][$access_token]);
 }
 
-function payment_error($status,$error_message="",$access_token){
+function payment_error($status, $error_message = "", $access_token)
+{
 
-    global $config,$lang;
+    global $config, $lang;
 
-    if (isset($_SESSION['quickad'][$access_token]['payment_type']))
-    {
-        if(isset($_SESSION['quickad'][$access_token]['transaction_id']))
-        {
+    if (isset($_SESSION['quickad'][$access_token]['payment_type'])) {
+        if (isset($_SESSION['quickad'][$access_token]['transaction_id'])) {
             $transaction_id = $_SESSION['quickad'][$access_token]['transaction_id'];
             unset($_SESSION['quickad'][$access_token]);
 
-            if($status == "cancel")
-            {
-                $trans_update = ORM::for_table($config['db']['pre'].'transaction')->find_one($transaction_id);
+            if ($status == "cancel") {
+                $trans_update = ORM::for_table($config['db']['pre'] . 'transaction')->find_one($transaction_id);
                 $trans_update->status = 'cancel';
                 $trans_update->save();
 
-                error_content($lang['DECLINED_TRANSACTION'],$error_message);
+                error_content($lang['DECLINED_TRANSACTION'], $error_message);
                 exit();
-            }
-            elseif($status == "error")
-            {
-                $trans_update = ORM::for_table($config['db']['pre'].'transaction')->find_one($transaction_id);
+            } elseif ($status == "error") {
+                $trans_update = ORM::for_table($config['db']['pre'] . 'transaction')->find_one($transaction_id);
                 $trans_update->status = 'failed';
                 $trans_update->save();
 
-                error_content($lang['FAILED_TRANSACTION'],$error_message);
+                error_content($lang['FAILED_TRANSACTION'], $error_message);
+                exit();
+            } else {
+                error_content($lang['FAILED_TRANSACTION'], $error_message);
                 exit();
             }
-            else
-            {
-                error_content($lang['FAILED_TRANSACTION'],$error_message);
-                exit();
-            }
-        }
-        else{
+        } else {
             unset($_SESSION['quickad'][$access_token]);
-            error_content($lang['FAILED_TRANSACTION'],$error_message);
+            error_content($lang['FAILED_TRANSACTION'], $error_message);
             exit();
         }
-
-    }
-    else
-    {
-        error_content($lang['INVALID_PAYMENT_PROCESS'],$error_message);
+    } else {
+        error_content($lang['INVALID_PAYMENT_PROCESS'], $error_message);
         exit();
     }
 }
 
-function get_items_count($userid=false,$status=null,$premium=false,$getbysubcat=null,$getbymaincat=null,$location=false){
+function get_items_count($userid = false, $status = null, $premium = false, $getbysubcat = null, $getbymaincat = null, $location = false)
+{
 
     global $config;
     $where = '';
     $where_array = array();
-    if($userid){
+    if ($userid) {
         $where_array['user_id'] = $userid;
-        if($where == '')
-            $where .= "where user_id = '".$userid."'";
+        if ($where == '')
+            $where .= "where user_id = '" . $userid . "'";
         else
-            $where .= " AND user_id = '".$userid."'";
+            $where .= " AND user_id = '" . $userid . "'";
     }
 
-    if($status != null && $status != "hide"){
+    if ($status != null && $status != "hide") {
         $where_array['status'] = $status;
-        if($where == '')
-            $where .= "where status = '".$status."'";
+        if ($where == '')
+            $where .= "where status = '" . $status . "'";
         else
-            $where .= " AND status = '".$status."'";
+            $where .= " AND status = '" . $status . "'";
     }
 
-    if($status == "hide"){
+    if ($status == "hide") {
         $where_array['status'] = "hide";
-        if($where == '')
+        if ($where == '')
             $where .= "where hide = '1'";
         else
             $where .= " AND hide = '1'";
-    }else{
+    } else {
         $where_array['hide'] = 0;
-        if($where == '')
+        if ($where == '')
             $where .= "where hide = '0'";
         else
             $where .= " AND hide = '0'";
     }
 
-    if($premium){
-        if($where == '')
+    if ($premium) {
+        if ($where == '')
             $where .= "where (featured = '1' or urgent = '1' or highlight = '1')";
         else
             $where .= " AND (featured = '1' or urgent = '1' or highlight = '1')";
     }
 
-    if($getbysubcat != null){
+    if ($getbysubcat != null) {
         $where_array['sub_category'] = $getbysubcat;
-        if($where == '')
-            $where .= "where sub_category = '".$getbysubcat."'";
+        if ($where == '')
+            $where .= "where sub_category = '" . $getbysubcat . "'";
         else
-            $where .= " AND sub_category = '".$getbysubcat."'";
+            $where .= " AND sub_category = '" . $getbysubcat . "'";
     }
 
-    if($getbymaincat != null){
+    if ($getbymaincat != null) {
         $where_array['category'] = $getbymaincat;
-        if($where == '')
-            $where .= "where category = '".$getbymaincat."'";
+        if ($where == '')
+            $where .= "where category = '" . $getbymaincat . "'";
         else
-            $where .= " AND category = '".$getbymaincat."'";
+            $where .= " AND category = '" . $getbymaincat . "'";
     }
 
-    if($location){
+    if ($location) {
         $country_code = check_user_country();
         $where_array['country'] = $country_code;
-        if($where == '')
-            $where .= "where country = '".$country_code."'";
+        if ($where == '')
+            $where .= "where country = '" . $country_code . "'";
         else
-            $where .= " AND country = '".$country_code."'";
+            $where .= " AND country = '" . $country_code . "'";
     }
 
     $pdo = ORM::get_db();
-    $query = "SELECT id FROM `".$config['db']['pre']."product` $where ";
+    $query = "SELECT id FROM `" . $config['db']['pre'] . "product` $where ";
     $result = $pdo->query($query);
     $item_count = $result->rowCount();
 
