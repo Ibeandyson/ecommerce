@@ -285,12 +285,6 @@ IF("{POST_WATERMARK}"=="0"){
                                                     <i class="currency">{USER_CURRENCY_SIGN}</i>
                                                 </div>
                                             </div>
-                                            <div class="col-xl-6 col-md-12 margin-top-12">
-                                                <div class="checkbox">
-                                                    <input type="checkbox" id="negotiable" name="negotiable" value="1">
-                                                    <label for="negotiable"><span class="checkbox-icon"></span> {LANG_NEGOTIATE}</label>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="submit-field">

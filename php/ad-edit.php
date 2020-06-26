@@ -111,7 +111,7 @@ function ajax_edit_advertise(){
                 if(empty($_POST['price'])){
                     $price = 0;
                 }
-                $negotiable = isset($_POST['negotiable']) ? '1' : '0';
+                // $negotiable = isset($_POST['negotiable']) ? '1' : '0';
                 $hide_phone = isset($_POST['hide_phone']) ? '1' : '0';
                 $cityid = $_POST['city'];
 
@@ -157,7 +157,7 @@ function ajax_edit_advertise(){
                     $item_edit->set('sub_category', $_POST['subcatid']);
                     $item_edit->set('description', $description);
                     $item_edit->set('price', $price);
-                    $item_edit->set('negotiable', $negotiable);
+                    $item_edit->set('negotiable', '0');
                     $item_edit->set('phone', $phone);
                     $item_edit->set('hide_phone', $hide_phone);
                     $item_edit->set('location', $location);
@@ -180,7 +180,7 @@ function ajax_edit_advertise(){
                     $item_insrt->sub_category = $_POST['subcatid'];
                     $item_insrt->description = $description;
                     $item_insrt->price = $price;
-                    $item_insrt->negotiable = $negotiable;
+                    $item_insrt->negotiable = '0';
                     $item_insrt->phone = $phone;
                     $item_insrt->hide_phone = $hide_phone;
                     $item_insrt->location = $location;
@@ -455,7 +455,7 @@ if(checkloggedin()) {
             $page->SetParameter ('DESCRIPTION', $description);
             $page->SetParameter ('PRICE', $price);
             $page->SetParameter ('PHONE', $phone);
-            $page->SetParameter ('NEGOTIABLE', $negotiable);
+            // $page->SetParameter ('NEGOTIABLE', $negotiable);
             $page->SetParameter ('HIDEPHONE', $hide_phone);
             $page->SetParameter ('TAGS', $tags);
             $page->SetParameter ('CITY', $cityid);

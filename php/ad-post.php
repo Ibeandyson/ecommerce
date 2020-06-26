@@ -235,7 +235,7 @@ function ajax_post_advertise(){
                     $price = 0;
                 }
 
-                $negotiable = isset($_POST['negotiable']) ? '1' : '0';
+                // $negotiable = isset($_POST['negotiable']) ? '1' : '0';
                 $hide_phone = isset($_POST['hide_phone']) ? '1' : '0';
 
 
@@ -299,7 +299,7 @@ function ajax_post_advertise(){
                 $item_insrt->sub_category = $_POST['subcatid'];
                 $item_insrt->description = $description;
                 $item_insrt->price = $price;
-                $item_insrt->negotiable = $negotiable;
+                $item_insrt->negotiable = '0';
                 $item_insrt->phone = $phone;
                 $item_insrt->hide_phone = $hide_phone;
                 $item_insrt->location = $location;
