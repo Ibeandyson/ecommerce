@@ -65,6 +65,8 @@ $router->map('GET|POST','/countries/?', 'countries.php');
 $router->map('GET|POST','/faq/?', 'faq.php');
 $router->map('GET|POST','/feedback/?', 'feedback.php');
 $router->map('GET|POST','/test/?', 'test.php');
+$router->map('GET|POST','/disclaimer/?', 'disclaimer.php');
+$router->map('GET|POST','/privacy_policy/?', 'privacy_policy.php');
 // Special (GET processing, etc)
 
 $router->map('GET|POST','/profile/[*:username]?/[*:page]?/?','profile.php');

@@ -77,11 +77,11 @@ if ($num_rows > 0) {
 
     $price = price_format($info['price'],$info['country']);
     $item_price = $price;
-    $item_negotiable = $info['negotiable'];
-    if($item_negotiable == 1)
-        $item_negotiable = $lang['NEGOTIATE'];
-    else
-        $item_negotiable = "";
+    // $item_negotiable = $info['negotiable'];
+    // if($item_negotiable == 1)
+    //     $item_negotiable = $lang['NEGOTIATE'];
+    // else
+    //     $item_negotiable = "";
 
     $count = 0;
     $q_result = ORM::for_table($config['db']['pre'].'custom_data')
@@ -413,7 +413,7 @@ $page->SetParameter ('ITEM_CREATED', $item_created_at);
 $page->SetParameter ('ITEM_DESC', $item_description);
 $page->SetParameter ('ITEM_SHOWMORE', $showmore);
 $page->SetParameter ('ITEM_PRICE', $item_price);
-$page->SetParameter ('ITEM_NEGOTIATE', $item_negotiable);
+// $page->SetParameter ('ITEM_NEGOTIATE', $item_negotiable);
 $page->SetParameter ('ITEM_PHONE', $item_phone);
 $page->SetParameter ('ITEM_HIDE_PHONE', $item_hide_phone);
 $page->SetParameter ('MAIN_SCREEN', $main_Screen);

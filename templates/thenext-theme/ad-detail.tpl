@@ -67,7 +67,7 @@ IF("{SHOW_IMAGE_SLIDER}"=="1"){
                         <div class="job-property">
                             <i class="la la-credit-card"></i>
                             <span>{LANG_PRICE}</span>
-                            <h5>{ITEM_PRICE} IF('{ITEM_NEGOTIATE}' != ''){ <span class="badge green d-inline-block">{ITEM_NEGOTIATE}</span> {:IF}</h5>
+                            <h5>{ITEM_PRICE}</h5>
                         </div>
                     </div>
                     {:IF}
