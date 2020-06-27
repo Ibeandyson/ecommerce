@@ -47,6 +47,8 @@
                             <li><a href="{LINK_COUNTRIES}">{LANG_COUNTRIES}</a></li>
                             {:IF}
                             <li><a href="{LINK_SITEMAP}">{LANG_SITE_MAP}</a></li>
+                            <li><a href="https://app.bellefu.com/privacy_policy">Privacy Policy</a></li>
+                            <li><a href="https://app.bellefu.com/disclaimer">Disclaimer</a></li>
                         </ul>
                     </div>
                 </div>
