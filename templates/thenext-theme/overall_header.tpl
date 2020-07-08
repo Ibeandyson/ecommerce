@@ -149,7 +149,10 @@
                             </li>
                             {:IF}
                             <li class="d-none d-lg-block">
-                                <a href="{LINK_LISTING}" style="color:white"><i class="icon-feather-list" style="color:white"></i> {LANG_FIND_ADS}</a>
+                                <a href="#" style="color:white">Submit CV</a>
+                            </li>
+                             <li class="d-none d-lg-block">
+                                <a href="#" style="color:white">Documentary</a>
                             </li>
                         </ul>
                     </nav>
@@ -157,7 +160,8 @@
                     <!-- Mobile Navigation -->
                     <nav class="mmenu-init" >
                         <ul class="mm-listview">
-                            <li><a href="{LINK_LISTING}" >{LANG_FIND_ADS}</a></li>
+                            <li><a href="#" >Submit CV</a></li>
+                            <li><a href="#" >Documentary</a></li>
                             IF({LOGGED_IN}){
                             <li><a href="{LINK_DASHBOARD}">{LANG_DASHBOARD}</a></li>
                             <li><a href="{LINK_MYADS}">{LANG_MY_ADS}</a></li>
@@ -208,10 +212,10 @@
                             <ul>
                                 IF(!{LOGGED_IN}){
                                 <li>
-                                    <a href="#sign-in-dialog" class="popup-with-zoom-anim"><i
-                                                class="icon-feather-log-in"></i> {LANG_LOGIN}</a>
+                                    <a href="#sign-in-dialog" class="popup-with-zoom-anim" style="color:white"><i
+                                                class="icon-feather-log-in" ></i> {LANG_LOGIN}</a>
                                 </li>
-                                <li><a href="{LINK_SIGNUP}">{LANG_REGISTER}</a></li>
+                                <li><a href="{LINK_SIGNUP}" style="color:white">{LANG_REGISTER}</a></li>
                                 {:IF}
                                 <li><a href="{LINK_POST-AD}" class="button ripple-effect post-job">{LANG_POST_FREE_AD}</a>
                                 </li>

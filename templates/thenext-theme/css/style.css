@@ -2552,7 +2552,10 @@ em.mm-counter + a.mm-fullsubopen + a, em.mm-counter + a.mm-fullsubopen + span {
 }
 
 #footer {
-    background-color: #303030;
+    background-color: black;
+    /* background-image: url("../images/footer.jpg"); */
+    background-repeat: no-repeat;
+    background-size: cover;
     color: silver
 }
 
@@ -4398,7 +4401,10 @@ span.blog-item-tag {
     }
 }
 
+
+
 @media (max-width: 2560px) {
+    .intro-banner
     .full-page-content-inner .grid-layout .job-listing {
         width: calc(100% * (1 / 4) - 30px)
     }
@@ -7042,8 +7048,13 @@ input:checked + .switch-button:before {
     display: block;
     text-align: center;
 }
-
-.banner-headline h1, .banner-headline h2, .banner-headline h3, .banner-headline h4 {
+.banner-headline h5{
+    font-size: 15px; 
+    color: #eee; 
+    line-height: 42px
+    font-weight: 300;
+}
+.banner-headline h1, .banner-headline h2, .banner-headline h4 {
     font-size: 28px;
     font-weight: 300;
     color: #eee;
@@ -7130,7 +7141,7 @@ input:checked + .switch-button:before {
     flex: 1;
     align-items: center;
     display: flex;
-    position: relative
+    position: relative;   
 }
 
 .listing-page .intro-search-field {
