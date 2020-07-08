@@ -5,9 +5,9 @@
             <div class="row">
                 <div class="col-xl-5 col-lg-5 col-md-12">
                     <div class="footer-logo">
-                     <h1 style="color: white; padding-bottom:10px">About</h1>
+                     <h1 style="color: white; padding-bottom:10px">{LANG_ABOUT_US}</h1>
                     </div>
-                    <p>{FOOTER_TEXT}</p>
+                    <p>{LANG_ABOUT_US_TEXT}</p>
                 </div>
                 <div class="col-xl-1 col-lg-1">
                 </div>
@@ -30,7 +30,7 @@
                     <div class="footer-links">
                         <h3>{LANG_HELP_SUPPORT}</h3>
                         <ul>
-                            <li><a href="{LINK_FAQ}">{LANG_FAQ}</a></li>
+                            <li><a href="https://bellefu.com/about_us/">{LANG_T&C}</a></li>
                             <li><a href="{LINK_FEEDBACK}">{LANG_FEEDBACK}</a></li>
                             <li><a href="{LINK_CONTACT}">{LANG_CONTACT}</a></li>
                         </ul>
@@ -47,8 +47,7 @@
                             <li><a href="{LINK_COUNTRIES}">{LANG_COUNTRIES}</a></li>
                             {:IF}
                             <li><a href="{LINK_SITEMAP}">{LANG_SITE_MAP}</a></li>
-                            <li><a href="https://app.bellefu.com/privacy_policy">Privacy Policy</a></li>
-                            <li><a href="https://app.bellefu.com/disclaimer">Disclaimer</a></li>
+                            <li><a href="https://bellefu.com/legal/">{LANG_LEGAL}</a></li>
                         </ul>
                     </div>
                 </div>

@@ -4852,6 +4852,7 @@ span.blog-item-tag {
 }
 .compact-list-layout .job-listing .job-listing-footer .job-listing-price {
     font-size: 1em;
+    color: rgb(255,165,0);
 }
 /* removed blue line highlight @jkp */
 /* .compact-list-layout .job-listing:before {
@@ -7022,6 +7023,7 @@ input:checked + .switch-button:before {
     top: 0;
     left: 0;
     z-index: 15;
+    background-color: rgba(42, 46, 50, .0);
 }
 
 .intro-banner:after {

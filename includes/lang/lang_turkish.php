@@ -2,6 +2,11 @@
 $lang['ABNORMALBID'] = 'Anormal teklif gerektiren yayınlanmayan reklam';
 $lang['ABOUT_ME'] = 'Hakkımda';
 $lang['ABOUT_YOU'] = 'Hakkınızda';
+$lang['ABOUT_US'] = 'Hakkımızda';
+$lang['LEGAL'] = 'Yasal';
+$lang['T&C'] = 'şartlar ve koşullar';
+$lang['FARMERS_CLUB'] = 'Çiftçi Kulübü';
+$lang['ABOUT_US_TEXT'] = 'Bellefu.com, çiftçilerin, alıcıların ve tarım ürünlerinin satıcılarının dünyadaki diğer tarımsal müteahhitlik sağlayıcıları ve üretim endüstrileriyle doğrudan temas kurmasını sağlayan, tarımla ilgili faaliyetlere adanmış dinamik bir çevrimiçi pazardır. Bellefu, tarımsal ürünleri aramayı parmaklarınızın ucunda yapmak için tasarlanmıştır.';
 $lang['ACCAEXIST'] = 'Bu e-mail başka bir hesaba ait';
 $lang['ACCOUNT_SETTING'] = 'Şifre yenileme';
 $lang['ACCOUNTBAN'] = 'Bu hesap banlanmıştır.';
