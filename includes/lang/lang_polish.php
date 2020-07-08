@@ -2,6 +2,11 @@
 $lang['ABNORMALBID'] = 'Zamieszczone ogłoszenia, które nie są wyświetlane, wymagają nieprawidłowej licytacji';
 $lang['ABOUT_ME'] = 'O mnie';
 $lang['ABOUT_YOU'] = 'O Tobie';
+$lang['ABOUT_US'] = 'O nas';
+$lang['LEGAL'] = 'Prawny';
+$lang['T&C'] = 'Zasady i Warunki';
+$lang['FARMERS_CLUB'] = 'Kluby rolników';
+$lang['ABOUT_US_TEXT'] = 'Bellefu.com jest dynamicznym rynkiem online poświęconym działaniom związanym z rolnictwem, zapewniającym rolnikom, kupującym i sprzedawcom produktów rolnych bezpośredni kontakt z innymi dostawcami rolnymi i przemysłem na całym świecie. Bellefu umożliwia wyszukiwanie produktów rolniczych na wyciągnięcie ręki.';
 $lang['ACCAEXIST'] = 'Konto już istnieje z tym adresem e-mail';
 $lang['ACCOUNT_SETTING'] = 'Ustawienia konta';
 $lang['ACCOUNTBAN'] = 'To konto zostało zbanowane';

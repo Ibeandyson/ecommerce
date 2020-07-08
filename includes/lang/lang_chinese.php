@@ -2,6 +2,11 @@
 $lang['ABNORMALBID'] = '非特色广告张贴需要异常出价';
 $lang['ABOUT_ME'] = '关于我';
 $lang['ABOUT_YOU'] = '关于你';
+$lang['ABOUT_US'] = '关于我们';
+$lang['LEGAL'] = '法律';
+$lang['T&C'] = '条款及细则';
+$lang['FARMERS_CLUB'] = '农民俱乐部';
+$lang['ABOUT_US_TEXT'] = 'Bellefu.com是一個充滿活力的在線市場，致力於與農業有關的活動，可確保農產品的農民，買主和賣主與全球其他農業聯盟的提供者和製造業直接接觸。 Bellefu的設計使您可以輕鬆搜索農產品。';
 $lang['ACCAEXIST'] = '一个帐户已经存在与该电子邮件地址';
 $lang['ACCOUNT_SETTING'] = '账户设置';
 $lang['ACCOUNTBAN'] = '此帐户已被禁止';

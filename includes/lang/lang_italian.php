@@ -2,6 +2,11 @@
 $lang['ABNORMALBID'] = 'Annunci pubblicitari non pubblicitari che richiedono un\'offerta anormale';
 $lang['ABOUT_ME'] = 'A proposito di me';
 $lang['ABOUT_YOU'] = 'A proposito di te';
+$lang['ABOUT_US'] = 'Riguardo a noi';
+$lang['LEGAL'] = 'legale';
+$lang['T&C'] = 'Termini & Condizioni';
+$lang['FARMERS_CLUB'] = 'Club degli agricoltori';
+$lang['ABOUT_US_TEXT'] = 'Bellefu.com è un mercato online dinamico dedicato alle attività legate all\'agricoltura che garantisce agli agricoltori, agli acquirenti e ai venditori di prodotti agricoli un contatto diretto con altri fornitori agro-alleati e industrie manifatturiere in tutto il mondo. Bellefu è progettato per rendere la ricerca dei prodotti agro disponibili a portata di mano.';
 $lang['ACCAEXIST'] = 'Un account esiste già con questo indirizzo di posta elettronica';
 $lang['ACCOUNT_SETTING'] = 'Impostazione conto';
 $lang['ACCOUNTBAN'] = 'Questo account è stato bannato';

@@ -1834,7 +1834,7 @@ function SaveSettings(){
     global $config,$lang,$link;
     $status = "";
     if (isset($_POST['logo_watermark'])) {
-        $valid_formats = array("jpg","jpeg","png"); // Valid image formats
+        $valid_formats = array("jpg","jpeg","png","gif"); // Valid image formats
         if (isset($_FILES['banner']) && $_FILES['banner']['tmp_name'] != "") {
             $filename = stripslashes($_FILES['banner']['name']);
             $ext = getExtension($filename);
@@ -1867,7 +1867,7 @@ function SaveSettings(){
             }
             else {
                 $status = "error";
-                $message = 'Only allowed jpg, jpeg png';
+                $message = 'Only allowed jpg, jpeg, png, gif';
             }
 
         }
@@ -1903,7 +1903,7 @@ function SaveSettings(){
             }
             else {
                 $status = "error";
-                $message = 'Only allowed jpg, jpeg png';
+                $message = 'Only allowed jpg, jpeg, png';
             }
 
         }
@@ -1939,7 +1939,7 @@ function SaveSettings(){
             }
             else {
                 $status = "error";
-                $message = 'Only allowed jpg, jpeg png';
+                $message = 'Only allowed jpg, jpeg, png';
             }
 
         }
@@ -1973,7 +1973,7 @@ function SaveSettings(){
             }
             else {
                 $status = "error";
-                $message = 'Only allowed jpg, jpeg png';
+                $message = 'Only allowed jpg, jpeg, png';
             }
 
         }
@@ -2008,7 +2008,7 @@ function SaveSettings(){
             }
             else {
                 $status = "error";
-                $message = 'Only allowed jpg, jpeg png';
+                $message = 'Only allowed jpg, jpeg, png';
             }
 
         }

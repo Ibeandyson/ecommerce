@@ -67,9 +67,12 @@
             <div class="col-xl-12 px-0">
 
                 <div class="categories-container">
-                    <a href="{LINK_POST-AD}" class="category-box">
+                    <a href="#" class="category-box">
                         <div class="category-box-icon">
-                            <div class="category-icon"><i class="la la-plus"></i></div>
+                            <div class="category-icon"><img src="/templates/thenext-theme/images/engineer.png" /></div>
+                        </div>
+                        <div class="category-box-content">
+                            <h3>{LANG_FARMERS_CLUB}</h3>
                         </div>
                     </a>
                     {LOOP: CAT}

@@ -2,6 +2,11 @@
 $lang['ABNORMALBID'] = '異常な入札が必要な投稿されていない広告を掲載しました';
 $lang['ABOUT_ME'] = '私について';
 $lang['ABOUT_YOU'] = 'あなたについて';
+$lang['ABOUT_US'] = '私たちに関しては';
+$lang['LEGAL'] = '法的';
+$lang['T&C'] = '利用規約';
+$lang['FARMERS_CLUB'] = 'ファーマーズクラブ';
+$lang['ABOUT_US_TEXT'] = 'Bellefu.comは、農業関連の活動に特化したダイナミックなオンラインマーケットプレイスであり、農産物の生産者、購入者、および販売者が、世界中の他の農業関連プロバイダーや製造業と直接接触できるようにしています。 Bellefuは、農産物の検索を指先で行えるように設計されています。';
 $lang['ACCAEXIST'] = 'その電子メールアドレスを持つアカウントが既に存在します。';
 $lang['ACCOUNT_SETTING'] = 'アカウント設定';
 $lang['ACCOUNTBAN'] = 'このアカウントは禁止されています';

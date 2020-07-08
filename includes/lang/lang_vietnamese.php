@@ -2,6 +2,11 @@
 $lang['ABNORMALBID'] = 'Quảng cáo không nổi bật được đăng yêu cầu đặt giá thầu bất thường';
 $lang['ABOUT_ME'] = 'Về tôi';
 $lang['ABOUT_YOU'] = 'Về bạn';
+$lang['ABOUT_US'] = 'Về chúng tôi';
+$lang['LEGAL'] = 'Hợp pháp';
+$lang['T&C'] = 'Điều khoản và điều kiện';
+$lang['FARMERS_CLUB'] = 'Câu lạc bộ nông dân';
+$lang['ABOUT_US_TEXT'] = 'Bellefu.com là một thị trường trực tuyến năng động dành riêng cho các hoạt động liên quan đến nông nghiệp, đảm bảo nông dân, người mua và người bán nông sản có liên hệ trực tiếp với các nhà cung cấp nông nghiệp và các ngành sản xuất khác trên thế giới. Bellefu được thiết kế để làm cho việc tìm kiếm các sản phẩm nông nghiệp có sẵn trong tầm tay của bạn.';
 $lang['ACCAEXIST'] = 'Một tài khoản đã tồn tại với địa chỉ email đó';
 $lang['ACCOUNT_SETTING'] = 'Thiết lập tài khoản';
 $lang['ACCOUNTBAN'] = 'Tài khoản này đã bị cấm';

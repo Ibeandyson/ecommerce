@@ -2,6 +2,11 @@
 $lang['ABNORMALBID'] = 'Annan annonsannons som kräver onormal budgivning';
 $lang['ABOUT_ME'] = 'Om mig';
 $lang['ABOUT_YOU'] = 'Om dig';
+$lang['ABOUT_US'] = 'Om oss';
+$lang['LEGAL'] = 'Rättslig';
+$lang['T&C'] = 'Allmänna Villkor';
+$lang['FARMERS_CLUB'] = 'Jordbrukare klubb';
+$lang['ABOUT_US_TEXT'] = 'Bellefu.com är en dynamisk onlinemarknad dedikerad till jordbruksrelaterad verksamhet som säkerställer att jordbrukare, köpare och säljare av jordbruksprodukter har direktkontakt med andra agro-allierade leverantörer och tillverkningsindustrier runt om i världen. Bellefu är utformad för att göra sökning efter agroprodukter tillgängliga till hands.';
 $lang['ACCAEXIST'] = 'Ett konto finns redan med den e_postadressen';
 $lang['ACCOUNT_SETTING'] = 'Kontoinställning';
 $lang['ACCOUNTBAN'] = 'Det här kontot har blivit bannat';
